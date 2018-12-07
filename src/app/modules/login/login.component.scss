@@ -1,0 +1,65 @@
+@import 'src/app/theme/variables.scss';
+
+section {
+  width: 100vw;
+  height: 100vh;
+}
+
+.width-100 {
+  width: 100vw;
+}
+
+.height-100 {
+  height: 100vh;
+}
+
+.background-cover {
+  background-size: cover !important;
+}
+
+.center {
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.padding {
+  padding: $padding !important;
+}
+
+.width-box {
+  width: 30vw;
+}
+
+@media #{$medium-and-down} {
+  .width-box {
+    width: 50vw;
+  }
+}
+
+@media #{$small-and-down} {
+  .width-box {
+    width: 85vw;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+}
+
+input[type=email].valid:not(.browser-default):focus,
+input[type=email]:not(.browser-default):focus:not([readonly]) {
+  border-bottom-color: map-get($map: $colors, $key: primary);
+  -webkit-box-shadow: 0 1px 0 0 map-get($map: $colors, $key: primary);
+  box-shadow: 0 1px 0 0 map-get($map: $colors, $key: primary);
+}
+
+input[type=email]:not(.browser-default):focus:not([readonly]) + label{
+  color: map-get($map: $colors, $key: primary) !important;
+}
+
+.border-box {
+  border: 8px solid map-get($map: $colors, $key: lightgrey);
+  border-radius: 20px;
+}

@@ -1,0 +1,70 @@
+@import 'src/app/theme/variables.scss';
+
+@media #{$medium-and-down} {
+  .side-menu {
+    display: none;
+  }
+}
+
+.side-menu {
+  height: calc(100vh - 64px);
+  height: -moz-calc(100vh - 64px);
+  height: -webkit-calc(100vh - 64px);
+  height: -o-calc(100vh - 64px);
+  height: calc(100vh - 64px);
+  overflow-y: scroll;
+  font-family: 'Roboto', sans-serif;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 90px;
+  list-style-type: none;
+  background: map-get($map: $colors, $key: ternary);
+  overflow-x: hidden;
+  transition: width .5s;
+  z-index: 10;
+}
+
+h5 {
+  display: none;
+}
+
+.side-menu:hover {
+  width: 300px;
+  h5 {
+    display: block;
+  }
+}
+
+.side-menu li {
+  width: 300px;
+}
+
+.side-menu li span {
+  font-size: 22px;
+  margin: 20px 40px 0 31px;
+}
+
+.side-menu li a {
+  display: block;
+  font-size: .9rem;
+  text-decoration: none;
+  color: #FFF;
+  height: 60px;
+}
+
+.side-menu li a:hover,
+.active {
+  background-color: map-get($map: $colors, $key: primary);
+  display: block;
+}
+
+.background-light {
+  background-color: map-get($map: $colors, $key: ternary-light);
+}
+
+.min-height-150 {
+  min-height: 150px;
+}

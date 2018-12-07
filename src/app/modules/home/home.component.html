@@ -1,0 +1,11 @@
+<!-- loader -->
+<app-loading-page *ngIf="loading"></app-loading-page>
+
+<!-- navbar -->
+<app-home-navbar [menu]="menu" [user]="user" (onClick)="changeRoute($event.item, $event.index)"></app-home-navbar>
+
+<!-- side menu -->
+<app-vertical-side-menu [menu]="menu" [user]="user" (onClick)="changeRoute($event.item, $event.index)"></app-vertical-side-menu>
+
+<!-- Add yout Component here -->
+<router-outlet></router-outlet>

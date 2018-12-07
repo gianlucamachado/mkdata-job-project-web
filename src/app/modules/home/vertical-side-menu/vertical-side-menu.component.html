@@ -1,0 +1,26 @@
+<ul class="side-menu" *ngIf="menu">
+  <li *ngIf="user" class="background-light min-height-150">
+    <div class="row no-margin">
+
+      <!-- profile picture -->
+      <div class="col s12 m12 l12 xl12 left-align margin-vertical">
+        <app-home-side-menu-photo [photoUrl]="user.photoUrl"></app-home-side-menu-photo>
+      </div>
+
+      <!-- profile information -->
+      <div class="col s12 m12 l12 xl12 left-align">
+        <h5 class="no-margin white-text" *ngIf="user['fantasyName']"> {{ user['fantasyName'] }} </h5>
+        <h5 class="no-margin white-text" *ngIf="!user['fantasyName']"> {{ user['displayName'] }} </h5>
+      </div>
+
+    </div>
+  </li>
+
+  <!-- menu items -->
+  <li *ngFor="let item of menu; let i = index">
+    <a [ngClass]="{ 'active': item.isActive, 'cursor-pointer': true }" (click)="onClick.emit({ item:item, index:i })">
+      <span [class]="item.icon"></span>
+      {{ item.label }}
+    </a>
+  </li>
+</ul>

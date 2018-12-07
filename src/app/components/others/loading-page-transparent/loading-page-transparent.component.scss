@@ -1,0 +1,5 @@
+@import 'src/app/components/others/loading-page/loading-page.component.scss';
+
+.secondary {
+  background-color: rgba($color: map-get($map: $colors, $key: secondary), $alpha: 0.5);
+}

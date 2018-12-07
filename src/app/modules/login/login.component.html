@@ -1,0 +1,85 @@
+<section>
+
+  <!-- show full loading in the page -->
+  <app-loading-page *ngIf="loading"></app-loading-page>
+
+  <!-- background image -->
+  <div class="width-100 height-100 background-cover" [ngStyle]="{'background': 'url(' + backgroundPicture + ') no-repeat center center'}"></div>
+
+  <!-- Main panel -->
+  <div class="position-fixed center width-box padding center">
+
+    <!-- create grid -->
+    <div class="row">
+
+      <!-- logo img -->
+      <div class="col s12 margin-top center-align">
+        <img src="assets/logo.png" width="60%">
+      </div>
+
+      <!-- header title -->
+      <div class="col s12 margin-topn white-text center-align">
+        <h5>Faça login para começar</h5>
+      </div>
+
+      <!-- form login -->
+      <div class="col s12 center-align">
+        <app-form-login (onValidate)="signInUser($event)" (onRecoveryPassword)="openModal()"></app-form-login>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- modal form -->
+<div id="recovery_modal" class="modal" materialize="modal" [materializeParams]="modalParams" [materializeActions]="modalActions">
+  <div class="modal-content">
+    <div class="row size no-margin">
+
+      <!-- icon close -->
+      <div class="col s12 right-align">
+        <i class="material-icons right cursor-pointer" (click)="closeModal(false, null)">close</i>
+      </div>
+
+      <!-- title -->
+      <div class="col s12">
+        <h5>Esqueceu a senha?</h5>
+      </div>
+
+      <!-- description -->
+      <div class="col s12">
+        <p>Identifique-se para receber um e-mail com as instruções e o link para criar uma nova senha.</p>
+      </div>
+
+      <!-- input -->
+      <form [formGroup]="recoveryForm">
+        <div class="col s12">
+          <div class="input-field">
+            <input id="recovery_email" maxlength="100" formControlName="email" type="email" class="validate" placeholder="Informe o e-mail"
+              [ngClass]="{'invalid': utils.showError('email', recoveryForm, submitAttempt)}">
+            <label for="recovery_email">E-mail</label>
+          </div>
+          <div class="form-control-feedback red-text" *ngIf="utils.showError('email', recoveryForm, submitAttempt)">
+            <p class="no-margin" *ngIf="recoveryForm['controls']['email'].errors.required">Campo obrigatório</p>
+            <p class="no-margin" *ngIf="!recoveryForm['controls']['email'].errors.required && recoveryForm['controls']['email'].errors.email">E-mail inválido</p>
+          </div>
+        </div>
+      </form>
+
+      <!-- button -->
+      <div class="col s12 m6 padding push-m6">
+        <app-button-generic [text]="'Enviar Senha'" (onClick)="closeModal(true, recoveryForm)"></app-button-generic>
+      </div>
+
+      <!-- button -->
+      <div class="col s12 m6 padding pull-m6">
+        <app-button-generic [text]="'Cancelar'" [isOutline]="true" (onClick)="closeModal(false, null)"></app-button-generic>
+      </div>
+
+    </div>
+
+  </div>
+</div>
