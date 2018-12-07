@@ -1,0 +1,7 @@
+<a *ngIf="!isOutline" [ngClass]="{'disabled' : isDisabled}" class="waves-effect waves-light btn-large no-shadow primary border-radius-7px width-100" (click)="onClick.emit()">
+{{text}}
+</a>
+
+<a *ngIf="isOutline" [ngClass]="{'disabled' : isDisabled}" class="waves-effect waves-light btn-large no-shadow white border-radius-7px width-100 primary-text primary-border" (click)="onClick.emit()">
+  {{text}}
+</a>

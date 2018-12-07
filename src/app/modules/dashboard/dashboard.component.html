@@ -1,0 +1,37 @@
+<div class="container">
+
+  <!-- panels -->
+  <div class="row">
+
+    <!-- title -->
+    <div class="col s12 grey-text text-lighten-1">
+      <h3>Dashboard</h3>
+    </div>
+    
+    <!-- panels -->
+    <div class="col s12 m6 l3" *ngFor="let button of buttons">
+      <app-panel-button [info]="button"></app-panel-button>
+    </div>
+
+  </div>
+
+  <!-- charts -->
+  <div class="row">
+    
+    <!-- chart one -->
+    <div class="col s12 xl6 center-align margin-extra">
+      <div style="width:100%;" class="margin-auto">
+        <canvas id="canvas1"></canvas>
+      </div>
+    </div>
+  
+    <!-- chart two -->
+    <div class="col s12 xl6 center-align margin-extra">
+      <div style="width:100%;" class="margin-auto">
+        <canvas id="canvas2"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+</div>

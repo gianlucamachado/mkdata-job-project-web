@@ -1,0 +1,5 @@
+@import 'src/app/theme/variables.scss';
+
+.background-light {
+  background-color: map-get($map: $colors, $key: ternary-light);
+}

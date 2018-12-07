@@ -1,0 +1,26 @@
+@import 'src/app/theme/variables.scss';
+
+.input-background-color {
+  background-color: map-get($map: $colors, $key: light);
+}
+
+.border-radius-7px {
+  border-radius: 7px;
+}
+
+input[type=text]:not(.browser-default),
+input[type=text].valid:not(.browser-default):focus,
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default),
+input[type=password].valid:not(.browser-default):focus,
+input[type=password]:not(.browser-default):focus:not([readonly]) {
+  margin: 0px;
+  border-bottom: 0px;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+a.transparent {
+  white-space: nowrap;
+  color: map-get($map: $colors, $key: darkgrey);
+}

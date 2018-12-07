@@ -1,0 +1,41 @@
+@import 'src/app/theme/variables.scss';
+
+.pagination li.active {
+  background-color: map-get($map: $colors, $key: primary);
+}
+
+.disabled {
+  display: none;
+}
+
+.header-list {
+  background-color: map-get($map: $colors, $key: gray-dark);
+}
+
+.border-radius-5px {
+  border-radius: 5px;
+}
+
+.material-icons {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.btn {
+  min-width: 140px;
+  padding: 0px 10px;
+}
+
+@media #{$small-and-down} {
+  .btn {
+    padding: 0rem 1rem;
+    min-width: 10px;
+  }
+  .valign-wrapper {
+    display: block !important;
+  }
+}
+
+.valign-wrapper {
+  display: flex;
+}

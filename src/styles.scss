@@ -1,1 +1,242 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'src/app/theme/variables.scss';
+
+/*************************************************************************************
+* Body distance from vertical menu
+*************************************************************************************/
+@media #{$large-and-up} {
+  .container {
+    padding-left: 92px !important;
+  }
+}
+
+@media #{$large-and-up} {
+  .container {
+    width: 90%;
+  }
+}
+
+h3 {
+  font-weight: 300;
+  font-size: 2.5rem;
+}
+
+.container {
+  padding-top: 80px !important;
+  padding-bottom: 40px !important;
+}
+
+/*************************************************************************************
+* Remove scroll bar
+*************************************************************************************/
+::-webkit-scrollbar {
+  display: none;
+}
+
+/*************************************************************************************
+* Positions
+*************************************************************************************/
+.position-absolute {
+  position: absolute;
+}
+
+.position-fixed {
+  position: fixed;
+}
+
+.position-relative {
+  position: relative;
+}
+
+/*************************************************************************************
+* Colors
+*************************************************************************************/
+.secondary {
+  background-color: map-get($map: $colors, $key: secondary);
+}
+
+.primary {
+  background-color: map-get($map: $colors, $key: primary);
+}
+
+.ternary {
+  background-color: map-get($map: $colors, $key: ternary);
+}
+
+.primary-text {
+  color: map-get($map: $colors, $key: primary);
+}
+
+.primary-border {
+  border: 1px solid map-get($map: $colors, $key: primary);
+}
+
+.bold {
+  font-weight: bold;
+}
+
+/*************************************************************************************
+* Margin
+*************************************************************************************/
+.no-margin {
+  margin: 0;
+}
+
+.margin {
+  margin: $margin;
+}
+
+.margin-auto {
+  margin: auto;
+}
+
+.margin-horizontal {
+  margin: 0px $margin;
+}
+
+.margin-vertical {
+  margin: $margin 0px;
+}
+
+.margin-top {
+  margin-top: $margin;
+}
+
+.margin-bottom {
+  margin-bottom: $margin;
+}
+
+.margin-left {
+  margin-left: $margin;
+}
+
+.margin-right {
+  margin-right: $margin;
+}
+
+/*************************************************************************************
+* Border
+*************************************************************************************/
+.header-layout {
+  background-color: map-get($map: $colors, $key: lightgrey);
+}
+
+.border-row {
+  border-color: map-get($map: $colors, $key: lightgrey);
+  border-style: solid;
+  border-width: 1px;
+}
+
+.no-border-top {
+  border-top-width: 0px;
+}
+
+/*************************************************************************************
+* Padding
+*************************************************************************************/
+.no-padding {
+  padding: 0;
+}
+
+.padding {
+  padding: $padding;
+}
+
+.padding-horizontal {
+  padding: 0px $padding;
+}
+
+.padding-vertical {
+  padding: $padding 0px;
+}
+
+.padding-top {
+  padding-top: $padding;
+}
+
+.padding-bottom {
+  padding-bottom: $padding;
+}
+
+.padding-left {
+  padding-left: $padding;
+}
+
+.padding-right {
+  padding-right: $padding;
+}
+
+/*************************************************************************************
+* Fonts
+*************************************************************************************/
+.font-weight-300 {
+  font-weight: 300;
+}
+
+/*************************************************************************************
+* Shadow
+*************************************************************************************/
+.no-shadow {
+  box-shadow: none;
+}
+
+/*************************************************************************************
+* Cursor
+*************************************************************************************/
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/*************************************************************************************
+* Others
+*************************************************************************************/
+.form-control-feedback {
+  transform: translateY(-16px);
+}
+
+.switch label input[type=checkbox]:checked+.lever {
+  background-color: map-get($map: $colors, $key: primary);
+}
+
+.switch label input[type=checkbox]:checked+.lever:after {
+  background-color: map-get($map: $colors, $key: primary-shade);
+}
+
+ul.dropdown-content.select-dropdown li:not(.disabled) span {
+  color: map-get($map: $colors, $key: primary);
+}
+
+.header-search {
+  background-color: map-get($map: $colors, $key: gray-light);
+}
+
+.header-list {
+  background-color: map-get($map: $colors, $key: gray-dark);
+}
+
+.border-item {
+  border-left: 1px solid map-get($map: $colors, $key: gray-dark);
+  border-right: 1px solid map-get($map: $colors, $key: gray-dark);
+  border-bottom: 1px solid map-get($map: $colors, $key: gray-dark);
+}
+
+.picker__date-display,
+.picker__day--selected,
+.picker__day--selected:hover,
+.picker--focused .picker__day--selected,
+.picker__weekday-display {
+  background-color: map-get($map: $colors, $key: primary);
+}
+
+.picker__close,
+.picker__today,
+.picker__day.picker__day--today {
+  color: map-get($map: $colors, $key: primary);
+}
+
+.picker__nav--prev:hover,
+.picker__nav--next:hover {
+  cursor: pointer;
+  color: white !important;
+  background: rgba($color: map-get($map: $colors, $key: primary), $alpha: 0.3);
+}

@@ -1,0 +1,18 @@
+<form [formGroup]="searchForm">
+  <div class="row no-margin valign-wrapper">
+    <div class="col s12 m12 l12 xl12 border-out input-field no-margin">
+
+      <!-- input -->
+      <input (keydown.enter)="onSearch.emit(searchForm.value)" formControlName="input" placeholder="Pesquisar"
+        autocomplete="off" type="text" class="no-margin">
+
+      <!-- button -->
+      <div id="share" class="position-absolute center">
+        <a class="valign-wrapper cursor-pointer" (click)="onSearch.emit(searchForm.value)">
+          <i class="fas fa-search margin-auto fa-lg position-relative"></i>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</form>

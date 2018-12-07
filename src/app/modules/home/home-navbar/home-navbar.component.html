@@ -1,0 +1,55 @@
+<nav class="position-fixed z-index-10">
+  <div class="nav-wrapper primary padding-horizontal">
+
+    <a href="#!" class="height-90px brand-logo">
+      <img class="cursor-pointer" src="assets/logo.png" (click)="onClick.emit({router: ''})" />
+    </a>
+
+    <a data-activates="slide-out" materialize="sideNav" [materializeParams]="sideNavParams" [materializeActions]="sideNavActions"
+      class="button-collapse">
+      <i class="material-icons cursor-pointer white-text">menu</i>
+    </a>
+
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li>
+        <i class="far fa-bell"></i>
+      </li>
+      <li>
+        <a class="dropdown-button white-text" data-activates="dropdown1" materialize="dropdown">admin@agendarapido.com.br
+          <i class="material-icons right white-text">arrow_drop_down</i>
+        </a>
+      </li>
+    </ul>
+    <!-- Dropdown Structure -->
+    <ul id="dropdown1" class="dropdown-content">
+
+      <li>
+        <a class="light-bk white-text">Sair</a>
+      </li>
+    </ul>
+
+  </div>
+</nav>
+
+<!-- sidenav menu -->
+<ul id="slide-out" class="side-nav side-menu ternary">
+
+  <li>
+    <app-home-profile [user]="user"></app-home-profile>
+  </li>
+
+  <!-- buttons -->
+  <li *ngFor="let item of menu; let i = index">
+    <a [ngClass]="{ 'selected': item.isActive, 'cursor-pointer':true }" (click)="onClick.emit({ item:item, index:i })">
+      <div class="row no-margin valign-wrapper">
+        <div class="col no-padding">
+          <span [class]="item.icon"></span>
+        </div>
+        <div class="col no-padding">
+          {{ item.label }}
+        </div>
+      </div>
+    </a>
+  </li>
+
+</ul>

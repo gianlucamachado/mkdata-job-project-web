@@ -1,0 +1,10 @@
+<div class="margin-vertical panel-box">
+  <div class="padding center-align white-text box-1" [ngStyle]="{ 'background-color': info.color }">
+    <i [class]="info.icon"></i>
+    <h2>{{ info.title }}</h2>
+    <h4> {{ info.count }}</h4>
+  </div>
+  <div class="width-100 center-align" [ngStyle]="{ 'background-color': info.secondaryColor }">
+    <div class="white-text footer-label">Total</div>
+  </div>
+</div>
