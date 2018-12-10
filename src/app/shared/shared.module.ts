@@ -6,9 +6,6 @@ import { MaterializeModule } from 'angular2-materialize';
 // modules
 import { ComponentsModule } from './../components/components.module';
 
-// services
-import { UtilsService } from './../providers/utils/utils.service';
-
 // common components
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/debounceTime';
@@ -24,9 +21,6 @@ import 'rxjs/add/operator/delay';
     ComponentsModule,
   ],
   declarations: [],
-  providers: [
-    UtilsService,
-  ],
   exports: [
     CommonModule,
     MaterializeModule,
