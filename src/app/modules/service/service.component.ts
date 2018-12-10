@@ -55,17 +55,17 @@ export class ServiceComponent implements OnInit {
   public services: any[] = [
     {
       service_id: 0,
-      icon: faker.image.business(),
+      icon: faker.image.avatar(),
       serviceName: faker.commerce.productMaterial(),
     },
     {
       service_id: 1,
-      icon: faker.image.business(),
+      icon: faker.image.avatar(),
       serviceName: faker.commerce.productMaterial(),
     },
     {
       service_id: 2,
-      icon: faker.image.business(),
+      icon: faker.image.avatar(),
       serviceName: faker.commerce.productMaterial(),
     },
   ];

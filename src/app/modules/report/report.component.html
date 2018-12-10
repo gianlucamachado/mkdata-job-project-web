@@ -8,6 +8,50 @@
       <h3>Relatório</h3>
     </div>
 
+    <!-- panels -->
+    <div class="col s12 m4" *ngFor="let button of buttons">
+      <app-panel-button [info]="button"></app-panel-button>
+    </div>
+
+  </div>
+
+  <!-- charts -->
+  <div class="row">
+
+    <!-- title -->
+    <div class="col s12 grey-text text-lighten-1 margin-extra">
+      <div class="col s8">
+        <h3 class="no-margin">Gráfico: Total de Solicitações</h3>
+      </div>
+      <div class="col s4">
+        <app-button-generic [text]="'Exportar'"></app-button-generic>
+      </div>
+    </div>
+
+    <!-- chart one -->
+    <div class="col s12 center-align">
+      <div style="width:100%;" class="margin-auto">
+        <canvas id="canvas1"></canvas>
+      </div>
+    </div>
+
+    <!-- title -->
+    <div class="col s12 grey-text text-lighten-1 margin-extra">
+      <div class="col s8">
+        <h3 class="no-margin">Gráfico: Tipo de Serviço</h3>
+      </div>
+      <div class="col s4">
+        <app-button-generic [text]="'Exportar'"></app-button-generic>
+      </div>
+    </div>
+
+    <!-- chart two -->
+    <div class="col s12 center-align">
+      <div style="width:100%;" class="margin-auto">
+        <canvas id="canvas2"></canvas>
+      </div>
+    </div>
+
   </div>
 
 </div>

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { OPTIONS, DATASETS } from './chart-options.constant';
 
 /**
  * Utils Provider
@@ -39,7 +40,7 @@ export class UtilsService {
     const labels: string[] = [];
 
     // months of the year
-    const monthsOfTheYear: string[] = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Nnvembro', 'Dezembro'];
+    const monthsOfTheYear: string[] = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
     // get month index
     let month: number = today.getMonth();
@@ -55,6 +56,20 @@ export class UtilsService {
 
     // return labels
     return labels.reverse();
+  }
+
+  /**
+   * Get chart options.
+   */
+  getChartOptions(): any {
+    return OPTIONS;
+  }
+
+  /**
+   * Get chart options.
+   */
+  getChartDatasets(): any {
+    return DATASETS;
   }
 
 }
