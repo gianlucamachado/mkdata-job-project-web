@@ -1,5 +1,79 @@
 <div class="container">
-  <p>
-    user works!
-  </p>
+
+  <!-- panels -->
+  <div class="row">
+
+    <!-- title -->
+    <div class="col s12 grey-text text-lighten-1">
+      <h3>Usuários</h3>
+    </div>
+
+    <!-- searchbar -->
+    <div class="col s12">
+      <app-search-bar (onSearch)="search($event.input)"></app-search-bar>
+    </div>
+
+  </div>
+
+  <!-- header med and up -->
+  <div class="row hide-on-med-and-down header-layout no-margin">
+    <div class="col s6">
+      <p>Nome</p>
+    </div>
+    <div class="col s3">
+      <p>E-mail</p>
+    </div>
+    <div class="col s3">
+      <p>Telefone</p>
+    </div>
+  </div>
+
+  <!-- table med and up -->
+  <div class="row valign-wrapper hide-on-med-and-down border-row no-margin padding-vertical no-border-top" *ngFor="let user of users">
+    <div class="col s6">
+      <div class="col">
+        <app-photo-circle [url]="user.photoUrl"></app-photo-circle>
+      </div>
+      <div class="col">
+        <p class="truncate"> {{ user.userName }} </p>
+      </div>
+    </div>
+    <div class="col s3">
+      <p> {{ user.email }} </p>
+    </div>
+    <div class="col s3">
+      <p> {{ user.phone }} </p>
+    </div>
+  </div>
+
+  <!-- table med only -->
+  <div class="row hide-on-large-only hide-on-small-only border-row no-margin padding-vertical" *ngFor="let user of users; let i = index"
+    [ngClass]="{'no-border-top': i != 0}">
+    <div class="col s12 m6">
+      <div class="col">
+        <app-photo-circle [url]="user.photoUrl"></app-photo-circle>
+      </div>
+      <div class="col">
+        <p class="truncate"> {{ user.userName }} </p>
+      </div>
+    </div>
+    <div class="col s12 m6">
+      <p> <span class="bold">E-mail:</span> {{ user.email }} </p>
+      <p> <span class="bold">Telefone:</span> {{ user.phone }} </p>
+    </div>
+  </div>
+
+  <!-- table small only -->
+  <div class="row show-on-small hide-on-med-and-up center-align border-row no-margin padding-vertical" *ngFor="let user of users; let i = index"
+    [ngClass]="{'no-border-top': i != 0}">
+    <div class="col s12 center-align">
+      <app-photo-circle [url]="user.photoUrl"></app-photo-circle>
+    </div>
+    <div class="col s12">
+      <p> <span class="bold">Nome:</span> {{ user.userName }} </p>
+      <p> <span class="bold">E-mail:</span> {{ user.email }} </p>
+      <p> <span class="bold">Telefone:</span> {{ user.phone }} </p>
+    </div>
+  </div>
+
 </div>

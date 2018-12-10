@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as faker from 'faker';
 
 /**
  * User component.
@@ -11,6 +12,30 @@ import { Component, OnInit } from '@angular/core';
 export class UserComponent implements OnInit {
 
   /**
+   * User objects.
+   */
+  public users: any[] = [
+    {
+      photoUrl: faker.image.avatar(),
+      userName: faker.name.findName(),
+      email: faker.internet.email(),
+      phone: faker.phone.phoneNumber(),
+    },
+    {
+      photoUrl: faker.image.avatar(),
+      userName: faker.name.findName(),
+      email: faker.internet.email(),
+      phone: faker.phone.phoneNumber(),
+    },
+    {
+      photoUrl: faker.image.avatar(),
+      userName: faker.name.findName(),
+      email: faker.internet.email(),
+      phone: faker.phone.phoneNumber(),
+    },
+  ];
+
+  /**
    * @ignore
    */
   constructor() { }
@@ -19,5 +44,12 @@ export class UserComponent implements OnInit {
    * @ignore
    */
   ngOnInit() { }
+
+  /**
+   * Search by input.
+   */
+  search(input: string): void {
+    console.log(input);
+  }
 
 }
