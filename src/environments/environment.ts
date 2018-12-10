@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  api_url: '',
   login: {
     email: 'admin@report.com.br',
     password: '123456',
