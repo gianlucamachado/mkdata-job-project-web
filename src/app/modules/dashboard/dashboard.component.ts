@@ -1,7 +1,6 @@
 import { UtilsService } from './../../providers/utils/utils.service';
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
-import { OPTIONS, DATASETS } from './chart-options.constant';
 import * as faker from 'faker';
 
 /**
@@ -22,8 +21,8 @@ export class DashboardComponent implements OnInit {
       icon: 'far fa-calendar-alt fa-3x',
       title: 'Solicitações',
       count: faker.random.number({ min: 0, max: 200 }),
-      color: '#34606c',
-      secondaryColor: '#628d9a',
+      color: '#628d9a',
+      secondaryColor: '#34606c',
     },
     {
       icon: 'fas fa-user fa-3x',
@@ -80,13 +79,13 @@ export class DashboardComponent implements OnInit {
     const labels: string[] = self.utilsService.getLastSevenMonths();
 
     // options
-    const options: any = OPTIONS;
+    const options: any = this.utilsService.getChartOptions();
 
     // chart type
     const type: string = 'bar';
 
     // data chart
-    const data1: any = { labels, datasets: DATASETS };
+    const data1: any = { labels, datasets: this.utilsService.getChartDatasets() };
 
     // create config
     const config1 = { options, type, data: data1 };
@@ -119,13 +118,13 @@ export class DashboardComponent implements OnInit {
     const labels: string[] = self.utilsService.getLastSevenMonths();
 
     // options
-    const options: any = OPTIONS;
+    const options: any = this.utilsService.getChartOptions();
 
     // chart type
     const type: string = 'bar';
 
     // data chart
-    const data2: any = { labels, datasets: DATASETS };
+    const data2: any = { labels, datasets: this.utilsService.getChartDatasets() };
 
     // create config
     const config2 = { options, type, data: data2 };

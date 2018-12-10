@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { ReportRoutingModule } from './report-routing.module';
 import { ReportComponent } from './report.component';
+import { PanelButtonComponent } from './panel-button/panel-button.component';
 
 @NgModule({
   imports: [
@@ -11,6 +12,7 @@ import { ReportComponent } from './report.component';
   ],
   declarations: [
     ReportComponent,
+    PanelButtonComponent,
   ],
 })
 export class ReportModule { }
