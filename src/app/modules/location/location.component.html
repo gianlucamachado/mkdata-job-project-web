@@ -1,5 +1,97 @@
 <div class="container">
-  <p>
-    location works!
-  </p>
+
+  <!-- panels -->
+  <div class="row">
+
+    <!-- title -->
+    <div class="col s12 grey-text text-lighten-1">
+      <h3>Locais</h3>
+    </div>
+
+  </div>
+
+  <!-- panels -->
+  <div class="row valign-wrapper">
+
+    <!-- searchbar -->
+    <div class="col s9 m8 l9 xl10">
+      <app-search-bar (onSearch)="search($event.input)"></app-search-bar>
+    </div>
+
+    <!-- add button -->
+    <div class="col s3 m4 l3 xl2">
+      <app-button-add (onClick)="create()"></app-button-add>
+    </div>
+
+  </div>
+
+  <!-- header med and up -->
+  <div class="row hide-on-small-only header-layout no-margin">
+    <div class="col s12 m6 l8">
+      <p>Local</p>
+    </div>
+    <div class="col s12 m2 l2">
+      <p>Agência</p>
+    </div>
+    <div class="col s12 m4 l2 center-align">
+      <p>Ações</p>
+    </div>
+  </div>
+
+  <!-- table med and up -->
+  <div class="row valign-wrapper hide-on-small-only border-row no-margin padding-vertical no-border-top" *ngFor="let location of locations">
+    <div class="col s12 m6 l8">
+      <p class="truncate"> {{ location.locationName }} </p>
+    </div>
+    <div class="col s12 m2 l2">
+      <p class="truncate"> {{ location.locationAgency }} </p>
+    </div>
+    <div class="col s12 m4 l2 center-align">
+      <div class="col s6 center-align">
+        <i class="fas fa-pencil-alt fa-2x blue-text text-darken-4" (click)="update(location)"></i>
+      </div>
+      <div class="col s6 center-align">
+        <div class="switch">
+          <label>
+            <input type="checkbox">
+            <span class="lever"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- table small only -->
+  <div class="row show-on-small hide-on-med-and-up center-align border-row no-margin padding-vertical" *ngFor="let location of locations; let i = index"
+    [ngClass]="{'no-border-top': i != 0}">
+    <div class="col s12">
+      <p class="truncate"> <span class="bold">Local: </span> {{ location.locationName }} </p>
+    </div>
+    <div class="col s12">
+      <p class="truncate"> <span class="bold">Agência: </span> {{ location.locationAgency }} </p>
+    </div>
+    <div class="col s12 margin-top">
+      <div class="col s6 center-align">
+        <i class="fas fa-pencil-alt fa-2x blue-text text-darken-4" (click)="update(location)"></i>
+      </div>
+      <div class="col s6 center-align">
+        <div class="switch">
+          <label>
+            <input type="checkbox">
+            <span class="lever"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- modal form -->
+<div *ngIf="router.url === '/administrador/local'" id="location_modal" class="modal" materialize="modal"
+  [materializeParams]="modelParams" [materializeActions]="modalActions">
+  <div class="modal-content">
+    <app-location-form [submitAttempt]="submitAttempt" [modalForm]="modalForm" [editMode]="editMode" (onClose)="closeModal()"
+      (onCreate)="createEvent($event)" (onUpdate)="updateEvent($event)"></app-location-form>
+  </div>
 </div>
