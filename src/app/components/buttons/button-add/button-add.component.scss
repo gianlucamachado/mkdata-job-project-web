@@ -4,19 +4,23 @@
   width: 100%;
 }
 
-.border-radius-50px {
-  border-radius: 50px;
+.border-radius-7px {
+  border-radius: 7px;
+}
+
+.height-60px {
+  height: 60px;
 }
 
 .btn-large {
-  height: 44px;
-  line-height: 44px;
+  height: 60px;
+  line-height: 60px;
 }
 
-.btn:focus, .btn-large:focus, .btn-floating:focus, .btn:hover, .btn-large:hover {
+.btn:focus,
+.btn-large:focus,
+.btn-floating:focus,
+.btn:hover,
+.btn-large:hover {
   background-color: map-get($map: $colors, $key: primary);
-}
-
-p {
-  transform: translateY(-3px);
 }
