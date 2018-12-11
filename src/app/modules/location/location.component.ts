@@ -3,6 +3,7 @@ import { MaterializeAction } from 'angular2-materialize';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as faker from 'faker';
+import { PaginationService } from '../../components/others/pagination/pagination.service';
 
 /**
  * Location Component.
@@ -71,9 +72,15 @@ export class LocationComponent implements OnInit {
   ];
 
   /**
+   * Current page.
+   */
+  public currentPage: number = 1;
+
+  /**
    * @ignore
    */
   constructor(
+    public paginationService: PaginationService,
     public router: Router,
     private formBuilder: FormBuilder,
   ) { }

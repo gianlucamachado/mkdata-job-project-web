@@ -31,4 +31,11 @@ export class PaginationService {
     return false;
   }
 
+  /**
+   * Get items per page value
+   */
+  getItemsPerPage(): number {
+    return ITEMS_PER_PAGE;
+  }
+
 }

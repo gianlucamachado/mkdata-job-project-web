@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import * as faker from 'faker';
 import { MaterializeAction } from 'angular2-materialize';
+import { PaginationService } from '../../components/others/pagination/pagination.service';
 
 /**
  * Company component.
@@ -52,9 +53,16 @@ export class CompanyComponent implements OnInit {
   public loading: boolean = true;
 
   /**
+   * Current page.
+   */
+  public currentPage: number = 1;
+
+  /**
    * @ignore
    */
-  constructor() { }
+  constructor(
+    public paginationService: PaginationService,
+  ) { }
 
   /**
    * @ignore

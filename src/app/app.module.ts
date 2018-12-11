@@ -11,6 +11,7 @@ import { UtilsService } from './providers/utils/utils.service';
 import { HttpRequestService } from './providers/http-request/http-request.service';
 import { StorageService } from './providers/storage/storage.service';
 import { TokenService } from './providers/token/token.service';
+import { PaginationService } from './components/others/pagination/pagination.service';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { TokenService } from './providers/token/token.service';
     HttpRequestService,
     StorageService,
     TokenService,
+    PaginationService,
   ],
   bootstrap: [
     AppComponent,

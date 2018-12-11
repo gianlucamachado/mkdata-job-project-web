@@ -52,87 +52,107 @@
     </div>
   </div>
 
-  <!-- table med and up -->
-  <div class="row hide-on-med-and-down border-row no-margin padding-vertical no-border-top" *ngFor="let solicitation of solicitations">
-    <div class="col s4">
-      <div class="col">
-        <app-photo-circle [url]="solicitation.photoUrl"></app-photo-circle>
+  <!-- loop solicitations -->
+  <div *ngIf="solicitations?.length !== 0">
+    <span *ngFor="let solicitation of solicitations; let i = index">
+
+      <!-- table med and up -->
+      <div class="row hide-on-med-and-down border-row no-margin padding-vertical no-border-top" *ngIf="paginationService.isCurrentPage(i, currentPage)">
+        <div class="col s4">
+          <div class="col">
+            <app-photo-circle [url]="solicitation.photoUrl"></app-photo-circle>
+          </div>
+          <div class="col">
+            <p class="truncate"> {{ solicitation.displayName }} </p>
+          </div>
+        </div>
+        <div class="col s4">
+          <p> {{ solicitation.location }} </p>
+        </div>
+        <div class="col s2">
+          <p> {{ solicitation.service }} </p>
+        </div>
+        <div class="col s2">
+          <p *ngIf="solicitation.status" class="green-text text-darken-2"> Resolvido </p>
+          <p *ngIf="!solicitation.status" class="red-text text-darken-2"> Aguardando </p>
+        </div>
       </div>
-      <div class="col">
-        <p class="truncate"> {{ solicitation.displayName }} </p>
+
+      <!-- table med only -->
+      <div class="row hide-on-large-only hide-on-small-only border-row no-margin padding-vertical" *ngIf="paginationService.isCurrentPage(i, currentPage)"
+        [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
+        <div class="col s12 m6">
+          <div class="col">
+            <app-photo-circle [url]="solicitation.photoUrl"></app-photo-circle>
+          </div>
+          <div class="col">
+            <p class="truncate"> {{ solicitation.displayName }} </p>
+          </div>
+        </div>
+        <div class="col s12 m6">
+          <p> <span class="bold">Local:</span> {{ solicitation.location }} </p>
+          <p> <span class="bold">Serviço:</span> {{ solicitation.service }} </p>
+          <p *ngIf="solicitation.status">
+            <span class="bold">
+              Status:
+            </span>
+            <span class="green-text text-darken-2">
+              Resolvido
+            </span>
+          </p>
+          <p *ngIf="!solicitation.status">
+            <span class="bold">
+              Status:
+            </span>
+            <span class="red-text text-darken-2">
+              Aguardando
+            </span>
+          </p>
+        </div>
       </div>
-    </div>
-    <div class="col s4">
-      <p> {{ solicitation.location }} </p>
-    </div>
-    <div class="col s2">
-      <p> {{ solicitation.service }} </p>
-    </div>
-    <div class="col s2">
-      <p *ngIf="solicitation.status" class="green-text text-darken-2"> Resolvido </p>
-      <p *ngIf="!solicitation.status" class="red-text text-darken-2"> Aguardando </p>
+
+      <!-- table small only -->
+      <div class="row show-on-small hide-on-med-and-up center-align border-row no-margin padding-vertical" *ngIf="paginationService.isCurrentPage(i, currentPage)"
+        [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
+        <div class="col s12">
+          <app-photo-circle [url]="solicitation.photoUrl"></app-photo-circle>
+        </div>
+        <div class="col s12">
+          <p> <span class="bold">Nome:</span> {{ solicitation.displayName }} </p>
+          <p> <span class="bold">Local:</span> {{ solicitation.location }} </p>
+          <p> <span class="bold">Serviço:</span> {{ solicitation.service }} </p>
+          <p *ngIf="solicitation.status">
+            <span class="bold">
+              Status:
+            </span>
+            <span class="green-text text-darken-2">
+              Resolvido
+            </span>
+          </p>
+          <p *ngIf="!solicitation.status">
+            <span class="bold">
+              Status:
+            </span>
+            <span class="red-text text-darken-2">
+              Aguardando
+            </span>
+          </p>
+        </div>
+      </div>
+    </span>
+  </div>
+
+  <!-- pagination -->
+  <div *ngIf="solicitations?.length !== 0">
+    <div class="col s12">
+      <app-pagination [numberOfItems]="solicitations?.length" [currentPage]="currentPage" (onChange)="currentPage = $event"></app-pagination>
     </div>
   </div>
 
-  <!-- table med only -->
-  <div class="row hide-on-large-only hide-on-small-only border-row no-margin padding-vertical" *ngFor="let solicitation of solicitations;let i = index"
-    [ngClass]="{'no-border-top': i != 0}">
-    <div class="col s12 m6">
-      <div class="col">
-        <app-photo-circle [url]="solicitation.photoUrl"></app-photo-circle>
-      </div>
-      <div class="col">
-        <p class="truncate"> {{ solicitation.displayName }} </p>
-      </div>
-    </div>
-    <div class="col s12 m6">
-      <p> <span class="bold">Local:</span> {{ solicitation.location }} </p>
-      <p> <span class="bold">Serviço:</span> {{ solicitation.service }} </p>
-      <p *ngIf="solicitation.status">
-        <span class="bold">
-          Status:
-        </span>
-        <span class="green-text text-darken-2">
-          Resolvido
-        </span>
-      </p>
-      <p *ngIf="!solicitation.status">
-        <span class="bold">
-          Status:
-        </span>
-        <span class="red-text text-darken-2">
-          Aguardando
-        </span>
-      </p>
-    </div>
-  </div>
-
-  <!-- table small only -->
-  <div class="row show-on-small hide-on-med-and-up center-align border-row no-margin padding-vertical" *ngFor="let solicitation of solicitations;let i = index"
-    [ngClass]="{'no-border-top': i != 0}">
-    <div class="col s12">
-      <app-photo-circle [url]="solicitation.photoUrl"></app-photo-circle>
-    </div>
-    <div class="col s12">
-      <p> <span class="bold">Nome:</span> {{ solicitation.displayName }} </p>
-      <p> <span class="bold">Local:</span> {{ solicitation.location }} </p>
-      <p> <span class="bold">Serviço:</span> {{ solicitation.service }} </p>
-      <p *ngIf="solicitation.status">
-        <span class="bold">
-          Status:
-        </span>
-        <span class="green-text text-darken-2">
-          Resolvido
-        </span>
-      </p>
-      <p *ngIf="!solicitation.status">
-        <span class="bold">
-          Status:
-        </span>
-        <span class="red-text text-darken-2">
-          Aguardando
-        </span>
-      </p>
+  <!-- table body message -->
+  <div *ngIf="solicitations?.length === 0" class="row border-row">
+    <div class="col s12 padding">
+      <app-error-message [message]="'Nenhuma solicitação cadastrada'"></app-error-message>
     </div>
   </div>
 
