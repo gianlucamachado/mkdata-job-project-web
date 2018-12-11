@@ -15,7 +15,7 @@
 
     <!-- searchbar -->
     <div class="col s9 m8 l9 xl10">
-      <app-search-bar (onSearch)="search($event.input)"></app-search-bar>
+      <app-search-bar [placeholder]="'Buscar por local'" (onSearch)="search($event.input)"></app-search-bar>
     </div>
 
     <!-- add button -->

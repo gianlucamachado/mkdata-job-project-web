@@ -10,7 +10,7 @@
 
     <!-- searchbar -->
     <div class="col s12">
-      <app-search-bar (onSearch)="search($event.input)"></app-search-bar>
+      <app-search-bar [placeholder]="'Buscar por nome, e-mail ou CNPJ'" (onSearch)="search($event.input)"></app-search-bar>
     </div>
 
   </div>
