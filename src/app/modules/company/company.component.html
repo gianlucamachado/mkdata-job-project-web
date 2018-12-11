@@ -18,9 +18,20 @@
       <h3>Lista de Empresas / Profissionais</h3>
     </div>
 
+  </div>
+
+  <!-- panels -->
+  <div class="row valign-wrapper">
+
     <!-- searchbar -->
-    <div class="col s12">
+    <div class="col s9 m8 l9 xl10">
       <app-search-bar [placeholder]="'Buscar por nome, e-mail ou CNPJ'" (onSearch)="search($event.input)"></app-search-bar>
+    </div>
+
+    <!-- add button -->
+    <div class="col s3 m4 l3 xl2">
+      <app-button-filter data-activates="company-filter" materialize="sideNav" [materializeParams]="sideNavParams"
+        [materializeActions]="sideNavActions"></app-button-filter>
     </div>
 
   </div>
@@ -88,3 +99,13 @@
   </div>
 
 </div>
+
+<!-- sidenav menu -->
+<ul id="company-filter" class="side-nav side-menu secondary">
+
+  <!-- header -->
+  <li>
+    <app-item-filter-header (onClose)="closeFilterMenu()"></app-item-filter-header>
+  </li>
+
+</ul>

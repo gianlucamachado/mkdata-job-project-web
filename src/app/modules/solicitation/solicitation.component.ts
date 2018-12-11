@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import * as faker from 'faker';
+import { MaterializeAction } from 'angular2-materialize';
 
 /**
  * Solicitation component.
@@ -10,6 +11,16 @@ import * as faker from 'faker';
   styleUrls: ['./solicitation.component.scss'],
 })
 export class SolicitationComponent implements OnInit {
+
+  /**
+   * Side navbar actions.
+   */
+  public sideNavActions = new EventEmitter<string | MaterializeAction>();
+
+  /**
+   * Side nav params.
+   */
+  public sideNavParams: any[] = [{ closeOnClick: true, edge: 'right' }];
 
   /**
    * Solicitation objects.
@@ -66,10 +77,14 @@ export class SolicitationComponent implements OnInit {
   }
 
   /**
-   * Open filter menu.
+   * Close filter menu.
    */
-  filter(): void {
-    console.log('filter');
+  closeFilterMenu(): void {
+    // tslint:disable-next-line:no-this-assignment
+    const self = this;
+
+    // emit event to close modal
+    self.sideNavActions.emit({ action: 'sideNav', params: ['hide'] });
   }
 
 }

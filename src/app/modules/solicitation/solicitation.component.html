@@ -30,7 +30,8 @@
 
     <!-- add button -->
     <div class="col s3 m4 l3 xl2">
-      <app-button-filter (onClick)="filter()"></app-button-filter>
+      <app-button-filter data-activates="solicitation-filter" materialize="sideNav" [materializeParams]="sideNavParams"
+        [materializeActions]="sideNavActions"></app-button-filter>
     </div>
 
   </div>
@@ -136,3 +137,14 @@
   </div>
 
 </div>
+
+
+<!-- sidenav menu -->
+<ul id="solicitation-filter" class="side-nav side-menu secondary">
+
+  <!-- header -->
+  <li>
+    <app-item-filter-header (onClose)="closeFilterMenu()"></app-item-filter-header>
+  </li>
+
+</ul>

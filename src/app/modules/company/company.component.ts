@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import * as faker from 'faker';
+import { MaterializeAction } from 'angular2-materialize';
 
 /**
  * Company component.
@@ -10,6 +11,16 @@ import * as faker from 'faker';
   styleUrls: ['./company.component.scss'],
 })
 export class CompanyComponent implements OnInit {
+
+  /**
+   * Side navbar actions.
+   */
+  public sideNavActions = new EventEmitter<string | MaterializeAction>();
+
+  /**
+   * Side nav params.
+   */
+  public sideNavParams: any[] = [{ closeOnClick: true, edge: 'right' }];
 
   /**
    * Companies objects.
@@ -60,6 +71,17 @@ export class CompanyComponent implements OnInit {
    */
   search(input: string): void {
     console.log(input);
+  }
+
+  /**
+   * Close filter menu.
+   */
+  closeFilterMenu(): void {
+    // tslint:disable-next-line:no-this-assignment
+    const self = this;
+
+    // emit event to close modal
+    self.sideNavActions.emit({ action: 'sideNav', params: ['hide'] });
   }
 
 }

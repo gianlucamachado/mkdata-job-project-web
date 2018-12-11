@@ -12,6 +12,7 @@ import { ErrorMessageComponent } from './others/error-message/error-message.comp
 import { LoadingPageTransparentComponent } from './others/loading-page-transparent/loading-page-transparent.component';
 import { ItemLoadingComponent } from './others/item-loading/item-loading.component';
 import { ButtonFilterComponent } from './buttons/button-filter/button-filter.component';
+import { ItemFilterHeaderComponent } from './others/item-filter-header/item-filter-header.component';
 
 @NgModule({
   imports: [
@@ -31,8 +32,10 @@ import { ButtonFilterComponent } from './buttons/button-filter/button-filter.com
     LoadingPageTransparentComponent,
     ItemLoadingComponent,
     ButtonFilterComponent,
+    ItemFilterHeaderComponent,
   ],
   exports: [
+    ItemFilterHeaderComponent,
     ButtonFilterComponent,
     ItemLoadingComponent,
     LoadingPageComponent,
