@@ -36,6 +36,11 @@ export class UserComponent implements OnInit {
   ];
 
   /**
+   * Loading variable
+   */
+  public loading: boolean = true;
+
+  /**
    * @ignore
    */
   constructor() { }
@@ -43,7 +48,12 @@ export class UserComponent implements OnInit {
   /**
    * @ignore
    */
-  ngOnInit() { }
+  ngOnInit() {
+
+    // loading
+    setTimeout(_ => this.loading = false, 1000);
+
+  }
 
   /**
    * Search by input.

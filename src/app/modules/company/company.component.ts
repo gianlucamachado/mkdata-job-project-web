@@ -36,6 +36,11 @@ export class CompanyComponent implements OnInit {
   ];
 
   /**
+   * Loading component.
+   */
+  public loading: boolean = true;
+
+  /**
    * @ignore
    */
   constructor() { }
@@ -43,7 +48,12 @@ export class CompanyComponent implements OnInit {
   /**
    * @ignore
    */
-  ngOnInit() { }
+  ngOnInit() {
+
+    // dismiss loading
+    setTimeout(_ => this.loading = false, 1000);
+
+  }
 
   /**
    * Search by input.

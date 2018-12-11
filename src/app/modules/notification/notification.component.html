@@ -1,4 +1,14 @@
-<div class="container">
+<div class="container" *ngIf="!notifications || loading">
+
+  <!-- loading component -->
+  <div class="row">
+    <app-item-loading></app-item-loading>
+  </div>
+
+</div>
+
+<!--  -->
+<div class="container" *ngIf="notifications && !loading">
 
   <!-- panels -->
   <div class="row">
