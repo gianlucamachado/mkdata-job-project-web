@@ -18,9 +18,19 @@
       <h3>Solicitações</h3>
     </div>
 
+  </div>
+
+  <!-- panels -->
+  <div class="row valign-wrapper">
+
     <!-- searchbar -->
-    <div class="col s12">
+    <div class="col s9 m8 l9 xl10">
       <app-search-bar [placeholder]="'Buscar por nome ou tipo de serviço'" (onSearch)="search($event.input)"></app-search-bar>
+    </div>
+
+    <!-- add button -->
+    <div class="col s3 m4 l3 xl2">
+      <app-button-filter (onClick)="filter()"></app-button-filter>
     </div>
 
   </div>

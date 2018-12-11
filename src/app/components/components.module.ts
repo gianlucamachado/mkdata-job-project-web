@@ -11,6 +11,7 @@ import { ButtonGenericComponent } from './buttons/button-generic/button-generic.
 import { ErrorMessageComponent } from './others/error-message/error-message.component';
 import { LoadingPageTransparentComponent } from './others/loading-page-transparent/loading-page-transparent.component';
 import { ItemLoadingComponent } from './others/item-loading/item-loading.component';
+import { ButtonFilterComponent } from './buttons/button-filter/button-filter.component';
 
 @NgModule({
   imports: [
@@ -29,8 +30,10 @@ import { ItemLoadingComponent } from './others/item-loading/item-loading.compone
     PaginationComponent,
     LoadingPageTransparentComponent,
     ItemLoadingComponent,
+    ButtonFilterComponent,
   ],
   exports: [
+    ButtonFilterComponent,
     ItemLoadingComponent,
     LoadingPageComponent,
     FormLoginComponent,

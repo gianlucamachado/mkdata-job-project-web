@@ -65,4 +65,11 @@ export class SolicitationComponent implements OnInit {
     console.log(input);
   }
 
+  /**
+   * Open filter menu.
+   */
+  filter(): void {
+    console.log('filter');
+  }
+
 }
