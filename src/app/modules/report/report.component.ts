@@ -41,6 +41,11 @@ export class ReportComponent implements OnInit {
   ];
 
   /**
+   * Loading variable
+   */
+  public loading: boolean = true;
+
+  /**
    * @ignore
    */
   constructor(
@@ -51,6 +56,9 @@ export class ReportComponent implements OnInit {
    * @ignore
    */
   async ngOnInit() {
+
+    // loading
+    setTimeout(_ => this.loading = false, 1000);
 
     // create chart one
     await this.createChartUser();

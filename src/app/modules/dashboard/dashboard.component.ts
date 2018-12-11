@@ -48,6 +48,11 @@ export class DashboardComponent implements OnInit {
   ];
 
   /**
+   * Loading component.
+   */
+  public loading: boolean = true;
+
+  /**
    * @ignore
    */
   constructor(
@@ -58,6 +63,9 @@ export class DashboardComponent implements OnInit {
    * @ignore
    */
   async ngOnInit() {
+
+    // dismiss loading
+    setTimeout(_ => this.loading = false, 1000);
 
     // create chart one
     await this.createChartUser();

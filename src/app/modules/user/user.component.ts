@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as faker from 'faker';
+import { PaginationService } from '../../components/others/pagination/pagination.service';
 
 /**
  * User component.
@@ -36,14 +37,31 @@ export class UserComponent implements OnInit {
   ];
 
   /**
-   * @ignore
+   * Loading variable
    */
-  constructor() { }
+  public loading: boolean = true;
+
+  /**
+   * Current page.
+   */
+  public currentPage: number = 1;
 
   /**
    * @ignore
    */
-  ngOnInit() { }
+  constructor(
+    public paginationService: PaginationService,
+  ) { }
+
+  /**
+   * @ignore
+   */
+  ngOnInit() {
+
+    // loading
+    setTimeout(_ => this.loading = false, 1000);
+
+  }
 
   /**
    * Search by input.

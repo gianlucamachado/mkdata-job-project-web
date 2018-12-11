@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as faker from 'faker';
+import { PaginationService } from '../../components/others/pagination/pagination.service';
 
 /**
  * Notification component.
@@ -27,14 +28,31 @@ export class NotificationComponent implements OnInit {
   ];
 
   /**
-   * @ignore
+   * Loading component.
    */
-  constructor() { }
+  public loading: boolean = true;
+
+  /**
+   * Current page.
+   */
+  public currentPage: number = 1;
 
   /**
    * @ignore
    */
-  ngOnInit() { }
+  constructor(
+    public paginationService: PaginationService,
+  ) { }
+
+  /**
+   * @ignore
+   */
+  ngOnInit() {
+
+    // dismiss loading
+    setTimeout(_ => this.loading = false, 1000);
+
+  }
 
   /**
    * Search by input.

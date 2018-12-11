@@ -3,7 +3,7 @@
     <div class="col s12 m12 l12 xl12 border-out input-field no-margin">
 
       <!-- input -->
-      <input (keydown.enter)="onSearch.emit(searchForm.value)" formControlName="input" placeholder="Pesquisar"
+      <input (keydown.enter)="onSearch.emit(searchForm.value)" formControlName="input" [placeholder]="placeholder"
         autocomplete="off" type="text" class="no-margin">
 
       <!-- button -->

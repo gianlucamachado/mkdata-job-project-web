@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 /**
@@ -17,6 +17,11 @@ export class SearchBarComponent implements OnInit {
    * Output search event.
    */
   @Output() onSearch: EventEmitter<string> = new EventEmitter<string>();
+
+  /**
+   * Placeholder input
+   */
+  @Input() placeholder: string = 'Pesquisar';
 
   /**
    * Modal form.
