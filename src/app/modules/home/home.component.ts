@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from './menu-item.interface';
 import { HomeService } from './home.service';
+import { StorageService } from '../../providers/storage/storage.service';
+import { TokenService } from '../../providers/token/token.service';
 
 /**
  * Home Component.
@@ -30,6 +32,7 @@ export class HomeComponent implements OnInit {
     { icon: 'fas fa-user', label: 'Usuários', href: '/administrador/usuario', isActive: false },
     { icon: 'fas fa-file-alt', label: 'Relatórios', href: '/administrador/relatorio', isActive: false },
     { icon: 'fas fa-bell', label: 'Notificação', href: '/administrador/notificacao', isActive: false },
+    { icon: 'fas fa-sign-out-alt', label: 'Sair', href: '', isActive: false },
   ];
 
   /**
@@ -51,6 +54,8 @@ export class HomeComponent implements OnInit {
   constructor(
     public router: Router,
     public homeService: HomeService,
+    private storageService: StorageService,
+    private tokenService: TokenService,
   ) { }
 
   /**
@@ -103,6 +108,12 @@ export class HomeComponent implements OnInit {
     // tslint:disable-next-line:no-this-assignment
     const self = this;
 
+    // if empty
+    if (!item.href) {
+      this.logout();
+      return;
+    }
+
     // change route
     self.router.navigate([item.href]);
 
@@ -114,6 +125,27 @@ export class HomeComponent implements OnInit {
 
     // set new index
     self.selected = index;
+  }
+
+  /**
+   * Logout
+   */
+  async logout() {
+    // show loading
+    this.loading = true;
+
+    // set token was null
+    await this.storageService.removeItem('token');
+
+    // set null on token service
+    await this.tokenService.setToken(null);
+
+    // dismiss to login page
+    setTimeout(() => {
+      this.loading = false;
+      this.router.navigate(['/']);
+      // tslint:disable-next-line:align
+    }, 500);
   }
 
 }

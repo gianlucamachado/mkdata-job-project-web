@@ -50,36 +50,11 @@ export class HomeNavbarComponent implements OnInit {
   /**
    * @ignore
    */
-  constructor(
-    private router: Router,
-    private storageService: StorageService,
-    private tokenService: TokenService,
-  ) { }
+  constructor() { }
 
   /**
    * @ignore
    */
   ngOnInit() { }
-
-  /**
-   * Logout
-   */
-  async logout() {
-    // show loading
-    this.loading = true;
-
-    // set token was null
-    await this.storageService.removeItem('token');
-
-    // set null on token service
-    await this.tokenService.setToken(null);
-
-    // dismiss to login page
-    setTimeout(() => {
-      this.loading = false;
-      this.router.navigate(['/']);
-    // tslint:disable-next-line:align
-    }, 500);
-  }
 
 }
