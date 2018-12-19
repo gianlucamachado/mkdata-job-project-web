@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  api_url: '',
+  api_url: 'http://localhost:8080',
   login: {
-    email: 'admin@report.com.br',
-    password: '123456',
+    user_email: 'admin@reportcorporate.com',
+    user_password: '123456',
   },
 };
 

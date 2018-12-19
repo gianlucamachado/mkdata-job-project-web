@@ -1,6 +1,9 @@
 import { MaterializeAction } from 'angular2-materialize';
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { MenuItem } from '../menu-item.interface';
+import { Router } from '@angular/router';
+import { StorageService } from '../../../providers/storage/storage.service';
+import { TokenService } from '../../../providers/token/token.service';
 
 /**
  * Component Home Navbar
@@ -38,6 +41,11 @@ export class HomeNavbarComponent implements OnInit {
    * On click output.
    */
   @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * Loading present variable.
+   */
+  public loading: boolean = false;
 
   /**
    * @ignore

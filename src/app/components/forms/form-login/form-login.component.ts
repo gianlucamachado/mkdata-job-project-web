@@ -1,3 +1,4 @@
+import { UtilsService } from './../../../providers/utils/utils.service';
 import { environment } from './../../../../environments/environment';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -39,6 +40,7 @@ export class FormLoginComponent implements OnInit {
    */
   constructor(
     private formBuilder: FormBuilder,
+    public utils: UtilsService,
   ) { }
 
   /**
@@ -50,8 +52,8 @@ export class FormLoginComponent implements OnInit {
 
     // initialize form
     self.loginForm = self.formBuilder.group({
-      email: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(50)])],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(50)])],
+      user_email: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(50)])],
+      user_password: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(50)])],
     });
 
     // bind values from dev env

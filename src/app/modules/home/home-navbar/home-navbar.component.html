@@ -1,3 +1,7 @@
+<!-- show full loading in the page -->
+<app-loading-page-transparent *ngIf="loading"></app-loading-page-transparent>
+
+<!-- desktop view -->
 <nav class="position-fixed z-index-10">
   <div class="nav-wrapper primary padding-horizontal">
 
@@ -24,7 +28,7 @@
     <ul id="dropdown1" class="dropdown-content">
 
       <li>
-        <a class="light-bk white-text">Sair</a>
+        <a class="light-bk white-text" (click)="onClick.emit({ item:{href:''}, index:0 })">Sair</a>
       </li>
     </ul>
 

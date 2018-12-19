@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 126.764 114.62">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#Gradiente_sem_nome_6);
+      }
+
+      .cls-2 {
+        fill: url(#Gradiente_sem_nome_9);
+      }
+
+      .cls-3 {
+        fill: url(#Gradiente_sem_nome_12);
+      }
+    </style>
+    <linearGradient id="Gradiente_sem_nome_6" data-name="Gradiente sem nome 6" x1="16.984" y1="36.914" x2="59.029" y2="14.304" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#79ab43"/>
+      <stop offset="1" stop-color="#527538"/>
+    </linearGradient>
+    <linearGradient id="Gradiente_sem_nome_9" data-name="Gradiente sem nome 9" x1="84.061" y1="83.605" x2="41.18" y2="61.356" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b4c138"/>
+      <stop offset="1" stop-color="#7a7e34"/>
+    </linearGradient>
+    <linearGradient id="Gradiente_sem_nome_12" data-name="Gradiente sem nome 12" x1="89.636" y1="1.306" x2="90.013" y2="49.533" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#289386"/>
+      <stop offset="1" stop-color="#28685c"/>
+    </linearGradient>
+  </defs>
+  <title>Triangulo</title>
+  <g id="Camada_2" data-name="Camada 2">
+    <g id="Camada_1-2" data-name="Camada 1">
+      <g>
+        <path class="cls-1" d="M34.651,70.706,1.683,11.871S.077,9.156.007,7.533a7.27,7.27,0,0,1,.307-2.47A7.548,7.548,0,0,1,2.65,1.454,6.875,6.875,0,0,1,7.309.021c8.464.213,45.23.014,45.235.023l10.83,19.4Z"/>
+        <path class="cls-2" d="M103.2,50.835l-1.508,2.751S70.782,108.617,69.5,110.892a6.746,6.746,0,0,1-7,3.681,6.107,6.107,0,0,1-4.818-3.046c-1.824-3.1-23.024-40.821-23.024-40.821L45.785,50.835Z"/>
+        <path class="cls-3" d="M52.544.044S97.711.044,119.863,0a7.022,7.022,0,0,1,6.209,10.012C124.733,12.69,103.2,50.835,103.2,50.835H80.905Z"/>
+      </g>
+    </g>
+  </g>
+</svg>
