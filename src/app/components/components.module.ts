@@ -1,3 +1,4 @@
+import { SweetMessageComponent } from './others/sweet-message/sweet-message.component';
 import { PaginationComponent } from './others/pagination/pagination.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,12 +14,14 @@ import { LoadingPageTransparentComponent } from './others/loading-page-transpare
 import { ItemLoadingComponent } from './others/item-loading/item-loading.component';
 import { ButtonFilterComponent } from './buttons/button-filter/button-filter.component';
 import { ItemFilterHeaderComponent } from './others/item-filter-header/item-filter-header.component';
+import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    SweetAlert2Module.forRoot(),
   ],
   declarations: [
     LoadingPageComponent,
@@ -33,8 +36,10 @@ import { ItemFilterHeaderComponent } from './others/item-filter-header/item-filt
     ItemLoadingComponent,
     ButtonFilterComponent,
     ItemFilterHeaderComponent,
+    SweetMessageComponent,
   ],
   exports: [
+    SweetMessageComponent,
     ItemFilterHeaderComponent,
     ButtonFilterComponent,
     ItemLoadingComponent,

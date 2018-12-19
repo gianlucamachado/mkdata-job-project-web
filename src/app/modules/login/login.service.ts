@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpRequestService } from '../../providers/http-request/http-request.service';
 
 /**
  * Service to authentication users with firebase.
@@ -7,8 +8,33 @@ import { Injectable } from '@angular/core';
 export class LoginService {
 
   /**
+   * Login url.
+   */
+  private loginUrl: string = '/api/user/login';
+
+  /**
    * @ignore
    */
-  constructor() { }
+  constructor(
+    private httpRequestService: HttpRequestService,
+  ) { }
+
+  /**
+   * Realize http request login.
+   * @param body Body of request.
+   * @returns Promise any.
+   */
+  login(body: any): Promise<any> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.httpRequestService
+          .postRequest(this.loginUrl, body)
+          .subscribe(
+            response => resolve(response),
+            error => reject(error),
+          );
+      },
+    );
+  }
 
 }

@@ -1,7 +1,7 @@
 <section>
 
   <!-- show full loading in the page -->
-  <app-loading-page *ngIf="loading"></app-loading-page>
+  <app-loading-page-transparent *ngIf="loading"></app-loading-page-transparent>
 
   <!-- background image -->
   <div class="width-100 height-100 background-cover" [ngStyle]="{'background': 'url(' + backgroundPicture + ') no-repeat center center'}"></div>
@@ -58,13 +58,14 @@
       <form [formGroup]="recoveryForm">
         <div class="col s12">
           <div class="input-field">
-            <input id="recovery_email" maxlength="100" formControlName="email" type="email" class="validate" placeholder="Informe o e-mail"
-              [ngClass]="{'invalid': utils.showError('email', recoveryForm, submitAttempt)}">
+            <input id="recovery_email" maxlength="100" formControlName="email" type="email" class="validate"
+              placeholder="Informe o e-mail" [ngClass]="{'invalid': utils.showError('email', recoveryForm, submitAttempt)}">
             <label for="recovery_email">E-mail</label>
           </div>
           <div class="form-control-feedback red-text" *ngIf="utils.showError('email', recoveryForm, submitAttempt)">
             <p class="no-margin" *ngIf="recoveryForm['controls']['email'].errors.required">Campo obrigatório</p>
-            <p class="no-margin" *ngIf="!recoveryForm['controls']['email'].errors.required && recoveryForm['controls']['email'].errors.email">E-mail inválido</p>
+            <p class="no-margin" *ngIf="!recoveryForm['controls']['email'].errors.required && recoveryForm['controls']['email'].errors.email">E-mail
+              inválido</p>
           </div>
         </div>
       </form>
@@ -83,3 +84,7 @@
 
   </div>
 </div>
+
+
+<!-- message -->
+<app-sweet-message [swalOptions]="swalOptions"></app-sweet-message>
