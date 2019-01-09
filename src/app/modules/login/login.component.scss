@@ -55,11 +55,22 @@ input[type=email]:not(.browser-default):focus:not([readonly]) {
   box-shadow: 0 1px 0 0 map-get($map: $colors, $key: primary);
 }
 
-input[type=email]:not(.browser-default):focus:not([readonly]) + label{
+input[type=email]:not(.browser-default):focus:not([readonly])+label {
   color: map-get($map: $colors, $key: primary) !important;
 }
 
 .border-box {
   border: 8px solid map-get($map: $colors, $key: lightgrey);
   border-radius: 20px;
+}
+
+.justify {
+  text-align: justify;
+}
+
+app-spinner {
+  position: absolute;
+  right: 0;
+  margin-top: 10px;
+  margin-right: 16px;
 }

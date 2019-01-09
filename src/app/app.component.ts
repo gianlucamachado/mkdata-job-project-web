@@ -23,6 +23,13 @@ export class AppComponent implements OnInit {
   public title = 'Report Corporate Web';
 
   /**
+   * Routes that will be not verify token.
+   */
+  public routes: string[] = [
+    '/recuperar-acesso',
+  ];
+
+  /**
    * @ignore
    */
   constructor(
@@ -44,14 +51,29 @@ export class AppComponent implements OnInit {
     const sub = this.router.events.subscribe(async (event) => {
       if (event instanceof RoutesRecognized) {
 
-        // validate
-        this.validateSavedToken();
+        // log
+        console.log(event);
+
+        // verify route
+        if (!this.arrayContains(event.url, this.routes)) {
+
+          // validate
+          this.validateSavedToken();
+
+        }
 
         // unsubscribe
         sub.unsubscribe();
 
       }
     });
+  }
+
+  /**
+   * Verify contain string into array.
+   */
+  arrayContains(needle: string, arrhaystack: string[]) {
+    return (arrhaystack.indexOf(needle.split('?')[0]) > -1);
   }
 
   /**

@@ -22,6 +22,11 @@ export class SweetMessageComponent implements OnInit {
   @Input() swalOptions: any;
 
   /**
+   * dismissible.
+   */
+  @Input() dismissible: boolean = true;
+
+  /**
    * Output confirm button clicked.
    */
   @Output() onConfirm: EventEmitter<void> = new EventEmitter<void>();
