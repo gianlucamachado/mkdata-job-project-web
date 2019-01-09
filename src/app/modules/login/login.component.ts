@@ -28,6 +28,11 @@ export class LoginComponent implements OnInit {
   public loading: boolean = false;
 
   /**
+   * Loading spinner present variable.
+   */
+  public loadingSpinner: boolean = false;
+
+  /**
    * Recovery form.
    */
   public recoveryForm: FormGroup;
@@ -65,6 +70,11 @@ export class LoginComponent implements OnInit {
    * View message child.
    */
   @ViewChild(SweetMessageComponent) messageComponent: SweetMessageComponent;
+
+  /**
+   * Temporary e-mail.
+   */
+  public recoveryEmail: string;
 
   /**
    * @ignore
@@ -200,6 +210,8 @@ export class LoginComponent implements OnInit {
         this.swalOptions.title = 'E-mail não confirmado';
         this.swalOptions.content = 'Acesse seu endereço de e-mail para confirmar sua conta.';
         this.swalOptions.button = 'Entendi';
+        this.swalOptions.button = 'Reenviar e-mail?';
+        this.recoveryEmail = value.user_email;
 
       } else if (e && e.error && e.error.message === 'status/invalid-email') {
 
@@ -227,10 +239,67 @@ export class LoginComponent implements OnInit {
   /**
    * Open modal to recovery user password.
    */
-  recoveryUserPassword(form: FormGroup): void {
+  async recoveryUserPassword(form: FormGroup): Promise<void> {
 
-    // log value
-    console.log('recovery user password', form.getRawValue());
+    // get form value
+    const value: any = form.getRawValue();
+
+    // log values
+    console.log(value);
+
+    // try/catch
+    try {
+
+      // set loading
+      this.loadingSpinner = true;
+
+      // do login
+      const response: any = await this.loginService.recoveryPassword(value.email);
+
+      // log response
+      console.log(response);
+
+      // Succefull message
+      this.swalOptions.title = 'E-mail enviado com sucesso';
+      this.swalOptions.content = `Um e-mail foi enviado para ${value.email} com instruções para recuperar o acesso a aplicação Report Corporate.`;
+      this.swalOptions.button = 'Entendi';
+
+      // navigate to admin route
+      this.closeModal(false, null);
+
+    } catch (e) {
+
+      // log error
+      console.error(e);
+
+      // handle errors
+      if (e && e.error && e.error.message === 'status/user-not-found') {
+
+        this.swalOptions.title = 'Usuário não encontrado';
+        this.swalOptions.content = 'Este e-mail não possui nenhum usuário. Verifique as informações inseridas e tente novamente.';
+        this.swalOptions.button = 'Entendi';
+
+      } else if (e && e.error && e.error.message === 'status/invalid-email') {
+
+        this.swalOptions.title = 'E-mail inválido';
+        this.swalOptions.content = 'Este e-mail é inválido. Verifique as informações inseridas e tente novamente.';
+        this.swalOptions.button = 'Entendi';
+
+      } else {
+
+        this.swalOptions.title = 'Erro enviar e-mail';
+        this.swalOptions.content = 'O envio de e-mail falhou. Verifique as informações inseridas e tente novamente.';
+        this.swalOptions.button = 'Entendi';
+
+      }
+
+    }
+
+    // present swal
+    this.messageComponent.show();
+
+    // dismiss loading
+    this.loadingSpinner = false;
 
   }
 
@@ -259,9 +328,60 @@ export class LoginComponent implements OnInit {
     if (close) {
       self.recoveryUserPassword(form);
     } else {
-      // emit event to close modal
+      // emit event to close modals
       self.modalActions.emit({ action: 'modal', params: ['close'] });
+      // reset form
+      this.recoveryForm.reset();
     }
+  }
 
+  /**
+   * Resend confirm e-mail
+   */
+  async resendConfirmEmail(email: string) {
+    if (email) {
+
+      // log email
+      console.log(email);
+
+      // present loading
+      this.loading = true;
+
+      // try/catcg
+      try {
+
+        // resend e-mail
+        const response: any = await this.loginService.resendConfirmAccountEmail(email);
+
+        // log response
+        console.log(response);
+
+        // Succefull message
+        this.swalOptions.title = 'E-mail enviado com sucesso';
+        this.swalOptions.content = `Um e-mail de confirmação foi enviado para ${email} para liberar o acesso à aplicação Report Corporate.`;
+        this.swalOptions.button = 'Entendi';
+
+      } catch (e) {
+
+        // log error
+        console.error(e);
+
+        // error message
+        this.swalOptions.title = 'Erro enviar e-mail';
+        this.swalOptions.content = 'O envio de e-mail falhou. Verifique as informações inseridas e tente novamente.';
+        this.swalOptions.button = 'Entendi';
+
+      }
+
+      // present swal
+      this.messageComponent.show();
+
+      // dismiss loading
+      setTimeout(() => this.loading = false, 500);
+
+      // set undefined
+      this.recoveryEmail = undefined;
+
+    }
   }
 }

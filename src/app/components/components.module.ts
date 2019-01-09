@@ -1,3 +1,4 @@
+import { SpinnerComponent } from './others/spinner/spinner.component';
 import { SweetMessageComponent } from './others/sweet-message/sweet-message.component';
 import { PaginationComponent } from './others/pagination/pagination.component';
 import { NgModule } from '@angular/core';
@@ -37,8 +38,10 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
     ButtonFilterComponent,
     ItemFilterHeaderComponent,
     SweetMessageComponent,
+    SpinnerComponent,
   ],
   exports: [
+    SpinnerComponent,
     SweetMessageComponent,
     ItemFilterHeaderComponent,
     ButtonFilterComponent,

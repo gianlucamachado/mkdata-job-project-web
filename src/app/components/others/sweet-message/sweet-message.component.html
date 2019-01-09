@@ -1,5 +1,5 @@
 <!-- Swall confirm -->
-<swal #generalSwal [showConfirmButton]="false">
+<swal #generalSwal [showConfirmButton]="false" [allowOutsideClick]="dismissible">
 
   <!-- header -->
   <ng-container *swalPartial="swalTargets.title">

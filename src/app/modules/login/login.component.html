@@ -51,13 +51,14 @@
 
       <!-- description -->
       <div class="col s12">
-        <p>Identifique-se para receber um e-mail com as instruções e o link para criar uma nova senha.</p>
+        <p class="justify">Identifique-se para receber um e-mail com as instruções e o link para criar uma nova senha.</p>
       </div>
 
       <!-- input -->
       <form [formGroup]="recoveryForm">
         <div class="col s12">
           <div class="input-field">
+            <app-spinner *ngIf="loadingSpinner" [sizeInPixels]="'20px'"></app-spinner>
             <input id="recovery_email" maxlength="100" formControlName="email" type="email" class="validate"
               placeholder="Informe o e-mail" [ngClass]="{'invalid': utils.showError('email', recoveryForm, submitAttempt)}">
             <label for="recovery_email">E-mail</label>
@@ -87,4 +88,4 @@
 
 
 <!-- message -->
-<app-sweet-message [swalOptions]="swalOptions"></app-sweet-message>
+<app-sweet-message [swalOptions]="swalOptions" (onConfirm)="resendConfirmEmail(recoveryEmail)"></app-sweet-message>
