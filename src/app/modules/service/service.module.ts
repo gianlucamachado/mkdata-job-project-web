@@ -4,6 +4,7 @@ import { ServiceRoutingModule } from './service-routing.module';
 import { ServiceComponent } from './service.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ServiceFormComponent } from './service-form/service-form.component';
+import { ServicesService } from './services.service';
 
 @NgModule({
   imports: [
@@ -14,5 +15,6 @@ import { ServiceFormComponent } from './service-form/service-form.component';
     ServiceComponent,
     ServiceFormComponent,
   ],
+  providers: [ServicesService],
 })
 export class ServiceModule { }

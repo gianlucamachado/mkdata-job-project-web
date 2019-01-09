@@ -1,17 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { LocalStorageModule } from '@ngx-pwa/local-storage';
-import { HttpClientModule } from '@angular/common/http';
-import { UtilsService } from './providers/utils/utils.service';
-import { HttpRequestService } from './providers/http-request/http-request.service';
 import { StorageService } from './providers/storage/storage.service';
 import { TokenService } from './providers/token/token.service';
 import { PaginationService } from './components/others/pagination/pagination.service';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,13 +19,12 @@ import { PaginationService } from './components/others/pagination/pagination.ser
   imports: [
     AppRoutingModule,
     BrowserModule.withServerTransition({ appId: 'report-corporate-web' }),
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
-    LocalStorageModule,
     HttpClientModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    SharedModule.forRoot(),
+    LocalStorageModule,
   ],
   providers: [
-    UtilsService,
-    HttpRequestService,
     StorageService,
     TokenService,
     PaginationService,

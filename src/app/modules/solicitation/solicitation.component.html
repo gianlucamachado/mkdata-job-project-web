@@ -1,4 +1,4 @@
-<div class="container" *ngIf="!solicitations || loading">
+<div class="container" *ngIf="!solicitationState.list || solicitationState.loading">
 
   <!-- loading component -->
   <div class="row">
@@ -8,7 +8,7 @@
 </div>
 
 <!--  -->
-<div class="container" *ngIf="solicitations && !loading">
+<div class="container" *ngIf="solicitationState.list && !solicitationState.loading">
 
   <!-- panels -->
   <div class="row">
@@ -25,7 +25,7 @@
 
     <!-- searchbar -->
     <div class="col s9 m8 l9 xl10">
-      <app-search-bar [placeholder]="'Buscar por nome ou tipo de serviço'" (onSearch)="search($event.input)"></app-search-bar>
+      <app-search-bar [placeholder]="'Buscar por nome ou tipo de serviço'" (onSearch)="search($event)"></app-search-bar>
     </div>
 
     <!-- add button -->
@@ -52,89 +52,70 @@
     </div>
   </div>
 
-  <!-- loop solicitations -->
-  <div *ngIf="solicitations?.length !== 0">
-    <span *ngFor="let solicitation of solicitations; let i = index">
+  <!-- loop solicitation -->
+  <div *ngIf="solicitationState.list?.length !== 0">
+    <span *ngFor="let solicitation of solicitationState.list; let i = index">
 
       <!-- table med and up -->
-      <div class="row hide-on-med-and-down border-row no-margin padding-vertical no-border-top" *ngIf="paginationService.isCurrentPage(i, currentPage)">
+      <div class="row hide-on-med-and-down border-row no-margin padding-vertical no-border-top">
         <div class="col s4">
           <div class="col">
-            <app-photo-circle [url]="solicitation.photoUrl"></app-photo-circle>
+            <app-photo-circle [url]="solicitation.employee_photo_url"></app-photo-circle>
           </div>
           <div class="col">
-            <p class="truncate"> {{ solicitation.displayName }} </p>
+            <p class="truncate"> {{ solicitation.employee_name }} </p>
           </div>
         </div>
         <div class="col s4">
-          <p> {{ solicitation.location }} </p>
+          <p> {{ solicitation.environment_description }} </p>
         </div>
         <div class="col s2">
-          <p> {{ solicitation.service }} </p>
+          <p> {{ solicitation.service_type_description }} </p>
         </div>
         <div class="col s2">
-          <p *ngIf="solicitation.status" class="green-text text-darken-2"> Resolvido </p>
-          <p *ngIf="!solicitation.status" class="red-text text-darken-2"> Aguardando </p>
+          <p class="green-text text-darken-2"> {{ solicitation.status }} </p>
         </div>
       </div>
 
       <!-- table med only -->
-      <div class="row hide-on-large-only hide-on-small-only border-row no-margin padding-vertical" *ngIf="paginationService.isCurrentPage(i, currentPage)"
-        [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
+      <div class="row hide-on-large-only hide-on-small-only border-row no-margin padding-vertical" [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
         <div class="col s12 m6">
           <div class="col">
-            <app-photo-circle [url]="solicitation.photoUrl"></app-photo-circle>
+            <app-photo-circle [url]="solicitation.employee_photo_url"></app-photo-circle>
           </div>
           <div class="col">
-            <p class="truncate"> {{ solicitation.displayName }} </p>
+            <p class="truncate"> {{ solicitation.employee_name }} </p>
           </div>
         </div>
         <div class="col s12 m6">
-          <p> <span class="bold">Local:</span> {{ solicitation.location }} </p>
-          <p> <span class="bold">Serviço:</span> {{ solicitation.service }} </p>
-          <p *ngIf="solicitation.status">
+          <p> <span class="bold">Local:</span> {{ solicitation.environment_description }} </p>
+          <p> <span class="bold">Serviço:</span> {{ solicitation.service_type_description }} </p>
+          <p>
             <span class="bold">
               Status:
             </span>
             <span class="green-text text-darken-2">
-              Resolvido
-            </span>
-          </p>
-          <p *ngIf="!solicitation.status">
-            <span class="bold">
-              Status:
-            </span>
-            <span class="red-text text-darken-2">
-              Aguardando
+              {{ solicitation.status }}
             </span>
           </p>
         </div>
       </div>
 
       <!-- table small only -->
-      <div class="row show-on-small hide-on-med-and-up center-align border-row no-margin padding-vertical" *ngIf="paginationService.isCurrentPage(i, currentPage)"
-        [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
+      <div class="row show-on-small hide-on-med-and-up center-align border-row no-margin padding-vertical" [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
         <div class="col s12">
-          <app-photo-circle [url]="solicitation.photoUrl"></app-photo-circle>
+          <app-photo-circle [url]="solicitation.employee_photo_url"></app-photo-circle>
         </div>
         <div class="col s12">
-          <p> <span class="bold">Nome:</span> {{ solicitation.displayName }} </p>
-          <p> <span class="bold">Local:</span> {{ solicitation.location }} </p>
-          <p> <span class="bold">Serviço:</span> {{ solicitation.service }} </p>
-          <p *ngIf="solicitation.status">
+          <p> <span class="bold">Nome:</span> {{ solicitation.employee_name }} </p>
+          <p> <span class="bold">Local:</span> {{ solicitation.environment_description }} </p>
+          <p> <span class="bold">Serviço:</span> {{ solicitation.service_type_description }} </p>
+          <p>
             <span class="bold">
               Status:
             </span>
             <span class="green-text text-darken-2">
-              Resolvido
-            </span>
-          </p>
-          <p *ngIf="!solicitation.status">
-            <span class="bold">
-              Status:
-            </span>
-            <span class="red-text text-darken-2">
-              Aguardando
+              {{ solicitation.status }}
             </span>
           </p>
         </div>
@@ -143,16 +124,18 @@
   </div>
 
   <!-- pagination -->
-  <div *ngIf="solicitations?.length !== 0">
+  <div *ngIf="solicitationState.list?.length !== 0">
     <div class="col s12">
-      <app-pagination [numberOfItems]="solicitations?.length" [currentPage]="currentPage" (onChange)="currentPage = $event"></app-pagination>
+      <app-pagination [pager]="solicitationState.pager" (pagination)="pagination($event)"></app-pagination>
     </div>
   </div>
 
   <!-- table body message -->
-  <div *ngIf="solicitations?.length === 0" class="row border-row">
+  <div *ngIf="solicitationState.list?.length === 0" class="row border-row">
     <div class="col s12 padding">
-      <app-error-message [message]="'Nenhuma solicitação cadastrada'"></app-error-message>
+      <app-error-message *ngIf="!solicitationState.error" [message]="'Nenhuma solicitação cadastrada'"></app-error-message>
+      <app-error-message *ngIf="solicitationState.error" [tryAgainButton]="true" [message]="solicitationState.messageError"
+        (tryGetData)="getList()"></app-error-message>
     </div>
   </div>
 

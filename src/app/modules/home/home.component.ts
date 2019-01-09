@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { MenuItem } from './menu-item.interface';
 import { HomeService } from './home.service';
 import { StorageService } from '../../providers/storage/storage.service';
@@ -44,10 +45,7 @@ export class HomeComponent implements OnInit {
   /**
    * User object.
    */
-  public user: any = {
-    displayName: 'Developer Gempe',
-    photoUrl: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg',
-  };
+  public user: any;
 
   /**
    * @ignore
@@ -71,10 +69,35 @@ export class HomeComponent implements OnInit {
     if (location.protocol === 'https:') {
       this.oneSignalService.init();
     }
+    self.getUserData();
 
     // get active page
     await self.getActivePage();
 
+  }
+
+  /**
+   * Get user data.
+   */
+  async getUserData() {
+    try {
+      this.user = await this.homeService.getUserInfo();
+
+    } catch (error) {
+      console.error(error),
+        // cancel loading
+        this.loading = false,
+
+        // set user default.
+        this.user = {
+          admin_name: 'Admin',
+          admin_photo_url: 'https://trello-attachments.s3.amazonaws.com/5b58fcf29a311ba8e8a12679/5c0fbda6df91812808f83c26/7002108d60ddb6698626b5954f168d29/Ativo_1.png',
+          user_email: 'admin@report.com',
+        };
+
+      // Case error try get user data again
+      setTimeout(_ => this.getUserData(), 2000);
+    }
   }
 
   /**

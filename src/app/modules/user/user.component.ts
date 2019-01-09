@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import * as faker from 'faker';
-import { PaginationService } from '../../components/others/pagination/pagination.service';
+
+import { ListControllerService } from '../../providers/utils/list-controller.service';
+import { ListState } from '../../classes/State.class';
+import { UserList } from '../../classes/UserList.class';
+import { UserService } from './user.service';
+import { PaginationService } from './../../components/others/pagination/pagination.service';
 
 /**
  * User component.
@@ -13,44 +17,17 @@ import { PaginationService } from '../../components/others/pagination/pagination
 export class UserComponent implements OnInit {
 
   /**
-   * User objects.
+   * User state.
    */
-  public users: any[] = [
-    {
-      photoUrl: faker.image.avatar(),
-      userName: faker.name.findName(),
-      email: faker.internet.email(),
-      phone: faker.phone.phoneNumber(),
-    },
-    {
-      photoUrl: faker.image.avatar(),
-      userName: faker.name.findName(),
-      email: faker.internet.email(),
-      phone: faker.phone.phoneNumber(),
-    },
-    {
-      photoUrl: faker.image.avatar(),
-      userName: faker.name.findName(),
-      email: faker.internet.email(),
-      phone: faker.phone.phoneNumber(),
-    },
-  ];
-
-  /**
-   * Loading variable
-   */
-  public loading: boolean = true;
-
-  /**
-   * Current page.
-   */
-  public currentPage: number = 1;
+  public userState: ListState<UserList> = new ListState();
 
   /**
    * @ignore
    */
   constructor(
     public paginationService: PaginationService,
+    private userService: UserService,
+    private listController: ListControllerService,
   ) { }
 
   /**
@@ -58,16 +35,56 @@ export class UserComponent implements OnInit {
    */
   ngOnInit() {
 
-    // loading
-    setTimeout(_ => this.loading = false, 1000);
-
+    this.getList();
   }
 
   /**
-   * Search by input.
+   * Get data from api.
    */
-  search(input: string): void {
-    console.log(input);
+  async getList() {
+    this.userState.loading = true;
+    this.userState.error = false;
+    this.userState.list = null;
+
+    // get list with all customers.
+    this.userState.allList = await this.userService.getAllUsers()
+      .catch(error => (
+        this.userState.messageError = `Erro ao buscar os dados: ${error.message}`,
+        this.userState.error = true,
+        this.userState.loading = false, []));
+
+    // get current page.
+    const pages = this.listController.setPagination(1, this.userState.allList);
+    // set pager controller to pagination and set current page.
+    this.userState.pager = pages.pagerController;
+    this.userState.list = pages.currentPage;
+    this.userState.loading = false;
+  }
+
+  /**
+   * set current page.
+   */
+  pagination(page: number): void {
+    // get current page.
+    const pages = this.listController.setPagination(page, this.userState.allList);
+    // set pager controller to pagination and set current page.
+    this.userState.pager = pages.pagerController;
+    this.userState.list = pages.currentPage;
+  }
+
+  /**
+   * Do Search and aplly pagination.
+   * @param search value searched
+   */
+  search(search: string) {
+    // params to be searched
+    const params = ['user_email'];
+    // get filters list case have filter active else get list.
+    const pages = this.listController.setSearch(search, params, this.userState.allList);
+
+    // set pager controller to pagination and set current page.
+    this.userState.pager = pages.pagerController;
+    this.userState.list = pages.currentPage;
   }
 
 }

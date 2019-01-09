@@ -1,0 +1,39 @@
+<div [formGroup]="form" [ngClass]="{'padding': question.controlType == 'textbox'}">
+
+  <!-- headers -->
+  <label *ngIf="question.controlType != 'radiobox' && question.controlType != 'switch' && !question.header" [attr.for]="question.key">
+    {{question.label}}
+  </label>
+  <p *ngIf="question.controlType == 'radiobox' || question.header" class="header-filter padding no-margin">
+    {{question.label}} </p>
+
+  <!-- inputs -->
+  <ng-container [ngSwitch]="question.controlType">
+
+    <input *ngSwitchCase="'textbox'" [ngClass]="question.className" [formControlName]="question.key" [id]="question.key"
+      [type]="question.type" [placeholder]="question.placeholder" [mask]="question.mask">
+
+    <select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key">
+      <option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</option>
+    </select>
+
+    <ng-container *ngSwitchCase="'switch'">
+      <div class="switch padding">
+        <span class="gray-dark-text font-size-16 font-weight-300"> {{ question.label }} </span>
+        <label class="right">
+          <input type="checkbox" [formControlName]="question.key">
+          <span class="lever no-margin"></span>
+        </label>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'radiobox'">
+      <p class=" padding-horizontal" *ngFor="let opt of question.options; let i = index">
+        <input type="radio" [id]="i" [name]="question.key" [value]="opt.key" [formControlName]="question.key">
+        <label class="label-radio" [for]="i"> {{ opt.value }} </label>
+      </p>
+    </ng-container>
+  </ng-container>
+
+  <!-- <div class="errorMessage" *ngIf="!isValid">{{question.label}} é requerido</div> -->
+</div>

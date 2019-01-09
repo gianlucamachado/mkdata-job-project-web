@@ -1,7 +1,14 @@
-import { Chart } from 'chart.js';
-import { Component, OnInit } from '@angular/core';
-import * as faker from 'faker';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
+
 import { UtilsService } from '../../providers/utils/utils.service';
+import { DATE_PICKER_PARAMS } from '../../providers/constants';
+
+import { Chart } from 'chart.js';
+import * as faker from 'faker';
+import { MaterializeAction } from 'angular2-materialize';
+import { ReportService } from './report.service';
+import { SweetMessageComponent } from '../../components/others/sweet-message/sweet-message.component';
 
 /**
  * Report Component.
@@ -41,15 +48,52 @@ export class ReportComponent implements OnInit {
   ];
 
   /**
+   * Date form group
+   * with start and end controls.
+   */
+  public dateForm: FormGroup;
+
+  /**
+   * Params to date picker.
+   */
+  public dataParams = DATE_PICKER_PARAMS;
+
+  /**
    * Loading variable
    */
   public loading: boolean = true;
+
+  /**
+   * Action for start datepicker
+   */
+  public startDateActions = new EventEmitter<string | MaterializeAction>();
+
+  /**
+   * Action for end datepicker
+   */
+  public endDateActions = new EventEmitter<string | MaterializeAction>();
+
+  /**
+   * Swal options.
+   */
+  public swalOptions: any = {
+    title: '',
+    content: '',
+    button: 'Entendi',
+  };
+
+  /**
+   * View message child.
+   */
+  @ViewChild(SweetMessageComponent) messageComponent: SweetMessageComponent;
 
   /**
    * @ignore
    */
   constructor(
     private utilsService: UtilsService,
+    private reportService: ReportService,
+    private fb: FormBuilder,
   ) { }
 
   /**
@@ -60,12 +104,37 @@ export class ReportComponent implements OnInit {
     // loading
     setTimeout(_ => this.loading = false, 1000);
 
+    this.dateForm = this.createForm();
+    this.getData();
+
     // create chart one
     await this.createChartUser();
 
     // create chart one
     await this.createChartSchedules();
 
+  }
+
+  /**
+   * Get initial data.
+   */
+  async getData() {
+    this.reportService.getReportBydate('start=1999-01-01&end=9999-01-01')
+      .catch(err => console.error(err));
+  }
+
+  // Getters.
+  get start() { return this.dateForm.get('start'); }
+  get end() { return this.dateForm.get('end'); }
+
+  /**
+   * Create formGroup.
+   */
+  createForm() {
+    return this.fb.group({
+      start: ['', Validators.required],
+      end: ['', Validators.required],
+    });
   }
 
   /**
@@ -77,7 +146,7 @@ export class ReportComponent implements OnInit {
     const self = this;
 
     // labels
-    const labels: string[] = self.utilsService.getLastSevenMonths();
+    const labels: string[] = self.utilsService.getLastSixMonths();
 
     // options
     const options: any = this.utilsService.getChartOptions();
@@ -140,6 +209,51 @@ export class ReportComponent implements OnInit {
 
     // log chart 1 config
     return new Promise(resolve => resolve(new Chart('canvas2', config2)));
+  }
+
+  /**
+   * Submit date form.
+   * @param form dateForm.
+   */
+  async onSubmit(form: FormGroup) {
+    if (form.valid) {
+
+      try {
+        // get satrt and end date.
+        const { start, end } = form.getRawValue();
+        const data = await this.reportService.getReportBydate(`start=${start}&end=${end}`);
+        console.log(data);
+
+      } catch (error) {
+        console.error(error);
+
+        this.swalOptions.title = 'Não foi possível realizar a busca.';
+        this.swalOptions.content = error.message;
+        this.swalOptions.button = 'Ok';
+        this.messageComponent.show();
+      }
+    } else {
+      console.error('Form inválido');
+      console.log(form);
+    }
+  }
+
+  /**
+   * Open date picker
+   * 1 - open start date picker.
+   * 2 - open end date picker.
+   */
+  openDatePicker(param: number) {
+    switch (param) {
+      case 1:
+        // actions are open or close
+        this.startDateActions.emit({ action: 'pickadate', params: ['open'] });
+        break;
+      case 2:
+        // actions are open or close
+        this.endDateActions.emit({ action: 'pickadate', params: ['open'] });
+        break;
+    }
   }
 
 }

@@ -3,12 +3,12 @@
     <div class="col s12 m12 l12 xl12 border-out input-field no-margin">
 
       <!-- input -->
-      <input (keydown.enter)="onSearch.emit(searchForm.value)" formControlName="input" [placeholder]="placeholder"
+      <input (keydown.enter)="onSearch.emit(input.value)" formControlName="input" [placeholder]="placeholder"
         autocomplete="off" type="text" class="no-margin">
 
       <!-- button -->
       <div id="share" class="position-absolute center">
-        <a class="valign-wrapper cursor-pointer" (click)="onSearch.emit(searchForm.value)">
+        <a class="valign-wrapper cursor-pointer" (click)="onSearch.emit(input.value)">
           <i class="fas fa-search margin-auto fa-lg position-relative"></i>
         </a>
       </div>
@@ -16,3 +16,15 @@
     </div>
   </div>
 </form>
+
+<!-- FILTERSS -->
+<!-- sidenav menu -->
+<ul id="slide-filter" class="side-nav side-menu secondary">
+  <!-- Filters header -->
+  <li class="primary-light d-flex align-items-center cursor-pointer" (click)="hideSideNav()">
+    <i class="material-icons white-text">chevron_left</i>
+    <span class="white-text font-size-20 font-weight-300 padding-left">Filtros</span>
+  </li>
+
+  <app-dynamic-form *ngIf="questions" [questions]="questions" (formValue)="formValues($event)" (formValueKeys)="formKeysSelected($event)"></app-dynamic-form>
+</ul>

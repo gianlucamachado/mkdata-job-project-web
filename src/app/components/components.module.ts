@@ -16,18 +16,27 @@ import { ItemLoadingComponent } from './others/item-loading/item-loading.compone
 import { ButtonFilterComponent } from './buttons/button-filter/button-filter.component';
 import { ItemFilterHeaderComponent } from './others/item-filter-header/item-filter-header.component';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
+import { DynamicFormComponent } from './others/search-bar/dynamic-form/dynamic-form.component';
+import { DynamicQuestionComponent } from './others/search-bar/dynamic-form/dynamic-question/dynamic-question.component';
+import { QuestionControlService } from '../providers/form/question-control.service';
+import { CreateformsService } from '../providers/form/createforms.service';
+
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxMaskModule.forRoot(),
     SweetAlert2Module.forRoot(),
   ],
   declarations: [
     LoadingPageComponent,
     FormLoginComponent,
     SearchBarComponent,
+    DynamicFormComponent,
+    DynamicQuestionComponent,
     PhotoCircleComponent,
     ButtonAddComponent,
     ButtonGenericComponent,
@@ -39,6 +48,10 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
     ItemFilterHeaderComponent,
     SweetMessageComponent,
     SpinnerComponent,
+  ],
+  providers: [
+    QuestionControlService,
+    CreateformsService,
   ],
   exports: [
     SpinnerComponent,
@@ -49,12 +62,15 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
     LoadingPageComponent,
     FormLoginComponent,
     SearchBarComponent,
+    DynamicFormComponent,
+    DynamicQuestionComponent,
     PhotoCircleComponent,
     ButtonAddComponent,
     ButtonGenericComponent,
     ErrorMessageComponent,
     PaginationComponent,
     LoadingPageTransparentComponent,
+    NgxMaskModule,
   ],
 })
 export class ComponentsModule { }

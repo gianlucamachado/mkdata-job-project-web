@@ -32,7 +32,7 @@ export class UtilsService {
   /**
    * Get last seven months.
    */
-  getLastSevenMonths(): string[] {
+  getLastSixMonths(): string[] {
     // get date
     const today = new Date();
 
@@ -45,7 +45,7 @@ export class UtilsService {
     // get month index
     let month: number = today.getMonth();
 
-    while (labels.length < 7) {
+    while (labels.length < 6) {
 
       // if is december month
       if (month === -1) month = 11;
@@ -70,6 +70,13 @@ export class UtilsService {
    */
   getChartDatasets(): any {
     return DATASETS;
+  }
+
+  /**
+   * Return to types of phone mask
+   */
+  changePhoneMask(phone: string): string {
+    return (phone && phone.length === 10) ? '(00) 0000-00000' : '(00) 00000-0000';
   }
 
 }

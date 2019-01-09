@@ -1,0 +1,69 @@
+@import 'src/app/theme/variables.scss';
+
+
+// -----  INPUT TEXT -----
+input[type=text]:not(.browser-default),
+input[type=text].valid:not(.browser-default):focus,
+input[type=text]:not(.browser-default):focus:not([readonly]) {
+  margin: 0px;
+  border-bottom: 0px;
+  padding: 0 10px;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  background-color: map-get($map: $colors, $key: light);
+}
+
+
+// -----  INPUT DATE -----
+.input-filter-date {
+  width: auto !important;
+  background-color: transparent !important;
+  color: #969FAA !important;
+  text-align: end;
+  border: none;
+  
+  &::placeholder {
+    color: map-get($map: $colors, $key: border) !important;
+  }
+}
+
+// -----  LABEL -----
+label {
+  color: map-get($colors, 'gray-dark' );
+  font-size: 15px;
+}
+
+// -----  HEADERS -----
+
+.header-filter {
+  background-color: #E1E2E1;
+  color: map-get($colors , 'text' );
+  font-weight: 300;
+  font-size: 18px;
+}
+
+// -----  RADIO -----
+
+[type="radio"]+label:before, [type="radio"]+label:after {
+  left: auto ;
+  right: 0 ;
+}
+.label-radio {
+  min-width: 270px;
+  max-width: 270px;
+  padding-left: 0 !important;
+}
+[type="radio"]:checked + label::after, [type="radio"].with-gap:checked + label::after {
+  background-color: map-get($colors , 'gray-dark' );
+}
+[type="radio"]:checked + label::after, [type="radio"].with-gap:checked + label::before, [type="radio"].with-gap:checked + label::after {
+  border: 2px solid map-get($colors , 'gray-dark' );
+}
+
+// -----  SWITCH -----
+.switch label input[type=checkbox]:checked+.lever:after {
+  background-color: map-get($colors , 'secondary-dark' ) !important;
+}
+.switch label input[type=checkbox]:checked+.lever {
+  background-color: map-get($colors , 'secondary' ) !important;
+}

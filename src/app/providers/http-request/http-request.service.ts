@@ -1,9 +1,12 @@
-import { environment } from '../../../environments/environment';
-import { TokenService } from '../token/token.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap, retry } from 'rxjs/operators';
+
+import { environment } from '../../../environments/environment';
+import { TokenService } from '../token/token.service';
+import { StorageService } from '../storage/storage.service';
+
 import { Observable } from 'rxjs/Observable';
+import { tap, retry } from 'rxjs/operators';
 
 /**
  * Http Request Provider
@@ -16,6 +19,7 @@ export class HttpRequestService {
    */
   constructor(
     private http: HttpClient,
+    private storageService: StorageService,
     public tokenProvider: TokenService,
   ) { }
 

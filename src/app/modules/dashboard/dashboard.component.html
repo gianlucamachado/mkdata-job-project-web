@@ -4,10 +4,8 @@
   <div class="row">
     <app-item-loading></app-item-loading>
   </div>
-
 </div>
 
-<!--  -->
 <div class="container">
 
   <!-- panels -->
@@ -19,14 +17,23 @@
     </div>
 
     <!-- panels -->
-    <div class="col s12 m6 l3" *ngFor="let button of buttons">
-      <app-panel-button [info]="button"></app-panel-button>
-    </div>
+    <ng-container *ngIf="!loading && !errorLoadData.error; else errorMessage">
+      <div class="col s12 m6 l3" *ngFor="let button of buttons">
+        <app-panel-button [info]="button"></app-panel-button>
+      </div>
+    </ng-container>
+    <ng-template #errorMessage>
+      <!-- Show message case cant load data. -->
+      <div class="col s12">
+        <app-error-message *ngIf="!loading && errorLoadData.error" [tryAgainButton]="true" [message]="errorLoadData.message"
+          (tryGetData)="getData()"></app-error-message>
+      </div>
+    </ng-template>
 
   </div>
 
   <!-- charts -->
-  <div class="row">
+  <div class="row" >
 
     <!-- chart one -->
     <div class="col s12 xl6 center-align margin-extra">

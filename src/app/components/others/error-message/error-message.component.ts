@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 /**
  * ### Item Error Message
@@ -16,6 +16,16 @@ export class ErrorMessageComponent implements OnInit {
    * Message Text.
    */
   @Input() message: string;
+
+  /**
+   * Option to show try again button.
+   */
+  @Input() tryAgainButton: boolean = false;
+
+  /**
+   * Try get data click.
+   */
+  @Output() tryGetData: EventEmitter<void> = new EventEmitter();
 
   /**
    * @ignore

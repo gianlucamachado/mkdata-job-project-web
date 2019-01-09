@@ -1,9 +1,8 @@
-import { MaterializeAction } from 'angular2-materialize';
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+
 import { MenuItem } from '../menu-item.interface';
-import { Router } from '@angular/router';
-import { StorageService } from '../../../providers/storage/storage.service';
-import { TokenService } from '../../../providers/token/token.service';
+
+import { MaterializeAction } from 'angular2-materialize';
 
 /**
  * Component Home Navbar

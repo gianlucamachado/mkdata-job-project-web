@@ -1,0 +1,18 @@
+<div>
+  <form (ngSubmit)="onSubmit(form)" [formGroup]="form">
+
+    <div *ngFor="let question of questions" class="form-row">
+      <app-dynamic-question [question]="question" [form]="form"></app-dynamic-question>
+    </div>
+    <div class="margin-top">
+      <button type="submit" class="btn-flat btn-apply width-100 center-align primary white-text"> Aplicar filtro</button>
+    </div>
+    <div class="margin-top">
+      <a class="btn-flat width-100 center-align" (click)="clearFilter()"> Limpar filtro</a>
+    </div>
+
+  </form>
+</div>
+
+<!-- Swall with error -->
+<swal title="" type="=" text="" #swalShowMessage></swal>

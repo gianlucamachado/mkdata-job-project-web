@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { HttpRequestService } from '../../providers/http-request/http-request.service';
+
 /**
  * Home Service
  *
@@ -9,8 +11,25 @@ import { Injectable } from '@angular/core';
 export class HomeService {
 
   /**
-   * @ignore
+   * Company endpoint.
    */
-  constructor() { }
+  private baseUrl = '/api/admin/find';
+
+  constructor(private httpRequestService: HttpRequestService) { }
+
+  /**
+   * Get admin infos.
+   */
+  getUserInfo(): Promise<any[]> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.httpRequestService.getRequestWithAuthorization(`${this.baseUrl}`)
+          .subscribe(
+            response => resolve(response),
+            error => reject(error),
+          );
+      },
+    );
+  }
 
 }

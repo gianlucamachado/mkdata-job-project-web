@@ -1,7 +1,21 @@
-<a *ngIf="!isOutline" [ngClass]="{'disabled' : isDisabled}" class="waves-effect waves-light btn-large no-shadow primary border-radius-7px width-100" (click)="onClick.emit()">
-{{text}}
+<a *ngIf="!isOutline" [ngClass]="{'disabled' : isDisabled}" class="waves-effect waves-light btn-large no-shadow primary border-radius-7px width-100"
+  (click)="onClick.emit()">
+  {{text}}
 </a>
 
-<a *ngIf="isOutline" [ngClass]="{'disabled' : isDisabled}" class="waves-effect waves-light btn-large no-shadow white border-radius-7px width-100 primary-text primary-border" (click)="onClick.emit()">
+<a *ngIf="isOutline && !icon" [ngClass]="{'disabled' : isDisabled}" class="waves-effect waves-light btn-large no-shadow white border-radius-7px width-100 primary-text primary-border"
+  (click)="onClick.emit()">
+  {{text}}
+</a>
+
+<a *ngIf="icon && isOutline" [ngClass]="{'disabled' : isDisabled}" class="waves-effect waves-light btn-large no-shadow white border-radius-7px width-100 primary-text primary-border"
+  (click)="onClick.emit()">
+  <i class="material-icons right"> {{ icon }} </i>
+  {{text}}
+</a>
+
+<a *ngIf="icon && !isOutline" [ngClass]="{'disabled' : isDisabled}" class="waves-effect waves-light btn-large no-shadow primary border-radius-7px width-100"
+  (click)="onClick.emit()">
+  <i [class]=" 'right' + icon"></i>
   {{text}}
 </a>

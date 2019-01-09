@@ -1,0 +1,18 @@
+export const DATE_PICKER_PARAMS = [{
+  weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+  weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+  weekdaysLetter: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+  language: 'pt-BR',
+  monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+  monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+  today: 'Hoje',
+  clear: 'Limpar',
+  close: 'Ok',
+  selectYears: 100,
+  selectMonths: true,
+  labelMonthNext: 'Próximo Mês',
+  labelMonthPrev: 'Mês Anterior',
+  format: 'dd-mm-yyyy',
+  labelMonthSelect: 'Selecione um Mês',
+  labelYearSelect: 'Selecione um ano',
+}];

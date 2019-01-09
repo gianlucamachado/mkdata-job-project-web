@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { SolicitationRoutingModule } from './solicitation-routing.module';
 import { SolicitationComponent } from './solicitation.component';
+import { SolicitationService } from './solicitation.service';
 
 @NgModule({
   imports: [
@@ -12,5 +13,6 @@ import { SolicitationComponent } from './solicitation.component';
   declarations: [
     SolicitationComponent,
   ],
+  providers: [SolicitationService],
 })
 export class SolicitationModule { }
