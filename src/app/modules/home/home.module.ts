@@ -10,6 +10,7 @@ import { HomeNavbarComponent } from './home-navbar/home-navbar.component';
 import { HomeSideMenuPhotoComponent } from './home-side-menu-photo/home-side-menu-photo.component';
 import { HomeProfileComponent } from './home-profile/home-profile.component';
 import { VerticalSideMenuComponent } from './vertical-side-menu/vertical-side-menu.component';
+import { OneSignalService } from './one-signal.service';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { VerticalSideMenuComponent } from './vertical-side-menu/vertical-side-me
   providers: [
     HomeService,
     HomeGuardService,
+    OneSignalService,
   ],
   exports: [],
 })

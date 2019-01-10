@@ -4,6 +4,7 @@ import { MenuItem } from './menu-item.interface';
 import { HomeService } from './home.service';
 import { StorageService } from '../../providers/storage/storage.service';
 import { TokenService } from '../../providers/token/token.service';
+import { OneSignalService } from './one-signal.service';
 
 /**
  * Home Component.
@@ -56,6 +57,7 @@ export class HomeComponent implements OnInit {
     public homeService: HomeService,
     private storageService: StorageService,
     private tokenService: TokenService,
+    private oneSignalService: OneSignalService,
   ) { }
 
   /**
@@ -64,6 +66,11 @@ export class HomeComponent implements OnInit {
   async ngOnInit() {
     // tslint:disable-next-line:no-this-assignment
     const self = this;
+
+    // initialize notifications
+    if (location.protocol === 'https:') {
+      this.oneSignalService.init();
+    }
 
     // get active page
     await self.getActivePage();
