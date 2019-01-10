@@ -46,3 +46,8 @@ ngrok
 # System Files
 .DS_Store
 Thumbs.db
+
+# certificates
+certificate.cnf
+localhost.crt
+localhost.key

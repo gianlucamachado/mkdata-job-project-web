@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "node server.js",
+    "start": "ng serve -o --port 4201 --ssl --ssl-key localhost.key --ssl-cert localhost.crt",
     "build": "ng build --prod",
     "test": "ng test",
     "test:coverage": "ng test --watch=false --code-coverage",
