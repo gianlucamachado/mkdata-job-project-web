@@ -32,7 +32,8 @@
             <app-button-generic (click)="openDatePicker(2)" [icon]="'event'" [isOutline]="true" [text]="(end.value == '')? 'Data término' : end.value"></app-button-generic>
           </div>
         </div>
-        <div class="col s12 push-m3 m6 l3 margin-vertical-5px">
+        <div class="col s12 push-m3 m6 l3 margin-vertical-5px" materialize [materializeParams]="['Preencha todos os campos',3000]"
+          [materializeActions]="toastActions">
           <app-button-generic (click)="onSubmit(dateForm)" [text]="'Buscar'"></app-button-generic>
         </div>
       </div>

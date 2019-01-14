@@ -1,5 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CreateformsService } from '../../../providers/form/createforms.service';
+
 import { MaterializeAction } from 'angular2-materialize';
 
 /**
@@ -24,7 +26,16 @@ export class SearchBarComponent implements OnInit {
 
   // Side nav params.
   public sideNavParams: any[] = [{ closeOnClick: true, edge: 'right' }];
-  public showAllFilters = true;
+
+  /**
+   * Show or hide filter button.
+   */
+  @Input() showFilter = false;
+
+  /**
+   * Question form.
+   */
+  @Input() questions: any;
 
   /**
    * Output search event.
@@ -51,6 +62,7 @@ export class SearchBarComponent implements OnInit {
    */
   constructor(
     private formBuilder: FormBuilder,
+    private createForm: CreateformsService,
   ) { }
 
   /**
@@ -66,6 +78,12 @@ export class SearchBarComponent implements OnInit {
     this.searchForm.controls['input'].valueChanges
       .debounceTime(400)
       .subscribe(search => this.onSearch.emit(search));
+
+    this.getFilters();
+  }
+
+  async getFilters() {
+    this.questions = await this.createForm.getSolicitationFilter();
   }
 
   get input() { return this.searchForm.get('input'); }

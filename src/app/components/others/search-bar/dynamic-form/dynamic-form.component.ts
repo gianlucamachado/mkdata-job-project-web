@@ -95,6 +95,7 @@ export class DynamicFormComponent implements OnInit {
       // get key of only filters seleted, with value iquals TRUE.
       // tslint:disable-next-line:no-shadowed-variable
       const key = Object.keys(formValues).filter(key => formValues[key] === true);
+
       this.formValueKeys.emit(key);
 
     } else {

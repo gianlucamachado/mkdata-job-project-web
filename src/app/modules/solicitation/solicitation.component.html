@@ -24,15 +24,15 @@
   <div class="row valign-wrapper">
 
     <!-- searchbar -->
-    <div class="col s9 m8 l9 xl10">
-      <app-search-bar [placeholder]="'Buscar por nome ou tipo de serviço'" (onSearch)="search($event)"></app-search-bar>
+    <div class="col s12">
+      <app-search-bar [showFilter]="true" [placeholder]="'Buscar por nome ou tipo de serviço'" (onSearch)="search($event)" (formValue)="filters($event)"></app-search-bar>
     </div>
 
     <!-- add button -->
-    <div class="col s3 m4 l3 xl2">
+    <!-- <div class="col s3 m4 l3 xl2">
       <app-button-filter data-activates="solicitation-filter" materialize="sideNav" [materializeParams]="sideNavParams"
         [materializeActions]="sideNavActions"></app-button-filter>
-    </div>
+    </div> -->
 
   </div>
 

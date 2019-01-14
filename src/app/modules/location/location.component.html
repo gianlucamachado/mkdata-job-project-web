@@ -24,23 +24,18 @@
   <div class="row valign-wrapper">
 
     <!-- searchbar -->
-    <div class="col s9 m8 l9 xl10">
-      <app-search-bar [placeholder]="'Buscar por local'" (onSearch)="search($event)"></app-search-bar>
-    </div>
-
-    <!-- add button -->
-    <div class="col s3 m4 l3 xl2">
-      <app-button-add (onClick)="create()"></app-button-add>
+    <div class="col s12">
+      <app-search-bar [showFilter]="true" [placeholder]="'Buscar por local'" (onSearch)="search($event)"></app-search-bar>
     </div>
 
   </div>
 
   <!-- header med and up -->
   <div class="row hide-on-small-only header-layout no-margin">
-    <div class="col s12 m6 l8">
+    <div class="col s12 m6 l6">
       <p>Local</p>
     </div>
-    <div class="col s12 m2 l2">
+    <div class="col s12 m2 l4">
       <p>Agência</p>
     </div>
     <div class="col s12 m4 l2 center-align">
@@ -54,10 +49,10 @@
 
       <!-- table med and up -->
       <div class="row valign-wrapper hide-on-small-only border-row no-margin padding-vertical no-border-top">
-        <div class="col s12 m6 l8">
+        <div class="col s12 m6 l6">
           <p class="truncate"> {{ location.environment_description }} </p>
         </div>
-        <div class="col s12 m2 l2">
+        <div class="col s12 m2 l4">
           <p class="truncate"> {{ location.agency }} </p>
         </div>
         <div class="col s12 m4 l2 center-align">

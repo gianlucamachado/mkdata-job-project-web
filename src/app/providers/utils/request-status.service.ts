@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
 
-import { HttpRequestService } from '../../providers/http-request/http-request.service';
+import { HttpRequestService } from '../http-request/http-request.service';
 
 @Injectable()
-export class ReportService {
+export class RequestStatusService {
 
   /**
-   * Report endpoint.
+   * Company endpoint.
    */
-  private baseUrl = '/api/report';
+  private baseUrl = '/api/request-status';
 
   constructor(private httpRequestService: HttpRequestService) { }
 
   /**
    * Get list with all companies.
    */
-  getReportBydate(date: string): Promise<any> {
+  getAllRequestStatus(): Promise<any[]> {
     return new Promise<any>(
       (resolve, reject) => {
-        this.httpRequestService.getRequestWithAuthorization(`${this.baseUrl}?${date}`)
+        this.httpRequestService.getRequestWithAuthorization(`${this.baseUrl}/list`)
           .subscribe(
             response => resolve(response),
             error => reject(error),

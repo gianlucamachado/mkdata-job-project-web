@@ -45,11 +45,13 @@ export class NotificationComponent implements OnInit {
     this.notificationState.list = null;
 
     // get list with last notifications.
-    this.notificationState.allList = await this.notificationService.getLast50Notifications()
-      .catch(error => (
-        this.notificationState.messageError = `Erro ao buscar os dados: ${error.message}`,
-        this.notificationState.error = true,
-        this.notificationState.loading = false, []));
+    // this.notificationState.allList = await this.notificationService.getLast50Notifications()
+    //   .catch(error => (
+    //     this.notificationState.messageError = `Erro ao buscar os dados: ${error.message}`,
+    //     this.notificationState.error = true,
+    //     this.notificationState.loading = false, []));
+
+    this.notificationState.allList = [];
 
     // get current page.
     const pages = this.listController.setPagination(1, this.notificationState.allList);

@@ -20,7 +20,7 @@
 
     <!-- searchbar -->
     <div class="col s12">
-      <app-search-bar [placeholder]="'Buscar nome, e-mail ou CPF'" (onSearch)="search($event)"></app-search-bar>
+      <app-search-bar [placeholder]="'Buscar nome ou e-mail'" (onSearch)="search($event)"></app-search-bar>
     </div>
 
   </div>
@@ -30,11 +30,8 @@
     <div class="col s6">
       <p>Nome</p>
     </div>
-    <div class="col s3">
+    <div class="col s6">
       <p>E-mail</p>
-    </div>
-    <div class="col s3">
-      <p>Telefone</p>
     </div>
   </div>
 
@@ -46,17 +43,14 @@
       <div class="row valign-wrapper hide-on-med-and-down border-row no-margin padding-vertical no-border-top">
         <div class="col s6">
           <div class="col">
-            <app-photo-circle [url]="user.photoUrl"></app-photo-circle>
+            <app-photo-circle [url]="user.employee_photo_url"></app-photo-circle>
           </div>
           <div class="col">
-            <p class="truncate"> {{ user.userName }} </p>
+            <p class="truncate"> {{ user.employee_name }} </p>
           </div>
         </div>
-        <div class="col s3">
+        <div class="col s6">
           <p> {{ user.user_email }} </p>
-        </div>
-        <div class="col s3">
-          <p> {{ user.phone }} </p>
         </div>
       </div>
 
@@ -64,27 +58,25 @@
       <div class="row hide-on-large-only hide-on-small-only border-row no-margin padding-vertical" [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
         <div class="col s12 m6">
           <div class="col">
-            <app-photo-circle [url]="user.photoUrl"></app-photo-circle>
+            <app-photo-circle [url]="user.employee_photo_url"></app-photo-circle>
           </div>
           <div class="col">
-            <p class="truncate"> {{ user.userName }} </p>
+            <p class="truncate"> {{ user.employee_name }} </p>
           </div>
         </div>
         <div class="col s12 m6">
           <p> <span class="bold">E-mail:</span> {{ user.user_email }} </p>
-          <p> <span class="bold">Telefone:</span> {{ user.phone }} </p>
         </div>
       </div>
 
       <!-- table small only -->
       <div class="row show-on-small hide-on-med-and-up center-align border-row no-margin padding-vertical" [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
         <div class="col s12 center-align">
-          <app-photo-circle [url]="user.photoUrl"></app-photo-circle>
+          <app-photo-circle [url]="user.employee_photo_url"></app-photo-circle>
         </div>
         <div class="col s12">
-          <p> <span class="bold">Nome:</span> {{ user.userName }} </p>
+          <p> <span class="bold">Nome:</span> {{ user.employee_name }} </p>
           <p> <span class="bold">E-mail:</span> {{ user.user_email }} </p>
-          <p> <span class="bold">Telefone:</span> {{ user.phone }} </p>
         </div>
       </div>
     </span>

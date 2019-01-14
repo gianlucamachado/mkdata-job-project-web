@@ -34,6 +34,11 @@ export class SolicitationComponent implements OnInit {
   public solicitationState: ListState<Solicitation> = new ListState();
 
   /**
+   * Search params.
+   */
+  public paramsToCompareSearch = ['employee_name', 'service_type_description', 'agency'];
+
+  /**
    * @ignore
    */
   constructor(
@@ -90,24 +95,28 @@ export class SolicitationComponent implements OnInit {
    */
   search(search: string) {
     // params to be searched
-    const params = ['employee_name', 'service_type_description', 'agency'];
     // get filters list case have filter active else get list.
-    const pages = this.listController.setSearch(search, params, this.solicitationState.allList);
+    const list = (this.solicitationState.allListFiltered) ? this.solicitationState.allListFiltered : this.solicitationState.allList;
+    const { pagerController, currentPage } = this.listController.setSearch(search, this.paramsToCompareSearch, list);
 
     // set pager controller to pagination and set current page.
-    this.solicitationState.pager = pages.pagerController;
-    this.solicitationState.list = pages.currentPage;
+    this.solicitationState.pager = pagerController;
+    this.solicitationState.list = currentPage;
   }
 
   /**
-   * Close filter menu.
+   * Apply filters and do pagination
+   * @param state object with filters values and dates.
    */
-  closeFilterMenu(): void {
-    // tslint:disable-next-line:no-this-assignment
-    const self = this;
+  filters(state) {
+    // Get filters.
+    const { pagerController, currentPage } = (!state) ?
+      (this.solicitationState.allListFiltered = null, this.listController.setFilters(null, this.solicitationState.allList)) :
+      this.listController.setFilters(state, this.solicitationState.allList);
 
-    // emit event to close modal
-    self.sideNavActions.emit({ action: 'sideNav', params: ['hide'] });
+    // set pager controller to pagination and set current page.
+    this.solicitationState.pager = pagerController;
+    this.solicitationState.list = currentPage;
   }
 
 }

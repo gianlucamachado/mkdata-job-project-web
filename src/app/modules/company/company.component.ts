@@ -68,10 +68,10 @@ export class CompanyComponent implements OnInit {
         this.companySate.loading = false, []));
 
     // get current page.
-    const pages = this.listController.setPagination(1, this.companySate.allList);
+    const { pagerController, currentPage } = this.listController.setPagination(1, this.companySate.allList);
     // set pager controller to pagination and set current page.
-    this.companySate.pager = pages.pagerController;
-    this.companySate.list = pages.currentPage;
+    this.companySate.pager = pagerController;
+    this.companySate.list = currentPage;
     this.companySate.loading = false;
   }
 
@@ -80,10 +80,10 @@ export class CompanyComponent implements OnInit {
    */
   pagination(page: number): void {
     // get current page.
-    const pages = this.listController.setPagination(page, this.companySate.allList);
+    const { pagerController, currentPage } = this.listController.setPagination(page, this.companySate.allList);
     // set pager controller to pagination and set current page.
-    this.companySate.pager = pages.pagerController;
-    this.companySate.list = pages.currentPage;
+    this.companySate.pager = pagerController;
+    this.companySate.list = currentPage;
   }
 
   /**
@@ -92,13 +92,12 @@ export class CompanyComponent implements OnInit {
    */
   search(search: string) {
     // params to be searched
-    const params = ['company_fantasy_name', 'company_responsible_name'];
+    const params = ['company_fantasy_name', 'company_responsible_name', 'company_cnpj', 'user_email'];
     // get filters list case have filter active else get list.
-    const pages = this.listController.setSearch(search, params, this.companySate.allList);
-
+    const { pagerController, currentPage } = this.listController.setSearch(search, params, this.companySate.allList);
     // set pager controller to pagination and set current page.
-    this.companySate.pager = pages.pagerController;
-    this.companySate.list = pages.currentPage;
+    this.companySate.pager = pagerController;
+    this.companySate.list = currentPage;
   }
 
   /**

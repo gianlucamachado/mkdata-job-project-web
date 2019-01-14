@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { ListControllerService } from '../../providers/utils/list-controller.service';
 import { ListState } from '../../classes/State.class';
-import { UserList } from '../../classes/UserList.class';
 import { UserService } from './user.service';
 import { PaginationService } from './../../components/others/pagination/pagination.service';
+import { Employee } from '../../classes/Employee.class';
 
 /**
  * User component.
@@ -19,7 +19,7 @@ export class UserComponent implements OnInit {
   /**
    * User state.
    */
-  public userState: ListState<UserList> = new ListState();
+  public userState: ListState<Employee> = new ListState();
 
   /**
    * @ignore
@@ -78,7 +78,7 @@ export class UserComponent implements OnInit {
    */
   search(search: string) {
     // params to be searched
-    const params = ['user_email'];
+    const params = ['user_email', 'employee_name'];
     // get filters list case have filter active else get list.
     const pages = this.listController.setSearch(search, params, this.userState.allList);
 

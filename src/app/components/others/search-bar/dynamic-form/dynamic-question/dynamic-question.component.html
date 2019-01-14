@@ -26,7 +26,7 @@
         </label>
       </div>
     </ng-container>
-
+    <!-- radio -->
     <ng-container *ngSwitchCase="'radiobox'">
       <p class=" padding-horizontal" *ngFor="let opt of question.options; let i = index">
         <input type="radio" [id]="i" [name]="question.key" [value]="opt.key" [formControlName]="question.key">

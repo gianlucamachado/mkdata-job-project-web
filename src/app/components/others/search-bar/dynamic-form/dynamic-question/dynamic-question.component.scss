@@ -52,6 +52,7 @@ label {
   min-width: 270px;
   max-width: 270px;
   padding-left: 0 !important;
+  padding-right: 20px;
 }
 [type="radio"]:checked + label::after, [type="radio"].with-gap:checked + label::after {
   background-color: map-get($colors , 'gray-dark' );

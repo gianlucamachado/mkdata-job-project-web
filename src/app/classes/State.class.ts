@@ -9,6 +9,7 @@ export class ListState<T> {
   public loading: boolean;
   public error: boolean;
   public messageError: string;
+  public allListFiltered?: T[];
   public allList: T[];
   public list: T[];
   public pager: Pagination;

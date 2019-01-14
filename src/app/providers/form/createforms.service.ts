@@ -6,10 +6,13 @@ import { TextboxQuestion } from './question-textbox';
 import { HeaderQuestion } from './question-header';
 import { SwitchQuestion } from './question-switch';
 
+import { RequestStatusService } from '../utils/request-status.service';
+
 @Injectable()
 export class CreateformsService {
 
   constructor(
+    private requestStatusService: RequestStatusService,
   ) { }
 
   /**
@@ -74,6 +77,34 @@ export class CreateformsService {
     ];
 
     return controls.sort((a, b) => a.order - b.order);
+  }
+
+  /**
+  * get all fields to create request filter.
+  */
+  async getSolicitationFilter() {
+
+    // request status
+    let requestStatus: any = [];
+
+    // get request status
+    requestStatus = await this.requestStatusService.getAllRequestStatus()
+      .catch(error => console.log(error));
+
+    // adjust object
+    requestStatus = requestStatus.map(st => ({ key: st.request_status_description, value: st.request_status_description }));
+
+    const questions: QuestionBase<any>[] = [
+
+      new RadioBoxQuestion({
+        key: 'status',
+        label: 'Status',
+        options: requestStatus,
+        order: 1,
+      }),
+    ];
+
+    return questions.sort((a, b) => a.order - b.order);
   }
 
 }

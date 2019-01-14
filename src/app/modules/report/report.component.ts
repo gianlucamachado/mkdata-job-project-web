@@ -27,21 +27,18 @@ export class ReportComponent implements OnInit {
     {
       icon: 'fas fa-th-large fa-3x',
       title: 'Serviço mais solicitado',
-      subtitle: 'Lâmpada Queimada',
       color: '#e19a00',
       secondaryColor: '#a97300',
     },
     {
       icon: 'fas fa-map-marked fa-3x',
       title: 'Local mais solicitado',
-      subtitle: 'Sala Esperança',
       color: '#95c22e',
       secondaryColor: '#7da226',
     },
     {
       icon: 'fas fa-store-alt fa-3x',
       title: 'Empresa que mais atendeu',
-      subtitle: 'AR Reparos',
       color: '#74bcd6',
       secondaryColor: '#5e98ad',
     },
@@ -88,6 +85,11 @@ export class ReportComponent implements OnInit {
   @ViewChild(SweetMessageComponent) messageComponent: SweetMessageComponent;
 
   /**
+   * Toast actions.
+   */
+  toastActions = new EventEmitter<string | MaterializeAction>();
+
+  /**
    * @ignore
    */
   constructor(
@@ -104,14 +106,16 @@ export class ReportComponent implements OnInit {
     // loading
     setTimeout(_ => this.loading = false, 1000);
 
+    // create form
     this.dateForm = this.createForm();
+    // get report data.
     this.getData();
 
     // create chart one
-    await this.createChartUser();
+    this.createChartUser();
 
     // create chart one
-    await this.createChartSchedules();
+    this.createChartSchedules();
 
   }
 
@@ -119,8 +123,39 @@ export class ReportComponent implements OnInit {
    * Get initial data.
    */
   async getData() {
-    this.reportService.getReportBydate('start=1999-01-01&end=9999-01-01')
+    const date = await this.reportService.getReportBydate('start=1999-01-01&end=9999-01-01')
       .catch(err => console.error(err));
+
+    this.setButtons(date);
+  }
+
+  /**
+   * Add buttons data.
+   */
+  setButtons({ mostRequestedService, mostRequestedLocation, companyThatMostAttended }) {
+    this.buttons = [
+      {
+        icon: 'fas fa-th-large fa-3x',
+        title: 'Serviço mais solicitado',
+        subtitle: mostRequestedService.service_type_description,
+        color: '#e19a00',
+        secondaryColor: '#a97300',
+      },
+      {
+        icon: 'fas fa-map-marked fa-3x',
+        title: 'Local mais solicitado',
+        subtitle: mostRequestedLocation.environment_description,
+        color: '#95c22e',
+        secondaryColor: '#7da226',
+      },
+      {
+        icon: 'fas fa-store-alt fa-3x',
+        title: 'Empresa que mais atendeu',
+        subtitle: companyThatMostAttended.company_fantasy_name,
+        color: '#74bcd6',
+        secondaryColor: '#5e98ad',
+      },
+    ];
   }
 
   // Getters.
@@ -219,14 +254,22 @@ export class ReportComponent implements OnInit {
     if (form.valid) {
 
       try {
-        // get satrt and end date.
-        const { start, end } = form.getRawValue();
+        this.buttons.map(button => delete button['subtitle']);
+        // get start and end date.
+        let { start, end } = form.getRawValue();
+        // adjust start date
+        start = this.adjustDate(start);
+        // adjust end date
+        end = this.adjustDate(end);
+
+        // get report.
         const data = await this.reportService.getReportBydate(`start=${start}&end=${end}`);
-        console.log(data);
+
+        // set buttons data.
+        this.setButtons(data);
 
       } catch (error) {
         console.error(error);
-
         this.swalOptions.title = 'Não foi possível realizar a busca.';
         this.swalOptions.content = error.message;
         this.swalOptions.button = 'Ok';
@@ -235,7 +278,19 @@ export class ReportComponent implements OnInit {
     } else {
       console.error('Form inválido');
       console.log(form);
+      this.toastActions.emit('toast');
     }
+  }
+
+  /**
+   * Return data like a year-month-day of data.
+   * @param date date string.
+   */
+  adjustDate(date: string) {
+    const day = date.slice(0, 2);
+    const month = date.slice(3, 5);
+    const year = date.slice(6);
+    return `${year}-${month}-${day}`;
   }
 
   /**

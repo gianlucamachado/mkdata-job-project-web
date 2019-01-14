@@ -8,7 +8,7 @@ export class UserService {
   /**
    * User endpoint.
    */
-  private baseUrl = '/api/user';
+  private baseUrl = '/api/employee';
 
   constructor(private httpRequestService: HttpRequestService) { }
 

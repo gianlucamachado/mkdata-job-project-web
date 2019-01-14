@@ -22,12 +22,15 @@ import { QuestionControlService } from '../providers/form/question-control.servi
 import { CreateformsService } from '../providers/form/createforms.service';
 
 import { NgxMaskModule } from 'ngx-mask';
+import { MaterializeModule } from 'angular2-materialize';
+import { RequestStatusService } from '../providers/utils/request-status.service';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    MaterializeModule,
     NgxMaskModule.forRoot(),
     SweetAlert2Module.forRoot(),
   ],
@@ -52,6 +55,7 @@ import { NgxMaskModule } from 'ngx-mask';
   providers: [
     QuestionControlService,
     CreateformsService,
+    RequestStatusService,
   ],
   exports: [
     SpinnerComponent,

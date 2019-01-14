@@ -12,7 +12,7 @@ export const DATE_PICKER_PARAMS = [{
   selectMonths: true,
   labelMonthNext: 'Próximo Mês',
   labelMonthPrev: 'Mês Anterior',
-  format: 'dd-mm-yyyy',
+  format: 'dd/mm/yyyy',
   labelMonthSelect: 'Selecione um Mês',
   labelYearSelect: 'Selecione um ano',
 }];
