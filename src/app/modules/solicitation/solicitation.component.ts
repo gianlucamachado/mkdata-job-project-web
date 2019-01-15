@@ -52,7 +52,9 @@ export class SolicitationComponent implements OnInit {
    */
   ngOnInit() {
 
+    // initialize
     this.getList();
+
   }
 
   /**
@@ -117,6 +119,17 @@ export class SolicitationComponent implements OnInit {
     // set pager controller to pagination and set current page.
     this.solicitationState.pager = pagerController;
     this.solicitationState.list = currentPage;
+  }
+
+  /**
+   * Close filter menu.
+   */
+  closeFilterMenu(): void {
+    // tslint:disable-next-line:no-this-assignment
+    const self = this;
+
+    // emit event to close modal
+    self.sideNavActions.emit({ action: 'sideNav', params: ['hide'] });
   }
 
 }

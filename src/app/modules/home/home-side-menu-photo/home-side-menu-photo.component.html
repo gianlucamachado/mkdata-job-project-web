@@ -1,3 +1,3 @@
 <div [style.width]="size" [style.height]="size" class="container-img border-radius-50 grey margin-auto">
-  <div [ngStyle]="{ 'background-image': 'url(' + photoUrl + ')' }" class="width-100 height-100 background border-radius-50"></div>
+  <div [ngStyle]="{ 'background-image': 'url(' + utilsService.verifyLink(photoUrl) + ')' }" class="width-100 height-100 background border-radius-50"></div>
 </div>

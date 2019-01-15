@@ -32,10 +32,10 @@
 
   <!-- header med and up -->
   <div class="row hide-on-small-only header-layout no-margin">
-    <div class="col s12 m6 l6">
+    <div class="col s12 m4 l5">
       <p>Local</p>
     </div>
-    <div class="col s12 m2 l4">
+    <div class="col s12 m4 l5">
       <p>Agência</p>
     </div>
     <div class="col s12 m4 l2 center-align">
@@ -48,12 +48,12 @@
     <span *ngFor="let location of locationSate.list; let i = index">
 
       <!-- table med and up -->
-      <div class="row valign-wrapper hide-on-small-only border-row no-margin padding-vertical no-border-top">
-        <div class="col s12 m6 l6">
-          <p class="truncate"> {{ location.environment_description }} </p>
+      <div class="row valign-wrapper hide-on-small-only border-row no-margin padding-vertical no-border-top hover-row cursor-pointer">
+        <div class="col s12 m4 l5">
+          <p class="truncate"> {{ location['environment_description'] }} </p>
         </div>
-        <div class="col s12 m2 l4">
-          <p class="truncate"> {{ location.agency }} </p>
+        <div class="col s12 m4 l5">
+          <p class="truncate"> {{ location['agency'] }} </p>
         </div>
         <div class="col s12 m4 l2 center-align">
           <div class="col s6 center-align">
@@ -71,12 +71,13 @@
       </div>
 
       <!-- table small only -->
-      <div class="row show-on-small hide-on-med-and-up center-align border-row no-margin padding-vertical" [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
+      <div class="row show-on-small hide-on-med-and-up center-align border-row no-margin padding-vertical hover-row cursor-pointer"
+        [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
         <div class="col s12">
-          <p class="truncate"> <span class="bold">Local: </span> {{ location.environment_description }} </p>
+          <p class="truncate"> <span class="bold">Local: </span> {{ location['environment_description'] }} </p>
         </div>
         <div class="col s12">
-          <p class="truncate"> <span class="bold">Agência: </span> {{ location.agency }} </p>
+          <p class="truncate"> <span class="bold">Agência: </span> {{ location['agency'] }} </p>
         </div>
         <div class="col s12 margin-top">
           <div class="col s6 center-align">

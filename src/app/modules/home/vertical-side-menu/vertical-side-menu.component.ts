@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MenuItem } from '../menu-item.interface';
+import { UtilsService } from '../../../providers/utils/utils.service';
 
 /**
  * ### Vertical Side Menu Component
@@ -31,7 +32,9 @@ export class VerticalSideMenuComponent implements OnInit {
   /**
    * @ignore
    */
-  constructor() { }
+  constructor(
+    public utilsService: UtilsService,
+  ) { }
 
   /**
    * @ignore

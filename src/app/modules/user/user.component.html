@@ -40,7 +40,7 @@
     <span *ngFor="let user of userState.list; let i = index">
 
       <!-- table med and up -->
-      <div class="row valign-wrapper hide-on-med-and-down border-row no-margin padding-vertical no-border-top">
+      <div class="row valign-wrapper hide-on-med-and-down border-row no-margin padding-vertical no-border-top hover-row cursor-pointer">
         <div class="col s6">
           <div class="col">
             <app-photo-circle [url]="user.employee_photo_url"></app-photo-circle>
@@ -55,7 +55,8 @@
       </div>
 
       <!-- table med only -->
-      <div class="row hide-on-large-only hide-on-small-only border-row no-margin padding-vertical" [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
+      <div class="row hide-on-large-only hide-on-small-only border-row no-margin padding-vertical hover-row cursor-pointer"
+        [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
         <div class="col s12 m6">
           <div class="col">
             <app-photo-circle [url]="user.employee_photo_url"></app-photo-circle>
@@ -70,7 +71,8 @@
       </div>
 
       <!-- table small only -->
-      <div class="row show-on-small hide-on-med-and-up center-align border-row no-margin padding-vertical" [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
+      <div class="row show-on-small hide-on-med-and-up center-align border-row no-margin padding-vertical hover-row cursor-pointer"
+        [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
         <div class="col s12 center-align">
           <app-photo-circle [url]="user.employee_photo_url"></app-photo-circle>
         </div>

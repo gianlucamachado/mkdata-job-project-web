@@ -25,7 +25,8 @@
 
     <!-- searchbar -->
     <div class="col s12">
-      <app-search-bar [showFilter]="true" [placeholder]="'Buscar por nome ou tipo de serviço'" (onSearch)="search($event)" (formValue)="filters($event)"></app-search-bar>
+      <app-search-bar [showFilter]="true" [placeholder]="'Buscar por nome ou tipo de serviço'" (onSearch)="search($event)"
+        (formValue)="filters($event)"></app-search-bar>
     </div>
 
     <!-- add button -->
@@ -57,7 +58,7 @@
     <span *ngFor="let solicitation of solicitationState.list; let i = index">
 
       <!-- table med and up -->
-      <div class="row hide-on-med-and-down border-row no-margin padding-vertical no-border-top">
+      <div class="row hide-on-med-and-down border-row no-margin padding-vertical no-border-top hover-row cursor-pointer">
         <div class="col s4">
           <div class="col">
             <app-photo-circle [url]="solicitation.employee_photo_url"></app-photo-circle>
@@ -73,12 +74,13 @@
           <p> {{ solicitation.service_type_description }} </p>
         </div>
         <div class="col s2">
-          <p class="green-text text-darken-2"> {{ solicitation.status }} </p>
+          <p [ngStyle]="{'color': solicitation.color}"> {{ solicitation.status }} </p>
         </div>
       </div>
 
       <!-- table med only -->
-      <div class="row hide-on-large-only hide-on-small-only border-row no-margin padding-vertical" [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
+      <div class="row hide-on-large-only hide-on-small-only border-row no-margin padding-vertical hover-row cursor-pointer"
+        [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
         <div class="col s12 m6">
           <div class="col">
             <app-photo-circle [url]="solicitation.employee_photo_url"></app-photo-circle>
@@ -94,7 +96,7 @@
             <span class="bold">
               Status:
             </span>
-            <span class="green-text text-darken-2">
+            <span [ngStyle]="{'color': solicitation.color}">
               {{ solicitation.status }}
             </span>
           </p>
@@ -102,7 +104,8 @@
       </div>
 
       <!-- table small only -->
-      <div class="row show-on-small hide-on-med-and-up center-align border-row no-margin padding-vertical" [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
+      <div class="row show-on-small hide-on-med-and-up center-align border-row no-margin padding-vertical hover-row cursor-pointer"
+        [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
         <div class="col s12">
           <app-photo-circle [url]="solicitation.employee_photo_url"></app-photo-circle>
         </div>
@@ -114,7 +117,7 @@
             <span class="bold">
               Status:
             </span>
-            <span class="green-text text-darken-2">
+            <span [ngStyle]="{'color': solicitation.color}">
               {{ solicitation.status }}
             </span>
           </p>

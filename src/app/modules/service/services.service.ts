@@ -31,4 +31,34 @@ export class ServicesService {
     );
   }
 
+  /**
+   * Create new service type.
+   */
+  createService(body: any): Promise<any> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.httpRequestService.putRequestWithAuthorization(this.baseUrl, body)
+          .subscribe(
+            response => resolve(response),
+            error => reject(error),
+          );
+      },
+    );
+  }
+
+  /**
+   * Update service type.
+   */
+  updateService(body: any, id: string): Promise<any> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.httpRequestService.postRequestWithAuthorization(`${this.baseUrl}/${id}`, body)
+          .subscribe(
+            response => resolve(response),
+            error => reject(error),
+          );
+      },
+    );
+  }
+
 }

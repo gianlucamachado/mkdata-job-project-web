@@ -136,10 +136,9 @@ export class ServiceComponent implements OnInit {
 
     // form group
     self.modalForm = self.formBuilder.group({
-      service_id: [''],
-      createdAt: [0, Validators.compose([Validators.required])],
-      serviceName: ['', Validators.compose([Validators.required])],
-      icon: ['', Validators.compose([Validators.required])],
+      service_type_id: [''],
+      service_type_description: ['', Validators.compose([Validators.required])],
+      service_type_active: ['0', Validators.compose([Validators.required])],
     });
   }
 
@@ -168,8 +167,29 @@ export class ServiceComponent implements OnInit {
     // log value
     console.log('createEvent()', value);
 
+    // present loading
+    this.serviceState.loading = true;
+
+    // try/catch
+    try {
+
+      // add new service type
+      const response: any = this.servicesService.createService(value);
+
+      // log response
+      console.log(response);
+
+    } catch (e) {
+
+      // log
+      console.error(e);
+
+    }
     // close modal
     this.closeModal();
+
+    // get info
+    this.getList();
   }
 
   /**
@@ -201,17 +221,70 @@ export class ServiceComponent implements OnInit {
     // log value
     console.log('updateEvent()', value);
 
+    // present loading
+    this.serviceState.loading = true;
+
+    // try/catch
+    try {
+
+      // add new service type
+      const response: any = this.servicesService.updateService(value, value.service_type_id);
+
+      // log response
+      console.log(response);
+
+    } catch (e) {
+
+      // log
+      console.error(e);
+
+    }
     // close modal
     this.closeModal();
+
+    // get info
+    this.getList();
   }
 
   /**
    * Update a service on switch event.
    * @param service Service snapshot to update.
    */
-  onSwitch(service: any): void {
+  onSwitch(event: any, service: any): void {
+
     // log values
-    console.log('onSwitch()', service);
+    console.log('onSwitch()', event.target.checked);
+
+    // tslint:disable-next-line:no-this-assignment
+    const self = this;
+
+    // path values
+    self.modalForm.patchValue(service);
+
+    // const active
+    const active: string = (event.target.checked) ? '1' : '0';
+
+    // set new value
+    self.modalForm.controls.service_type_active.setValue(active);
+
+    // get value
+    const value: any = self.modalForm.getRawValue();
+
+    // try/catch
+    try {
+
+      // add new service type
+      const response: any = this.servicesService.updateService(value, value.service_type_id);
+
+      // log response
+      console.log(response);
+
+    } catch (e) {
+
+      // log
+      console.error(e);
+
+    }
   }
 
   /**

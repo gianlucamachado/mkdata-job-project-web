@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { OPTIONS, DATASETS } from './chart-options.constant';
+import { environment } from '../../../environments/environment';
 
 /**
  * Utils Provider
@@ -77,6 +78,18 @@ export class UtilsService {
    */
   changePhoneMask(phone: string): string {
     return (phone && phone.length === 10) ? '(00) 0000-00000' : '(00) 00000-0000';
+  }
+
+  /**
+   * Verify link of photo
+   */
+  verifyLink(photo: string): string {
+
+    if (photo && photo.indexOf('http') === -1) {
+      return environment.images_url + photo;
+    }
+
+    return photo;
   }
 
 }

@@ -16,51 +16,12 @@
 
     <!-- input -->
     <div class="col s12 padding">
-
-      <!-- img box -->
-      <div class="col s12 m3 no-padding center-align">
-
-        <!-- fake image -->
-        <div class="icon-box cursor-pointer" *ngIf="modalForm.value.icon === ''" [ngStyle]="{ 'background-image': (submitAttempt) ? 'url(assets/photo-camera-red.png)' : 'url(assets/photo-camera.png)' }"
-          [ngClass]="{'border-red': submitAttempt}" (click)="file.click()">
-          <div class="progress" *ngIf="uploadPercent">
-            <div class="determinate" [style.width]="uploadPercent + '%'"></div>
-          </div>
-        </div>
-
-        <!-- uploaded image -->
-        <div class="icon-box cursor-pointer" *ngIf="modalForm.value.icon !== ''" [ngStyle]="{ 'background-image': 'url(' + modalForm.value.icon + ')' }"
-          (click)="file.click()">
-          <div class="progress" *ngIf="uploadPercent">
-            <div class="determinate" [style.width]="uploadPercent + '%'"></div>
-          </div>
-        </div>
-
-        <!-- message -->
-        <div class="red-text" *ngIf="utils.showError('icon', modalForm, submitAttempt)">
-          <p class="align" *ngIf="modalForm.controls['icon'].errors.required">Ícone obrigatório</p>
-        </div>
-
-        <!-- input file -->
-        <input type="file" accept="image/*" hidden #file (change)="onChangeInputPicture($event)">
-      </div>
-
-      <!-- descripition -->
-      <div class="col s12 m9">
-        <p style="font-weight: bold; font-size: 20px; margin-top: 0px;">Adicione um ícone para o serviço.</p>
-        <p><strong>Recomendações:</strong> Utilize imagens no formato png e com fundo transparente para um melhor
-          aproveitamento do layout.</p>
-      </div>
-    </div>
-
-    <!-- input -->
-    <div class="col s12 padding">
       <div class="input-field no-margin">
-        <input maxlength="20" (keydown.enter)="validate(modalForm)" formControlName="serviceName" placeholder="Nome do Serviço"
-          type="text" class="validate" [ngClass]="{'invalid': utils.showError('serviceName', modalForm, submitAttempt)}">
+        <input maxlength="20" (keydown.enter)="validate(modalForm)" formControlName="service_type_description" placeholder="Nome do Serviço"
+          type="text" class="validate" [ngClass]="{'invalid': utils.showError('service_type_description', modalForm, submitAttempt)}">
       </div>
-      <div class="form-control-feedback red-text" *ngIf="utils.showError('serviceName', modalForm, submitAttempt)">
-        <p class="no-margin" *ngIf="modalForm.controls['serviceName'].errors.required">Campo obrigatório</p>
+      <div class="form-control-feedback red-text" *ngIf="utils.showError('service_type_description', modalForm, submitAttempt)">
+        <p class="no-margin" *ngIf="modalForm.controls['service_type_description'].errors.required">Campo obrigatório</p>
       </div>
     </div>
 

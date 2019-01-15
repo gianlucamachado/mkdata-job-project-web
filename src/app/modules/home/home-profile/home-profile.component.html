@@ -2,13 +2,12 @@
 
   <!-- picture -->
   <div class="col s12 m12 l12 xl12 center-align margin-vertical">
-    <app-home-side-menu-photo [photoUrl]="user.photoUrl" [size]="'100px'"></app-home-side-menu-photo>
+    <app-home-side-menu-photo [photoUrl]="utilsService.verifyLink(user.admin_photo_url)" [size]="'100px'"></app-home-side-menu-photo>
   </div>
 
   <!-- text -->
   <div class="col s12 m12 l12 xl12 center-align">
-    <h5 class="no-margin white-text" *ngIf="user['fantasyName']"> {{ user['fantasyName'] }} </h5>
-    <h5 class="no-margin white-text" *ngIf="!user['fantasyName']"> {{ user['displayName'] }} </h5>
+    <h5 class="no-margin white-text" *ngIf="user['admin_name']"> {{ user['admin_name'] }} </h5>
   </div>
 
 </div>
