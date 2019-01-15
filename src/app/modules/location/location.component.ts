@@ -51,7 +51,7 @@ export class LocationComponent implements OnInit {
   /**
    * location State.
    */
-  public locationSate: ListState<Location> = new ListState();
+  public locationState: ListState<Location> = new ListState();
 
   /**
    * @ignore
@@ -74,6 +74,7 @@ export class LocationComponent implements OnInit {
     // initialize form
     self.initializeForm();
 
+    // get list
     this.getList();
   }
 
@@ -86,10 +87,9 @@ export class LocationComponent implements OnInit {
 
     // form group
     self.modalForm = self.formBuilder.group({
-      location_id: [''],
-      createdAt: [''],
-      locationName: ['', Validators.compose([Validators.required])],
-      locationAgency: ['', Validators.compose([Validators.required])],
+      environment_id: [''],
+      environment_description: ['', Validators.compose([Validators.required])],
+      agency_id: ['', Validators.compose([Validators.required])],
     });
   }
 
@@ -97,23 +97,23 @@ export class LocationComponent implements OnInit {
    * Get all data.
    */
   async getList() {
-    this.locationSate.loading = true;
-    this.locationSate.error = false;
-    this.locationSate.list = null;
+    this.locationState.loading = true;
+    this.locationState.error = false;
+    this.locationState.list = null;
 
     // get list with all customers.
-    this.locationSate.allList = await this.locationService.getAllLocation()
+    this.locationState.allList = await this.locationService.getAllLocation()
       .catch(error => (
-        this.locationSate.messageError = `Erro ao buscar os dados: ${error.message}`,
-        this.locationSate.error = true,
-        this.locationSate.loading = false, []));
+        this.locationState.messageError = `Erro ao buscar os dados: ${error.message}`,
+        this.locationState.error = true,
+        this.locationState.loading = false, []));
 
     // get current page.
-    const pages = this.listController.setPagination(1, this.locationSate.allList);
+    const pages = this.listController.setPagination(1, this.locationState.allList);
     // set pager controller to pagination and set current page.
-    this.locationSate.pager = pages.pagerController;
-    this.locationSate.list = pages.currentPage;
-    this.locationSate.loading = false;
+    this.locationState.pager = pages.pagerController;
+    this.locationState.list = pages.currentPage;
+    this.locationState.loading = false;
   }
 
   /**
@@ -121,10 +121,10 @@ export class LocationComponent implements OnInit {
    */
   pagination(page: number): void {
     // get current page.
-    const pages = this.listController.setPagination(page, this.locationSate.allList);
+    const pages = this.listController.setPagination(page, this.locationState.allList);
     // set pager controller to pagination and set current page.
-    this.locationSate.pager = pages.pagerController;
-    this.locationSate.list = pages.currentPage;
+    this.locationState.pager = pages.pagerController;
+    this.locationState.list = pages.currentPage;
   }
 
   /**
@@ -135,11 +135,11 @@ export class LocationComponent implements OnInit {
     // params to be searched
     const params = ['environment_description'];
     // get filters list case have filter active else get list.
-    const pages = this.listController.setSearch(search, params, this.locationSate.allList);
+    const pages = this.listController.setSearch(search, params, this.locationState.allList);
 
     // set pager controller to pagination and set current page.
-    this.locationSate.pager = pages.pagerController;
-    this.locationSate.list = pages.currentPage;
+    this.locationState.pager = pages.pagerController;
+    this.locationState.list = pages.currentPage;
   }
 
   /**
@@ -167,8 +167,29 @@ export class LocationComponent implements OnInit {
     // log value
     console.log('createEvent()', value);
 
+    // present loading
+    this.locationState.loading = true;
+
+    // try/catch
+    try {
+
+      // add new service type
+      const response: any = this.locationService.createEnvironment(value);
+
+      // log response
+      console.log(response);
+
+    } catch (e) {
+
+      // log
+      console.error(e);
+
+    }
     // close modal
     this.closeModal();
+
+    // get info
+    this.getList();
   }
 
   /**
@@ -200,8 +221,29 @@ export class LocationComponent implements OnInit {
     // log value
     console.log('updateEvent()', value);
 
+    // present loading
+    this.locationState.loading = true;
+
+    // try/catch
+    try {
+
+      // add new service type
+      const response: any = this.locationService.updateEnvironment(value, value.environment_id);
+
+      // log response
+      console.log(response);
+
+    } catch (e) {
+
+      // log
+      console.error(e);
+
+    }
     // close modal
     this.closeModal();
+
+    // get info
+    this.getList();
   }
 
   /**

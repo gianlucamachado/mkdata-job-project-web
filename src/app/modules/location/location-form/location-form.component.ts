@@ -1,3 +1,4 @@
+import { LocationService } from './../location.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { UtilsService } from '../../../providers/utils/utils.service';
@@ -46,26 +47,29 @@ export class LocationFormComponent implements OnInit {
   /**
    * Agencies.
    */
-  public agencies$: Observable<any> = new Observable((observer) => {
-    observer.next([
-      { name: 500, value: 500 },
-      { name: 200, value: 200 },
-      { name: 600, value: 600 },
-    ]);
-    observer.complete();
-  });
+  public agencies$: Observable<any[]>;
 
   /**
    * @ignore
    */
   constructor(
     public utils: UtilsService,
+    private locationService: LocationService,
   ) { }
 
   /**
    * @ignore
    */
-  ngOnInit() { }
+  async ngOnInit() {
+
+    // get agencies
+    try {
+      this.agencies$ = await this.locationService.getAgencies();
+    } catch (e) {
+      console.error(e);
+    }
+
+  }
 
   /**
    * Validate form.
