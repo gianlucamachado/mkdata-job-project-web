@@ -1,9 +1,13 @@
+import { ListState } from './../../classes/State.class';
+import { ListControllerService } from './../../providers/utils/list-controller.service';
+import { ServicesService } from './services.service';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { MaterializeAction } from 'angular2-materialize';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as faker from 'faker';
 import { PaginationService } from '../../components/others/pagination/pagination.service';
+import { Service } from '../../classes/Service.class';
 
 /**
  * Service component.
@@ -36,11 +40,6 @@ export class ServiceComponent implements OnInit {
   public submitAttempt: boolean = false;
 
   /**
-   * Loading variable
-   */
-  public loading: boolean = true;
-
-  /**
    * Modal params.
    */
   public modelParams = [
@@ -51,30 +50,9 @@ export class ServiceComponent implements OnInit {
   ];
 
   /**
-   * Services objects.
+   * Service class state.
    */
-  public services: any[] = [
-    {
-      service_id: 0,
-      icon: faker.image.avatar(),
-      serviceName: faker.commerce.productMaterial(),
-    },
-    {
-      service_id: 1,
-      icon: faker.image.avatar(),
-      serviceName: faker.commerce.productMaterial(),
-    },
-    {
-      service_id: 2,
-      icon: faker.image.avatar(),
-      serviceName: faker.commerce.productMaterial(),
-    },
-  ];
-
-  /**
-   * Current page.
-   */
-  public currentPage: number = 1;
+  public serviceState: ListState<Service> = new ListState();
 
   /**
    * @ignore
@@ -82,7 +60,9 @@ export class ServiceComponent implements OnInit {
   constructor(
     public paginationService: PaginationService,
     public router: Router,
+    private servicesService: ServicesService,
     private formBuilder: FormBuilder,
+    private listController: ListControllerService,
   ) { }
 
   /**
@@ -95,8 +75,56 @@ export class ServiceComponent implements OnInit {
     // initialize form
     self.initializeForm();
 
-    // loading
-    setTimeout(_ => self.loading = false, 1000);
+    this.getList();
+  }
+
+  /**
+   * Get all Data.
+   */
+  async getList() {
+    this.serviceState.loading = true;
+    this.serviceState.error = false;
+    this.serviceState.list = null;
+
+    // get list with all customers.
+    this.serviceState.allList = await this.servicesService.getAllServicesType()
+      .catch(error => (
+        this.serviceState.messageError = `Erro ao buscar os dados: ${error.message}`,
+        this.serviceState.error = true,
+        this.serviceState.loading = false, []));
+
+    // get current page.
+    const pages = this.listController.setPagination(1, this.serviceState.allList);
+    // set pager controller to pagination and set current page.
+    this.serviceState.pager = pages.pagerController;
+    this.serviceState.list = pages.currentPage;
+    this.serviceState.loading = false;
+  }
+
+  /**
+   * set current page.
+   */
+  pagination(page: number): void {
+    // get current page.
+    const pages = this.listController.setPagination(page, this.serviceState.allList);
+    // set pager controller to pagination and set current page.
+    this.serviceState.pager = pages.pagerController;
+    this.serviceState.list = pages.currentPage;
+  }
+
+  /**
+   * Do Search and aplly pagination.
+   * @param search value searched
+   */
+  search(search: string) {
+    // params to be searched
+    const params = ['service_type_description'];
+    // get filters list case have filter active else get list.
+    const pages = this.listController.setSearch(search, params, this.serviceState.allList);
+
+    // set pager controller to pagination and set current page.
+    this.serviceState.pager = pages.pagerController;
+    this.serviceState.list = pages.currentPage;
   }
 
   /**
@@ -113,13 +141,6 @@ export class ServiceComponent implements OnInit {
       serviceName: ['', Validators.compose([Validators.required])],
       icon: ['', Validators.compose([Validators.required])],
     });
-  }
-
-  /**
-   * Search by input.
-   */
-  search(input: string): void {
-    console.log(input);
   }
 
   /**

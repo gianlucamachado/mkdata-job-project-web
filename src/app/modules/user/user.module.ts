@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { UserRoutingModule } from './user-routing.module';
 import { UserComponent } from './user.component';
+import { UserService } from './user.service';
 
 @NgModule({
   imports: [
@@ -11,6 +12,9 @@ import { UserComponent } from './user.component';
   ],
   declarations: [
     UserComponent,
+  ],
+  providers: [
+    UserService,
   ],
 })
 export class UserModule { }

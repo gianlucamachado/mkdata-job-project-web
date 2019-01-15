@@ -1,9 +1,12 @@
+import { ListControllerService } from './../../providers/utils/list-controller.service';
+import { LocationService } from './location.service';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { MaterializeAction } from 'angular2-materialize';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as faker from 'faker';
 import { PaginationService } from '../../components/others/pagination/pagination.service';
+import { ListState } from '../../classes/State.class';
 
 /**
  * Location Component.
@@ -36,11 +39,6 @@ export class LocationComponent implements OnInit {
   public submitAttempt: boolean = false;
 
   /**
-   * Loading variable
-   */
-  public loading: boolean = true;
-
-  /**
    * Modal params.
    */
   public modelParams = [
@@ -51,30 +49,9 @@ export class LocationComponent implements OnInit {
   ];
 
   /**
-   * Location objects.
+   * location State.
    */
-  public locations: any[] = [
-    {
-      location_id: 0,
-      locationName: faker.commerce.department(),
-      locationAgency: 500,
-    },
-    {
-      location_id: 1,
-      locationName: faker.commerce.department(),
-      locationAgency: 600,
-    },
-    {
-      location_id: 2,
-      locationName: faker.commerce.department(),
-      locationAgency: 500,
-    },
-  ];
-
-  /**
-   * Current page.
-   */
-  public currentPage: number = 1;
+  public locationSate: ListState<Location> = new ListState();
 
   /**
    * @ignore
@@ -83,6 +60,8 @@ export class LocationComponent implements OnInit {
     public paginationService: PaginationService,
     public router: Router,
     private formBuilder: FormBuilder,
+    private locationService: LocationService,
+    private listController: ListControllerService,
   ) { }
 
   /**
@@ -95,8 +74,7 @@ export class LocationComponent implements OnInit {
     // initialize form
     self.initializeForm();
 
-    // loading
-    setTimeout(_ => self.loading = false, 1000);
+    this.getList();
   }
 
   /**
@@ -116,10 +94,52 @@ export class LocationComponent implements OnInit {
   }
 
   /**
-   * Search by input.
+   * Get all data.
    */
-  search(input: string): void {
-    console.log(input);
+  async getList() {
+    this.locationSate.loading = true;
+    this.locationSate.error = false;
+    this.locationSate.list = null;
+
+    // get list with all customers.
+    this.locationSate.allList = await this.locationService.getAllLocation()
+      .catch(error => (
+        this.locationSate.messageError = `Erro ao buscar os dados: ${error.message}`,
+        this.locationSate.error = true,
+        this.locationSate.loading = false, []));
+
+    // get current page.
+    const pages = this.listController.setPagination(1, this.locationSate.allList);
+    // set pager controller to pagination and set current page.
+    this.locationSate.pager = pages.pagerController;
+    this.locationSate.list = pages.currentPage;
+    this.locationSate.loading = false;
+  }
+
+  /**
+   * set current page.
+   */
+  pagination(page: number): void {
+    // get current page.
+    const pages = this.listController.setPagination(page, this.locationSate.allList);
+    // set pager controller to pagination and set current page.
+    this.locationSate.pager = pages.pagerController;
+    this.locationSate.list = pages.currentPage;
+  }
+
+  /**
+   * Do Search and aplly pagination.
+   * @param search value searched
+   */
+  search(search: string) {
+    // params to be searched
+    const params = ['environment_description'];
+    // get filters list case have filter active else get list.
+    const pages = this.listController.setSearch(search, params, this.locationSate.allList);
+
+    // set pager controller to pagination and set current page.
+    this.locationSate.pager = pages.pagerController;
+    this.locationSate.list = pages.currentPage;
   }
 
   /**

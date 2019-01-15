@@ -1,18 +1,57 @@
 <form [formGroup]="searchForm">
   <div class="row no-margin valign-wrapper">
-    <div class="col s12 m12 l12 xl12 border-out input-field no-margin">
 
-      <!-- input -->
-      <input (keydown.enter)="onSearch.emit(searchForm.value)" formControlName="input" [placeholder]="placeholder"
-        autocomplete="off" type="text" class="no-margin">
+    <ng-container *ngIf="!showFilter; else elseTemplate">
+      <div class="col s12 border-out input-field no-margin">
+        <!-- input -->
+        <input (keydown.enter)="onSearch.emit(input.value)" formControlName="input" [placeholder]="placeholder"
+          autocomplete="off" type="text" class="no-margin">
 
-      <!-- button -->
-      <div id="share" class="position-absolute center">
-        <a class="valign-wrapper cursor-pointer" (click)="onSearch.emit(searchForm.value)">
-          <i class="fas fa-search margin-auto fa-lg position-relative"></i>
+        <!-- button -->
+        <div id="share" class="position-absolute center">
+          <a class="valign-wrapper cursor-pointer" (click)="onSearch.emit(input.value)">
+            <i class="fas fa-search margin-auto fa-lg position-relative"></i>
+          </a>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #elseTemplate>
+      <div class="col s9 m8 border-out input-field no-margin">
+        <!-- input -->
+        <input (keydown.enter)="onSearch.emit(input.value)" formControlName="input" [placeholder]="placeholder"
+          autocomplete="off" type="text" class="no-margin">
+
+        <!-- button -->
+        <div id="share" class="position-absolute center">
+          <a class="valign-wrapper cursor-pointer" (click)="onSearch.emit(input.value)">
+            <i class="fas fa-search margin-auto fa-lg position-relative"></i>
+          </a>
+        </div>
+      </div>
+      <div class="col s3 m4">
+        <a class="waves-effect btn-large no-shadow primary border-radius-7px width-100 height-60px" data-activates="slide-filter"
+          materialize="sideNav" [materializeParams]="sideNavParams" [materializeActions]="sideNavActions">
+          <div class="row no-margin valign-wrapper height-60px">
+            <div class="col s12 m8 l9 hide-on-small-only no-padding">
+              <p class="no-margin white-text center-align">Filtros</p>
+            </div>
+            <div class="col s12 m4 l3 no-padding">
+              <i class="fas fa-sliders-h white-text"></i>
+            </div>
+          </div>
         </a>
       </div>
-
-    </div>
+    </ng-template>
   </div>
 </form>
+
+<!-- FILTERSS -->
+<!-- sidenav menu -->
+<ul id="slide-filter" class="side-nav side-menu secondary">
+  <!-- Filters header -->
+  <li class="primary d-flex align-items-center cursor-pointer" (click)="hideSideNav()">
+    <i class="material-icons white-text">chevron_left</i>
+    <span class="white-text font-size-20 font-weight-300 padding-left">Filtros</span>
+  </li>
+  <app-dynamic-form *ngIf="questions" [questions]="questions" (formValue)="formValues($event)" (formValueKeys)="formKeysSelected($event)"></app-dynamic-form>
+</ul>

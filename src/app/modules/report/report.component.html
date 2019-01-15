@@ -17,6 +17,27 @@
     <div class="col s12 grey-text text-lighten-1">
       <h3>Relatório</h3>
     </div>
+    <form [formGroup]="dateForm">
+      <div class="col s12 margin-vertical">
+        <div class="col s12 m6 push-m3 offset-m6 l3 margin-vertical-5px">
+          <input formControlName="start" hidden type="text" materialize="pickadate" [materializeActions]="startDateActions"
+            [materializeParams]="dataParams">
+          <app-button-generic [icon]="'event'" [isOutline]="true" [text]="(start.value == '')? 'Data início' : start.value"
+            (click)="openDatePicker(1)"></app-button-generic>
+        </div>
+        <div class="col s12 m12 l3 no-padding">
+          <div class="col s12 m6 push-m3 l12 margin-vertical-5px">
+            <input formControlName="end" hidden type="text" materialize="pickadate" [materializeActions]="endDateActions"
+              [materializeParams]="dataParams">
+            <app-button-generic (click)="openDatePicker(2)" [icon]="'event'" [isOutline]="true" [text]="(end.value == '')? 'Data término' : end.value"></app-button-generic>
+          </div>
+        </div>
+        <div class="col s12 push-m3 m6 l3 margin-vertical-5px" materialize [materializeParams]="['Preencha todos os campos',3000]"
+          [materializeActions]="toastActions">
+          <app-button-generic (click)="onSubmit(dateForm)" [text]="'Buscar'"></app-button-generic>
+        </div>
+      </div>
+    </form>
 
     <!-- panels -->
     <div class="col s12 m4" *ngFor="let button of buttons">
@@ -63,5 +84,7 @@
     </div>
 
   </div>
-
 </div>
+
+<!-- message -->
+<app-sweet-message [swalOptions]="swalOptions"></app-sweet-message>

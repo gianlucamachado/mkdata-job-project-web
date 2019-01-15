@@ -1,4 +1,4 @@
-<div class="container" *ngIf="!services || loading">
+<div class="container" *ngIf="!serviceState.list || serviceState.loading">
 
   <!-- loading component -->
   <div class="row">
@@ -8,7 +8,7 @@
 </div>
 
 <!--  -->
-<div class="container" *ngIf="services && !loading">
+<div class="container" *ngIf="serviceState.list && !serviceState.loading">
 
   <!-- panels -->
   <div class="row">
@@ -25,7 +25,7 @@
 
     <!-- searchbar -->
     <div class="col s9 m8 l9 xl10">
-      <app-search-bar [placeholder]="'Buscar por tipo de serviço'" (onSearch)="search($event.input)"></app-search-bar>
+      <app-search-bar [placeholder]="'Buscar por tipo de serviço'" (onSearch)="search($event)"></app-search-bar>
     </div>
 
     <!-- add button -->
@@ -46,17 +46,17 @@
   </div>
 
   <!-- table med and up -->
-  <div *ngIf="services?.length !== 0">
-    <span *ngFor="let service of services; let i = index">
+  <div *ngIf="serviceState.list?.length !== 0">
+    <div *ngFor="let service of serviceState.list; let i = index">
 
       <!-- med and up -->
-      <div class="row valign-wrapper hide-on-small-only border-row no-margin padding-vertical no-border-top" *ngIf="paginationService.isCurrentPage(i, currentPage)">
+      <div class="row valign-wrapper hide-on-small-only border-row no-margin padding-vertical no-border-top">
         <div class="col s12 m8 l10">
           <div class="col">
             <app-photo-circle [url]="service.icon"></app-photo-circle>
           </div>
           <div class="col">
-            <p class="truncate"> {{ service.serviceName }} </p>
+            <p class="truncate"> {{ service.service_type_description }} </p>
           </div>
         </div>
         <div class="col s12 m4 l2 center-align">
@@ -75,13 +75,12 @@
       </div>
 
       <!-- table small only -->
-      <div class="row show-on-small hide-on-med-and-up center-align border-row no-margin padding-vertical" *ngIf="paginationService.isCurrentPage(i, currentPage)"
-        [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
+      <div class="row show-on-small hide-on-med-and-up center-align border-row no-margin padding-vertical" [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
         <div class="col s12 center-align">
           <app-photo-circle [url]="service.icon"></app-photo-circle>
         </div>
         <div class="col s12 center-align">
-          <p class="truncate"> <span class="bold">Nome do Serviço: </span> {{ service.serviceName }} </p>
+          <p class="truncate"> <span class="bold">Nome do Serviço: </span> {{ service.service_type_description }} </p>
         </div>
         <div class="col s12 margin-top">
           <div class="col s6 center-align">
@@ -97,20 +96,22 @@
           </div>
         </div>
       </div>
-    </span>
+    </div>
   </div>
 
   <!-- pagination -->
-  <div *ngIf="services?.length !== 0">
+  <div *ngIf="serviceState.list?.length !== 0">
     <div class="col s12">
-      <app-pagination [numberOfItems]="services?.length" [currentPage]="currentPage" (onChange)="currentPage = $event"></app-pagination>
+      <app-pagination [pager]="serviceState.pager" (pagination)="pagination($event)"></app-pagination>
     </div>
   </div>
 
   <!-- table body message -->
-  <div *ngIf="services?.length === 0" class="row border-row">
+  <div *ngIf="serviceState.list?.length === 0" class="row border-row">
     <div class="col s12 padding">
-      <app-error-message [message]="'Nenhum serviço cadastrado'"></app-error-message>
+      <app-error-message *ngIf="!serviceState.error" [message]="'Nenhum serviço cadastrado'"></app-error-message>
+      <app-error-message *ngIf="serviceState.error" [tryAgainButton]="true" [message]="serviceState.messageError"
+        (tryGetData)="getList()"></app-error-message>
     </div>
   </div>
 

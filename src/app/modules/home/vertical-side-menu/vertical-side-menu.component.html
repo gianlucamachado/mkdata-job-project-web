@@ -4,13 +4,13 @@
 
       <!-- profile picture -->
       <div class="col s12 m12 l12 xl12 left-align margin-vertical">
-        <app-home-side-menu-photo [photoUrl]="user.photoUrl"></app-home-side-menu-photo>
+        <app-home-side-menu-photo [photoUrl]="user.admin_photo_url"></app-home-side-menu-photo>
       </div>
 
       <!-- profile information -->
       <div class="col s12 m12 l12 xl12 left-align">
-        <h5 class="no-margin white-text" *ngIf="user['fantasyName']"> {{ user['fantasyName'] }} </h5>
-        <h5 class="no-margin white-text" *ngIf="!user['fantasyName']"> {{ user['displayName'] }} </h5>
+        <h5 class="no-margin white-text" *ngIf="user['admin_name']"> {{ user['admin_name'] }} </h5>
+        <!-- <h5 class="no-margin white-text" *ngIf="!user['admin_name']"> {{ user['admin_name'] }} </h5> -->
       </div>
 
     </div>

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { CompanyRoutingModule } from './company-routing.module';
 import { CompanyComponent } from './company.component';
+import { CompanyService } from './company.service';
 
 @NgModule({
   imports: [
@@ -11,6 +12,9 @@ import { CompanyComponent } from './company.component';
   ],
   declarations: [
     CompanyComponent,
+  ],
+  providers: [
+    CompanyService,
   ],
 })
 export class CompanyModule { }

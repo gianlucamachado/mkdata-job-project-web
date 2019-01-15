@@ -4,6 +4,7 @@
     "max-line-length": [false],
     "no-increment-decrement": false,
     "prefer-template": false,
-    "align": [false]
+    "align": [false],
+    "variable-name": [false]
   }
 }

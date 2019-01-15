@@ -31,6 +31,11 @@ export class ButtonGenericComponent implements OnInit {
   @Input() isOutline: boolean = false;
 
   /**
+   * Icon string
+   */
+  @Input() icon: string;
+
+  /**
    * @ignore
    */
   constructor() { }
