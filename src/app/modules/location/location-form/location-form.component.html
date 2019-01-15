@@ -23,24 +23,27 @@
     </div>
 
     <!-- agency -->
-    <div class="col s12 padding">
-      <div class="input-field" *ngIf="agencies$">
-        <select id="category" materialize="material_select" formControlName="locationAgency">
-          <option value="" disabled selected>Selecione a agência</option>
-          <option *ngFor="let agency of agencies$ | async" [value]="agency.value">{{agency.name}}</option>
-        </select>
-        <label for="category">Agência</label>
+    <div class="row margin-top">
+      <div class="col s12 padding">
+        <div class="input-field" *ngIf="agencies$">
+          <select id="category" materialize="material_select" formControlName="agency_id">
+            <option value="" disabled selected>Selecione a agência</option>
+            <option *ngFor="let agency of agencies$ | async" [value]="agency.agency_id">{{agency.agency_code + ' - ' +
+              agency.agency_name}}</option>
+          </select>
+          <label for="category">Agência</label>
+        </div>
       </div>
     </div>
 
     <!-- input -->
     <div class="col s12 padding">
       <div class="input-field no-margin">
-        <input maxlength="20" (keydown.enter)="validate(modalForm)" formControlName="locationName" placeholder="Nome do Local"
-          type="text" class="validate" [ngClass]="{'invalid': utils.showError('locationName', modalForm, submitAttempt)}">
+        <input maxlength="20" (keydown.enter)="validate(modalForm)" formControlName="environment_description"
+          placeholder="Nome do Local" type="text" class="validate" [ngClass]="{'invalid': utils.showError('environment_description', modalForm, submitAttempt)}">
       </div>
-      <div class="form-control-feedback red-text" *ngIf="utils.showError('locationName', modalForm, submitAttempt)">
-        <p class="no-margin" *ngIf="modalForm.controls['locationName'].errors.required">Campo obrigatório</p>
+      <div class="form-control-feedback red-text" *ngIf="utils.showError('environment_description', modalForm, submitAttempt)">
+        <p class="no-margin" *ngIf="modalForm.controls['environment_description'].errors.required">Campo obrigatório</p>
       </div>
     </div>
 

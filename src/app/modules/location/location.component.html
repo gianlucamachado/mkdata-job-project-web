@@ -1,4 +1,4 @@
-<div class="container" *ngIf="!locationSate.list || locationSate.loading">
+<div class="container" *ngIf="!locationState.list || locationState.loading">
 
   <!-- loading component -->
   <div class="row">
@@ -8,7 +8,7 @@
 </div>
 
 <!--  -->
-<div class="container" *ngIf="locationSate.list && !locationSate.loading">
+<div class="container" *ngIf="locationState.list && !locationState.loading">
 
   <!-- panels -->
   <div class="row">
@@ -24,8 +24,13 @@
   <div class="row valign-wrapper">
 
     <!-- searchbar -->
-    <div class="col s12">
-      <app-search-bar [showFilter]="true" [placeholder]="'Buscar por local'" (onSearch)="search($event)"></app-search-bar>
+    <div class="col s9 m8 l9 xl10">
+      <app-search-bar [placeholder]="'Buscar por local'" (onSearch)="search($event)"></app-search-bar>
+    </div>
+
+    <!-- add button -->
+    <div class="col s3 m4 l3 xl2">
+      <app-button-add (onClick)="create()"></app-button-add>
     </div>
 
   </div>
@@ -44,8 +49,8 @@
   </div>
 
   <!-- table med and up -->
-  <div *ngIf="locationSate.list?.length !== 0">
-    <span *ngFor="let location of locationSate.list; let i = index">
+  <div *ngIf="locationState.list?.length !== 0">
+    <span *ngFor="let location of locationState.list; let i = index">
 
       <!-- table med and up -->
       <div class="row valign-wrapper hide-on-small-only border-row no-margin padding-vertical no-border-top hover-row cursor-pointer">
@@ -97,17 +102,17 @@
   </div>
 
   <!-- pagination -->
-  <div *ngIf="locationSate.list?.length !== 0">
+  <div *ngIf="locationState.list?.length !== 0">
     <div class="col s12">
-      <app-pagination [pager]="locationSate.pager" (pagination)="pagination($event)"></app-pagination>
+      <app-pagination [pager]="locationState.pager" (pagination)="pagination($event)"></app-pagination>
     </div>
   </div>
 
   <!-- table body message -->
-  <div *ngIf="locationSate.list?.length === 0" class="row border-row">
+  <div *ngIf="locationState.list?.length === 0" class="row border-row">
     <div class="col s12 padding">
-      <app-error-message *ngIf="!locationSate.error" [message]="'Nenhum local cadastrado'"></app-error-message>
-      <app-error-message *ngIf="locationSate.error" [tryAgainButton]="true" [message]="locationSate.messageError"
+      <app-error-message *ngIf="!locationState.error" [message]="'Nenhum local cadastrado'"></app-error-message>
+      <app-error-message *ngIf="locationState.error" [tryAgainButton]="true" [message]="locationState.messageError"
         (tryGetData)="getList()"></app-error-message>
     </div>
   </div>
