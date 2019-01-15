@@ -202,7 +202,6 @@ export class ServiceComponent implements OnInit {
 
     // path values
     self.modalForm.patchValue(service);
-    console.log(service);
 
     // set edit mode
     self.editMode = true;
@@ -251,9 +250,41 @@ export class ServiceComponent implements OnInit {
    * Update a service on switch event.
    * @param service Service snapshot to update.
    */
-  onSwitch(service: any): void {
+  onSwitch(event: any, service: any): void {
+
     // log values
-    console.log('onSwitch()', service);
+    console.log('onSwitch()', event.target.checked);
+
+    // tslint:disable-next-line:no-this-assignment
+    const self = this;
+
+    // path values
+    self.modalForm.patchValue(service);
+
+    // const active
+    const active: string = (event.target.checked) ? '1' : '0';
+
+    // set new value
+    self.modalForm.controls.service_type_active.setValue(active);
+
+    // get value
+    const value: any = self.modalForm.getRawValue();
+
+    // try/catch
+    try {
+
+      // add new service type
+      const response: any = this.servicesService.updateService(value, value.service_type_id);
+
+      // log response
+      console.log(response);
+
+    } catch (e) {
+
+      // log
+      console.error(e);
+
+    }
   }
 
   /**
