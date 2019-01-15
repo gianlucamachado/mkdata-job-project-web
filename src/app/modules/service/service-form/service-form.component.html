@@ -29,7 +29,7 @@
         </div>
 
         <!-- uploaded image -->
-        <div class="icon-box cursor-pointer" *ngIf="modalForm.value.icon !== ''" [ngStyle]="{ 'background-image': 'url(' + modalForm.value.icon + ')' }"
+        <div class="icon-box cursor-pointer" *ngIf="modalForm.value.icon !== ''" [ngStyle]="{ 'background-image': 'url(' + utils.verifyLink(modalForm.value.icon) + ')' }"
           (click)="file.click()">
           <div class="progress" *ngIf="uploadPercent">
             <div class="determinate" [style.width]="uploadPercent + '%'"></div>

@@ -1,3 +1,4 @@
+import { UtilsService } from './../../../providers/utils/utils.service';
 import { Component, OnInit, Input } from '@angular/core';
 
 /**
@@ -25,7 +26,9 @@ export class HomeSideMenuPhotoComponent implements OnInit {
   /**
    * @ignore
    */
-  constructor() { }
+  constructor(
+    public utilsService: UtilsService,
+  ) { }
 
   /**
    * @ignore

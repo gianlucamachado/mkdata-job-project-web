@@ -4,7 +4,7 @@
 
       <!-- profile picture -->
       <div class="col s12 m12 l12 xl12 left-align margin-vertical">
-        <app-home-side-menu-photo [photoUrl]="user.admin_photo_url"></app-home-side-menu-photo>
+        <app-home-side-menu-photo [photoUrl]="utilsService.verifyLink(user.admin_photo_url)"></app-home-side-menu-photo>
       </div>
 
       <!-- profile information -->
