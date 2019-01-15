@@ -136,10 +136,9 @@ export class ServiceComponent implements OnInit {
 
     // form group
     self.modalForm = self.formBuilder.group({
-      service_id: [''],
-      createdAt: [0, Validators.compose([Validators.required])],
-      serviceName: ['', Validators.compose([Validators.required])],
-      icon: ['', Validators.compose([Validators.required])],
+      service_type_id: [''],
+      service_type_description: ['', Validators.compose([Validators.required])],
+      service_type_active: ['0', Validators.compose([Validators.required])],
     });
   }
 
@@ -168,8 +167,29 @@ export class ServiceComponent implements OnInit {
     // log value
     console.log('createEvent()', value);
 
+    // present loading
+    this.serviceState.loading = true;
+
+    // try/catch
+    try {
+
+      // add new service type
+      const response: any = this.servicesService.createService(value);
+
+      // log response
+      console.log(response);
+
+    } catch (e) {
+
+      // log
+      console.error(e);
+
+    }
     // close modal
     this.closeModal();
+
+    // get info
+    this.getList();
   }
 
   /**
@@ -182,6 +202,7 @@ export class ServiceComponent implements OnInit {
 
     // path values
     self.modalForm.patchValue(service);
+    console.log(service);
 
     // set edit mode
     self.editMode = true;
@@ -201,8 +222,29 @@ export class ServiceComponent implements OnInit {
     // log value
     console.log('updateEvent()', value);
 
+    // present loading
+    this.serviceState.loading = true;
+
+    // try/catch
+    try {
+
+      // add new service type
+      const response: any = this.servicesService.updateService(value, value.service_type_id);
+
+      // log response
+      console.log(response);
+
+    } catch (e) {
+
+      // log
+      console.error(e);
+
+    }
     // close modal
     this.closeModal();
+
+    // get info
+    this.getList();
   }
 
   /**
