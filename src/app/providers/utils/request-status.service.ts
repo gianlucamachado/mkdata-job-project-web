@@ -10,7 +10,12 @@ export class RequestStatusService {
    */
   private baseUrl = '/api/request-status';
 
-  constructor(private httpRequestService: HttpRequestService) { }
+  /**
+   * @ignore
+   */
+  constructor(
+    private httpRequestService: HttpRequestService,
+  ) { }
 
   /**
    * Get list with all companies.

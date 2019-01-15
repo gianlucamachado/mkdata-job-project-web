@@ -10,7 +10,12 @@ export class UserService {
    */
   private baseUrl = '/api/employee';
 
-  constructor(private httpRequestService: HttpRequestService) { }
+  /**
+   * @ignore
+   */
+  constructor(
+    private httpRequestService: HttpRequestService,
+  ) { }
 
   /**
    * Get list with all users.

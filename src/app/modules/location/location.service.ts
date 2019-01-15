@@ -9,7 +9,12 @@ export class LocationService {
    */
   private baseUrl = '/api/environment';
 
-  constructor(private httpRequestService: HttpRequestService) { }
+  /**
+   * @ignore
+   */
+  constructor(
+    private httpRequestService: HttpRequestService,
+  ) { }
 
   /**
    * Get list with all locations.

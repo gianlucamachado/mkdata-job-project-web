@@ -11,7 +11,12 @@ export class CompanyService {
    */
   private baseUrl = '/api/company';
 
-  constructor(private httpRequestService: HttpRequestService) { }
+  /**
+   * @ignore
+   */
+  constructor(
+    private httpRequestService: HttpRequestService,
+  ) { }
 
   /**
    * Get list with all companies.

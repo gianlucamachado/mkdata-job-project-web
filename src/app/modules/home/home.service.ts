@@ -15,7 +15,12 @@ export class HomeService {
    */
   private baseUrl = '/api/admin/find';
 
-  constructor(private httpRequestService: HttpRequestService) { }
+  /**
+   * @ignore
+   */
+  constructor(
+    private httpRequestService: HttpRequestService,
+  ) { }
 
   /**
    * Get admin infos.

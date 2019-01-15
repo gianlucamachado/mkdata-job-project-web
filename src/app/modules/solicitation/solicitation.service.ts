@@ -9,7 +9,12 @@ export class SolicitationService {
    */
   private baseUrl = '/api/request';
 
-  constructor(private httpRequestService: HttpRequestService) { }
+  /**
+   * @ignore
+   */
+  constructor(
+    private httpRequestService: HttpRequestService,
+  ) { }
 
   /**
    * Get list with all companies.

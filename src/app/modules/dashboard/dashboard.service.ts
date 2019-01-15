@@ -10,7 +10,12 @@ export class DashboardService {
    */
   private baseUrl = '/api/dashboard';
 
-  constructor(private httpRequestService: HttpRequestService) { }
+  /**
+   * @ignore
+   */
+  constructor(
+    private httpRequestService: HttpRequestService,
+  ) { }
 
   /**
    * Get all dashboard data.

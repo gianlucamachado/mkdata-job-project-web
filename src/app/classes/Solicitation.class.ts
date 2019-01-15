@@ -2,7 +2,6 @@
  * Solicitation class.
  */
 export class Solicitation {
-  // tslint:disable:variable-name
   public agency: string;
   public employee_name: string;
   public employee_photo_url: string;

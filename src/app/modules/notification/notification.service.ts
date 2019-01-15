@@ -9,7 +9,12 @@ export class NotificationService {
    */
   private baseUrl = '/api/notification';
 
-  constructor(private httpRequestService: HttpRequestService) { }
+  /**
+   * @ignore
+   */
+  constructor(
+    private httpRequestService: HttpRequestService,
+  ) { }
 
   /**
    * Get list with last 50 notifications.
