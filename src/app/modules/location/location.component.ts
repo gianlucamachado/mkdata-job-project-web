@@ -89,6 +89,7 @@ export class LocationComponent implements OnInit {
     self.modalForm = self.formBuilder.group({
       environment_id: [''],
       environment_description: ['', Validators.compose([Validators.required])],
+      environment_active: ['1', Validators.compose([Validators.required])],
       agency_id: ['', Validators.compose([Validators.required])],
     });
   }
@@ -160,12 +161,15 @@ export class LocationComponent implements OnInit {
    * Save a location.
    * @param form Form with values.
    */
-  createEvent(form: FormGroup): void {
+  async createEvent(form: FormGroup) {
     // get form value
     const value: any = form.getRawValue();
 
     // log value
     console.log('createEvent()', value);
+
+    // close modal
+    this.closeModal();
 
     // present loading
     this.locationState.loading = true;
@@ -174,7 +178,7 @@ export class LocationComponent implements OnInit {
     try {
 
       // add new service type
-      const response: any = this.locationService.createEnvironment(value);
+      const response: any = await this.locationService.createEnvironment(value);
 
       // log response
       console.log(response);
@@ -185,8 +189,6 @@ export class LocationComponent implements OnInit {
       console.error(e);
 
     }
-    // close modal
-    this.closeModal();
 
     // get info
     this.getList();
@@ -214,12 +216,15 @@ export class LocationComponent implements OnInit {
    * Update a location.
    * @param form Form with values.
    */
-  updateEvent(form: FormGroup): void {
+  async updateEvent(form: FormGroup) {
     // get form value
     const value: any = form.getRawValue();
 
     // log value
     console.log('updateEvent()', value);
+
+    // close modal
+    this.closeModal();
 
     // present loading
     this.locationState.loading = true;
@@ -228,7 +233,7 @@ export class LocationComponent implements OnInit {
     try {
 
       // add new service type
-      const response: any = this.locationService.updateEnvironment(value, value.environment_id);
+      const response: any = await this.locationService.updateEnvironment(value, value.environment_id);
 
       // log response
       console.log(response);
@@ -239,8 +244,6 @@ export class LocationComponent implements OnInit {
       console.error(e);
 
     }
-    // close modal
-    this.closeModal();
 
     // get info
     this.getList();
@@ -250,9 +253,44 @@ export class LocationComponent implements OnInit {
    * Update a location on switch event.
    * @param location location snapshot to update.
    */
-  onSwitch(location: any): void {
+  async onSwitch(event: any, location: any) {
+
     // log values
-    console.log('onSwitch()', location);
+    console.log('onSwitch()', event.target.checked);
+
+    // tslint:disable-next-line:no-this-assignment
+    const self = this;
+
+    // path values
+    self.modalForm.patchValue(location);
+
+    // const active
+    const active: string = (event.target.checked) ? '1' : '0';
+
+    // set new value
+    self.modalForm.controls.environment_active.setValue(active);
+
+    // get value
+    const value: any = self.modalForm.getRawValue();
+
+    // log value
+    console.log(value);
+
+    // try/catch
+    try {
+
+      // add new service type
+      const response: any = await this.locationService.updateEnvironment(value, value.environment_id);
+
+      // log response
+      console.log(response);
+
+    } catch (e) {
+
+      // log
+      console.error(e);
+
+    }
   }
 
   /**

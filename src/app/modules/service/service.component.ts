@@ -160,12 +160,15 @@ export class ServiceComponent implements OnInit {
    * Save a service.
    * @param form Form with values.
    */
-  createEvent(form: FormGroup): void {
+  async createEvent(form: FormGroup) {
     // get form value
     const value: any = form.getRawValue();
 
     // log value
     console.log('createEvent()', value);
+
+    // close modal
+    this.closeModal();
 
     // present loading
     this.serviceState.loading = true;
@@ -174,7 +177,7 @@ export class ServiceComponent implements OnInit {
     try {
 
       // add new service type
-      const response: any = this.servicesService.createService(value);
+      const response: any = await this.servicesService.createService(value);
 
       // log response
       console.log(response);
@@ -185,8 +188,6 @@ export class ServiceComponent implements OnInit {
       console.error(e);
 
     }
-    // close modal
-    this.closeModal();
 
     // get info
     this.getList();
@@ -214,12 +215,15 @@ export class ServiceComponent implements OnInit {
    * Update a service.
    * @param form Form with values.
    */
-  updateEvent(form: FormGroup): void {
+  async updateEvent(form: FormGroup) {
     // get form value
     const value: any = form.getRawValue();
 
     // log value
     console.log('updateEvent()', value);
+
+    // close modal
+    this.closeModal();
 
     // present loading
     this.serviceState.loading = true;
@@ -228,7 +232,7 @@ export class ServiceComponent implements OnInit {
     try {
 
       // add new service type
-      const response: any = this.servicesService.updateService(value, value.service_type_id);
+      const response: any = await this.servicesService.updateService(value, value.service_type_id);
 
       // log response
       console.log(response);
@@ -239,8 +243,6 @@ export class ServiceComponent implements OnInit {
       console.error(e);
 
     }
-    // close modal
-    this.closeModal();
 
     // get info
     this.getList();
@@ -250,7 +252,7 @@ export class ServiceComponent implements OnInit {
    * Update a service on switch event.
    * @param service Service snapshot to update.
    */
-  onSwitch(event: any, service: any): void {
+  async onSwitch(event: any, service: any) {
 
     // log values
     console.log('onSwitch()', event.target.checked);
@@ -274,7 +276,7 @@ export class ServiceComponent implements OnInit {
     try {
 
       // add new service type
-      const response: any = this.servicesService.updateService(value, value.service_type_id);
+      const response: any = await this.servicesService.updateService(value, value.service_type_id);
 
       // log response
       console.log(response);

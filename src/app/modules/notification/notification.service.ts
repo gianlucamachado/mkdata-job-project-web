@@ -24,7 +24,7 @@ export class NotificationService {
       (resolve, reject) => {
         this.httpRequestService.getRequestWithAuthorization(`${this.baseUrl}`)
           .subscribe(
-            response => resolve(response),
+            response => resolve(response.notifications),
             error => reject(error),
           );
       },
