@@ -8,6 +8,8 @@ import { PaginationService } from '../../components/others/pagination/pagination
 import { UtilsService } from './../../providers/utils/utils.service';
 
 import { MaterializeAction } from 'angular2-materialize';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 /**
  * Company component.
@@ -32,7 +34,32 @@ export class CompanyComponent implements OnInit {
   /**
    * Company state.
    */
-  public companySate: ListState<Company> = new ListState<Company>();
+  public companyState: ListState<Company> = new ListState<Company>();
+
+  /**
+   * Modal actions.
+   */
+  public modalActions = new EventEmitter<any | MaterializeAction>();
+
+  /*
+   * Modal form.
+   */
+  public modalForm: FormGroup;
+
+  /**
+   * Submit attempt variable.
+   */
+  public submitAttempt: boolean = false;
+
+  /**
+   * Modal params.
+   */
+  public modelParams = [
+    {
+      dismissible: false,
+      complete: () => { },
+    },
+  ];
 
   /**
    * @ignore
@@ -42,37 +69,57 @@ export class CompanyComponent implements OnInit {
     private companyService: CompanyService,
     public utilsService: UtilsService,
     private listController: ListControllerService,
+    private formBuilder: FormBuilder,
+    public router: Router,
   ) { }
 
   /**
    * @ignore
    */
   ngOnInit() {
+    // initialize form
+    this.initializeForm();
 
+    // get list
     this.getList();
+  }
+
+  /**
+   * Initialize Form.
+   */
+  initializeForm(): void {
+    // tslint:disable-next-line:no-this-assignment
+    const self = this;
+
+    // form group
+    self.modalForm = self.formBuilder.group({
+      agency_id: ['', Validators.compose([Validators.required])],
+      company_id: ['', Validators.compose([Validators.required])],
+      service_type_id: ['', Validators.compose([Validators.required])],
+    });
   }
 
   /**
    * Get all data.
    */
   async getList() {
-    this.companySate.loading = true;
-    this.companySate.error = false;
-    this.companySate.list = null;
+    this.companyState.loading = true;
+    this.companyState.error = false;
+    this.companyState.list = null;
 
     // get list with all customers.
-    this.companySate.allList = await this.companyService.getAllCompanies()
+    this.companyState.allList = await this.companyService.getAllCompanies()
       .catch(error => (
-        this.companySate.messageError = `Erro ao buscar os dados: ${error.message}`,
-        this.companySate.error = true,
-        this.companySate.loading = false, []));
+        this.companyState.messageError = `Erro ao buscar os dados: ${error.message}`,
+        this.companyState.error = true,
+        this.companyState.loading = false, []));
 
     // get current page.
-    const { pagerController, currentPage } = this.listController.setPagination(1, this.companySate.allList);
+    const { pagerController, currentPage } = this.listController.setPagination(1, this.companyState.allList);
     // set pager controller to pagination and set current page.
-    this.companySate.pager = pagerController;
-    this.companySate.list = currentPage;
-    this.companySate.loading = false;
+    this.companyState.pager = pagerController;
+    this.companyState.list = currentPage;
+    this.companyState.loading = false;
   }
 
   /**
@@ -80,10 +127,10 @@ export class CompanyComponent implements OnInit {
    */
   pagination(page: number): void {
     // get current page.
-    const { pagerController, currentPage } = this.listController.setPagination(page, this.companySate.allList);
+    const { pagerController, currentPage } = this.listController.setPagination(page, this.companyState.allList);
     // set pager controller to pagination and set current page.
-    this.companySate.pager = pagerController;
-    this.companySate.list = currentPage;
+    this.companyState.pager = pagerController;
+    this.companyState.list = currentPage;
   }
 
   /**
@@ -94,10 +141,10 @@ export class CompanyComponent implements OnInit {
     // params to be searched
     const params = ['company_fantasy_name', 'company_responsible_name', 'company_cnpj', 'user_email'];
     // get filters list case have filter active else get list.
-    const { pagerController, currentPage } = this.listController.setSearch(search, params, this.companySate.allList);
+    const { pagerController, currentPage } = this.listController.setSearch(search, params, this.companyState.allList);
     // set pager controller to pagination and set current page.
-    this.companySate.pager = pagerController;
-    this.companySate.list = currentPage;
+    this.companyState.pager = pagerController;
+    this.companyState.list = currentPage;
   }
 
   /**
@@ -109,6 +156,87 @@ export class CompanyComponent implements OnInit {
 
     // emit event to close modal
     self.sideNavActions.emit({ action: 'sideNav', params: ['hide'] });
+  }
+
+  /**
+   * Update a service.
+   * @param service Service snapshot to remove from database.
+   */
+  update(service: any): void {
+    // tslint:disable-next-line:no-this-assignment
+    const self = this;
+
+    // path values
+    self.modalForm.patchValue(service);
+
+    // open modal
+    self.openModal();
+  }
+
+  /**
+   * Update a service.
+   * @param form Form with values.
+   */
+  async updateEvent(form: FormGroup) {
+
+    // get form value
+    const value: any = form.getRawValue();
+
+    // log value
+    console.log('updateEvent()', value);
+
+    // close modal
+    this.closeModal();
+
+    // present loading
+    this.companyState.loading = true;
+
+    // try/catch
+    try {
+
+      // add new service type
+      const response: any = await this.companyService.createServiceTypeAgency(value);
+
+      // log response
+      console.log(response);
+
+    } catch (e) {
+
+      // log
+      console.error(e);
+
+    }
+
+    // get info
+    this.getList();
+  }
+
+  /**
+   * Open modal.
+   */
+  openModal(): void {
+    // tslint:disable-next-line:no-this-assignment
+    const self = this;
+
+    // emit event to open modal
+    self.modalActions.emit({ action: 'modal', params: ['open'] });
+  }
+
+  /**
+   * Close modal page.
+   */
+  closeModal(): void {
+    // tslint:disable-next-line:no-this-assignment
+    const self = this;
+
+    // set false submit attempt
+    self.submitAttempt = false;
+
+    // reset form
+    self.initializeForm();
+
+    // emit event to close modal
+    self.modalActions.emit({ action: 'modal', params: ['close'] });
   }
 
 }

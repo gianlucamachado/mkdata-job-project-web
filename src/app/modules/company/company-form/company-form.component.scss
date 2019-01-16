@@ -1,0 +1,20 @@
+@import 'src/app/theme/variables.scss';
+
+.padding {
+  padding: $padding !important;
+}
+
+.padding-horizontal {
+  padding: 0px $padding !important;
+}
+
+.padding-top {
+  padding-top: $padding !important;
+}
+
+input[type=text].valid:not(.browser-default):focus,
+input[type=text]:not(.browser-default):focus:not([readonly]) {
+  border-bottom-color: map-get($map: $colors, $key: primary);
+  -webkit-box-shadow: 0 1px 0 0 map-get($map: $colors, $key: primary);
+  box-shadow: 0 1px 0 0 map-get($map: $colors, $key: primary);
+}

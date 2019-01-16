@@ -1,0 +1,63 @@
+<form [formGroup]="modalForm">
+  <div class="row">
+
+    <!-- icon close -->
+    <div class="col s12 right-align">
+      <i class="material-icons right cursor-pointer" (click)="onClose.emit()">close</i>
+    </div>
+
+    <!-- header -->
+    <div class="col s12 center-align padding">
+      <h5 class="no-margin">Associar serviço</h5>
+    </div>
+
+    <!-- message -->
+    <div class="col s12">
+      <p class="center-align no-margin">Escolha a agência e o tipo de serviço prestado pela empresas.</p>
+    </div>
+
+    <!-- agency -->
+    <div class="row margin-top">
+      <div class="col s12 padding-horizontal padding-top">
+        <div class="input-field" *ngIf="agencies$">
+          <select id="category" materialize="material_select" formControlName="agency_id">
+            <option value="" disabled selected>Selecione a agência</option>
+            <option *ngFor="let agency of agencies$ | async" [value]="agency.agency_id">{{agency.agency_code + ' - ' +
+              agency.agency_name}}</option>
+          </select>
+          <label for="category">Agência</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- loading -->
+    <div class="row" *ngIf="loading" >
+      <app-item-loading></app-item-loading>
+    </div>
+
+    <!-- input -->
+    <div class="row margin-top" *ngIf="services$ && (services$ | async)?.length > 0 && !loading">
+      <div class="col s12 padding-horizontal">
+        <div class="input-field">
+          <select id="category" materialize="material_select" formControlName="service_type_id">
+            <option value="" disabled selected>Selecione o tipo de serviço</option>
+            <option *ngFor="let service of services$ | async" [value]="service.service_type_id">{{
+              service.service_type_description }}</option>
+          </select>
+          <label for="category">Tipo de serviço</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- button concluir -->
+    <div class="col s12 m6 push-m6 padding center-align">
+      <app-button-generic [text]="'Salvar'" (onClick)="validate(modalForm)"></app-button-generic>
+    </div>
+
+    <!-- button cancel -->
+    <div class="col s12 m6 pull-m6 padding center-align">
+      <app-button-generic [text]="'Cancelar'" [isOutline]="true" (onClick)="onClose.emit()"></app-button-generic>
+    </div>
+
+  </div>
+</form>

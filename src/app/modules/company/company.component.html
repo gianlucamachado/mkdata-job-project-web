@@ -1,4 +1,4 @@
-<div class="container" *ngIf="!companySate.list || companySate.loading">
+<div class="container" *ngIf="!companyState.list || companyState.loading">
 
   <!-- loading component -->
   <div class="row">
@@ -8,7 +8,7 @@
 </div>
 
 <!--  -->
-<div class="container" *ngIf="companySate.list && !companySate.loading">
+<div class="container" *ngIf="companyState.list && !companyState.loading">
 
   <!-- panels -->
   <div class="row">
@@ -47,8 +47,8 @@
   </div>
 
   <!-- table med and up -->
-  <div *ngIf="companySate.list?.length !== 0">
-    <span *ngFor="let company of companySate.list; let i = index">
+  <div *ngIf="companyState.list?.length !== 0">
+    <span *ngFor="let company of companyState.list; let i = index">
 
       <div class="row valign-wrapper hide-on-med-and-down border-row no-margin padding-vertical no-border-top hover-row cursor-pointer">
         <div class="col s4">
@@ -64,7 +64,7 @@
           <p> {{ company.amount }} </p>
         </div>
         <div class="col s1 center-align">
-          <i class="fas fa-pencil-alt fa-2x blue-text text-darken-4"></i>
+          <i class="fas fa-pencil-alt fa-2x blue-text text-darken-4" (click)="update(company)"></i>
         </div>
       </div>
 
@@ -78,7 +78,7 @@
           <p> <span class="bold">Responsável:</span> {{ company.company_responsible_name }} </p>
           <p> <span class="bold">Telefone:</span> {{ company.company_phone | mask: '(00) 00000-0000' }} </p>
           <p> <span class="bold">Serviços:</span> {{ company.amount }} </p>
-          <i class="fas fa-pencil-alt fa-2x blue-text text-darken-4"></i>
+          <i class="fas fa-pencil-alt fa-2x blue-text text-darken-4" (click)="update(company)"></i>
         </div>
       </div>
 
@@ -90,24 +90,24 @@
           <p> <span class="bold">Responsável:</span> {{ company.company_responsible_name }} </p>
           <p> <span class="bold">Telefone:</span> {{ company.company_phone | mask: '(00) 00000-0000' }} </p>
           <p> <span class="bold">Serviços:</span> {{ company.amount }} </p>
-          <i class="fas fa-pencil-alt fa-2x blue-text text-darken-4"></i>
+          <i class="fas fa-pencil-alt fa-2x blue-text text-darken-4" (click)="update(company)"></i>
         </div>
       </div>
     </span>
   </div>
 
   <!-- pagination -->
-  <div *ngIf="companySate.list?.length !== 0">
+  <div *ngIf="companyState.list?.length !== 0">
     <div class="col s12">
-      <app-pagination [pager]="companySate.pager" (pagination)="pagination($event)"></app-pagination>
+      <app-pagination [pager]="companyState.pager" (pagination)="pagination($event)"></app-pagination>
     </div>
   </div>
 
   <!-- table body message -->
-  <div *ngIf="companySate.list?.length === 0" class="row border-row">
+  <div *ngIf="companyState.list?.length === 0" class="row border-row">
     <div class="col s12 padding">
-      <app-error-message *ngIf="!companySate.error" [message]="'Nenhuma empresa cadastrada'"></app-error-message>
-      <app-error-message *ngIf="companySate.error" [tryAgainButton]="true" [message]="companySate.messageError"
+      <app-error-message *ngIf="!companyState.error" [message]="'Nenhuma empresa cadastrada'"></app-error-message>
+      <app-error-message *ngIf="companyState.error" [tryAgainButton]="true" [message]="companyState.messageError"
         (tryGetData)="getList()"></app-error-message>
     </div>
   </div>
@@ -123,3 +123,12 @@
   </li>
 
 </ul>
+
+
+<!-- modal form -->
+<div *ngIf="router.url === '/administrador/empresa'" id="company_modal" class="modal" materialize="modal"
+  [materializeParams]="modelParams" [materializeActions]="modalActions">
+  <div class="modal-content">
+    <app-company-form [submitAttempt]="submitAttempt" [modalForm]="modalForm" (onClose)="closeModal()" (onUpdate)="updateEvent($event)"></app-company-form>
+  </div>
+</div>
