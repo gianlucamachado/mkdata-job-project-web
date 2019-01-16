@@ -1,13 +1,14 @@
 import { ListState } from './../../classes/State.class';
 import { ListControllerService } from './../../providers/utils/list-controller.service';
 import { ServicesService } from './services.service';
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
 import { MaterializeAction } from 'angular2-materialize';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as faker from 'faker';
 import { PaginationService } from '../../components/others/pagination/pagination.service';
 import { Service } from '../../classes/Service.class';
+import { SweetMessageComponent } from '../../components/others/sweet-message/sweet-message.component';
 
 /**
  * Service component.
@@ -53,6 +54,20 @@ export class ServiceComponent implements OnInit {
    * Service class state.
    */
   public serviceState: ListState<Service> = new ListState();
+
+  /**
+   * Swal options.
+   */
+  public swalOptions: any = {
+    title: '',
+    content: '',
+    button: 'Entendi',
+  };
+
+  /**
+   * View message child.
+   */
+  @ViewChild(SweetMessageComponent) messageComponent: SweetMessageComponent;
 
   /**
    * @ignore
@@ -138,7 +153,7 @@ export class ServiceComponent implements OnInit {
     self.modalForm = self.formBuilder.group({
       service_type_id: [''],
       service_type_description: ['', Validators.compose([Validators.required])],
-      service_type_active: ['0', Validators.compose([Validators.required])],
+      service_type_active: ['1', Validators.compose([Validators.required])],
     });
   }
 
@@ -182,12 +197,25 @@ export class ServiceComponent implements OnInit {
       // log response
       console.log(response);
 
+      // message
+      this.swalOptions.title = 'Sucesso';
+      this.swalOptions.content = 'Serviço adicionado com sucesso';
+      this.swalOptions.button = 'Entendi';
+
     } catch (e) {
 
       // log
       console.error(e);
 
+      // message
+      this.swalOptions.title = 'Erro';
+      this.swalOptions.content = 'Erro ao criar novo serviço';
+      this.swalOptions.button = 'Entendi';
+
     }
+
+    // show message
+    this.messageComponent.show();
 
     // get info
     this.getList();
@@ -237,12 +265,25 @@ export class ServiceComponent implements OnInit {
       // log response
       console.log(response);
 
+      // message
+      this.swalOptions.title = 'Sucesso';
+      this.swalOptions.content = 'Serviço atualizado com sucesso';
+      this.swalOptions.button = 'Entendi';
+
     } catch (e) {
 
       // log
       console.error(e);
 
+      // message
+      this.swalOptions.title = 'Erro';
+      this.swalOptions.content = 'Erro ao atualizar serviço';
+      this.swalOptions.button = 'Entendi';
+
     }
+
+    // show message
+    this.messageComponent.show();
 
     // get info
     this.getList();
