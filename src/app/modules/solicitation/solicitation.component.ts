@@ -7,6 +7,7 @@ import { Solicitation } from '../../classes/Solicitation.class';
 import { PaginationService } from '../../components/others/pagination/pagination.service';
 
 import { MaterializeAction } from 'angular2-materialize';
+import { Router } from '@angular/router';
 
 /**
  * Solicitation component.
@@ -45,6 +46,7 @@ export class SolicitationComponent implements OnInit {
     public paginationService: PaginationService,
     private listController: ListControllerService,
     private solicitationService: SolicitationService,
+    private router: Router,
   ) { }
 
   /**
@@ -130,6 +132,19 @@ export class SolicitationComponent implements OnInit {
 
     // emit event to close modal
     self.sideNavActions.emit({ action: 'sideNav', params: ['hide'] });
+  }
+
+  /**
+   * Open request details.
+   */
+  openDetails(solicitation: any) {
+
+    // log solicitation
+    console.log(solicitation);
+
+    // navigate
+    this.router.navigate([`/administrador/solicitacao/detalhes/${solicitation.request_id}`]);
+
   }
 
 }

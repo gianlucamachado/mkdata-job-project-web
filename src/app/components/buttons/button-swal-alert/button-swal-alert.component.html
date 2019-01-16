@@ -1,0 +1,37 @@
+<!-- Swall confirm -->
+<swal #generalSwal [showConfirmButton]="false" [allowOutsideClick]="dismissible">
+
+  <!-- header -->
+  <ng-container *swalPartial="swalTargets.title">
+    <div class="d-flex justify-content-center flex-column align-items-center">
+      <img src="assets/sicoob-logo-horizontal-default.png" height="40" alt="Logo">
+    </div>
+  </ng-container>
+
+  <!-- content -->
+  <div class="d-flex flex-column align-items-center margin-top" *swalPartial="swalTargets.content">
+
+    <!-- buttons -->
+    <div class="padding-bottom-40px d-flex flex-column align-items-center margin-bottom-5px">
+      <strong class="title-text padding-top center-align"> {{ swalOptions.title }} </strong>
+      <span class="padding-vertical center-align">
+        {{ swalOptions.content }}
+      </span>
+    </div>
+
+    <!-- buttons -->
+    <div class="row no-margin margin-top position-absolute bottom-0 width-100">
+      <div class="col s6 no-padding">
+        <a class="btn hover-secondary btn-large width-100 grey lighten-3 grey-text text-darken-3" (click)="left()">
+          {{ swalOptions.button_left }}
+        </a>
+      </div>
+      <div class="col s6 no-padding">
+        <a class="btn hover-secondary btn-large width-100 primary white-text" (click)="right()">
+          {{ swalOptions.button_right }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+</swal>

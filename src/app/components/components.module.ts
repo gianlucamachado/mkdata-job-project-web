@@ -1,3 +1,4 @@
+import { ButtonSwalAlertComponent } from './buttons/button-swal-alert/button-swal-alert.component';
 import { SpinnerComponent } from './others/spinner/spinner.component';
 import { SweetMessageComponent } from './others/sweet-message/sweet-message.component';
 import { PaginationComponent } from './others/pagination/pagination.component';
@@ -24,6 +25,7 @@ import { CreateformsService } from '../providers/form/createforms.service';
 import { NgxMaskModule } from 'ngx-mask';
 import { MaterializeModule } from 'angular2-materialize';
 import { RequestStatusService } from '../providers/utils/request-status.service';
+import { InputCommentComponent } from './forms/input-comment/input-comment.component';
 
 @NgModule({
   imports: [
@@ -51,6 +53,8 @@ import { RequestStatusService } from '../providers/utils/request-status.service'
     ItemFilterHeaderComponent,
     SweetMessageComponent,
     SpinnerComponent,
+    InputCommentComponent,
+    ButtonSwalAlertComponent,
   ],
   providers: [
     QuestionControlService,
@@ -58,6 +62,8 @@ import { RequestStatusService } from '../providers/utils/request-status.service'
     RequestStatusService,
   ],
   exports: [
+    ButtonSwalAlertComponent,
+    InputCommentComponent,
     SpinnerComponent,
     SweetMessageComponent,
     ItemFilterHeaderComponent,

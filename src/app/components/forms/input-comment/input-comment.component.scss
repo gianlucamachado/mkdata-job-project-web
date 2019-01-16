@@ -1,0 +1,49 @@
+@import 'src/app/theme/variables.scss';
+
+.padding {
+  padding: $padding !important;
+}
+
+.footer-fixed nav {
+  height: 64px;
+  line-height: 64px;
+  text-transform: uppercase;
+}
+
+.footer-fixed {
+  position: fixed;
+  width: 100vw;
+  height: 64px;
+  padding: 0;
+  bottom: 0;
+}
+
+.no-border-bottom.input:not([type]):focus:not([readonly]),
+.no-border-bottom.input[type=text]:not(.browser-default):focus:not([readonly]),
+.no-border-bottom.input[type=password]:not(.browser-default):focus:not([readonly]),
+.no-border-bottom.input[type=email]:not(.browser-default):focus:not([readonly]),
+.no-border-bottom.input[type=url]:not(.browser-default):focus:not([readonly]),
+.no-border-bottom.input[type=time]:not(.browser-default):focus:not([readonly]),
+.no-border-bottom.input[type=date]:not(.browser-default):focus:not([readonly]),
+.no-border-bottom.input[type=datetime]:not(.browser-default):focus:not([readonly]),
+.no-border-bottom.input[type=datetime-local]:not(.browser-default):focus:not([readonly]),
+.no-border-bottom.input[type=tel]:not(.browser-default):focus:not([readonly]),
+.no-border-bottom.input[type=number]:not(.browser-default):focus:not([readonly]),
+.no-border-bottom.input[type=search]:not(.browser-default):focus:not([readonly]),
+.no-border-bottom.textarea.materialize-textarea:focus:not([readonly]) {
+  border: none;
+  box-shadow: none;
+}
+
+input {
+  color: black;
+}
+
+.input-button {
+  line-height: normal !important;
+  margin-bottom: 5px;
+}
+
+.width-100 {
+  width: 100%;
+}
