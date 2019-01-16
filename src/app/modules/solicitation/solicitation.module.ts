@@ -5,6 +5,7 @@ import { SolicitationRoutingModule } from './solicitation-routing.module';
 import { SolicitationComponent } from './solicitation.component';
 import { SolicitationService } from './solicitation.service';
 import { RequestStatusService } from '../../providers/utils/request-status.service';
+import { SolicitationDetailsComponent } from './solicitation-details/solicitation-details.component';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { RequestStatusService } from '../../providers/utils/request-status.servi
   ],
   declarations: [
     SolicitationComponent,
+    SolicitationDetailsComponent,
   ],
   providers: [
     SolicitationService,

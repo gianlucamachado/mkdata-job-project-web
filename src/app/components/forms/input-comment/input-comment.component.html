@@ -1,0 +1,35 @@
+<!-- mobile -->
+<footer class="page-footer footer-fixed hide-on-med-and-up">
+  <nav class="white border-row-top overflow-hidden no-shadow">
+    <div class="row no-margin valign-wrapper">
+
+      <div class="input-field col s9">
+        <form [formGroup]="inputForm">
+          <input class="no-border-bottom" placeholder="Adicionar comentário" formControlName="input" type="text" (keydown.enter)="validate(inputForm)">
+        </form>
+      </div>
+
+      <div class="col s3 center-align" (click)="validate(inputForm)">
+        <p class="primary-text no-margin input-button">Enviar</p>
+      </div>
+
+    </div>
+  </nav>
+</footer>
+
+<!-- desktop -->
+<div class="row no-margin hide-on-small-only">
+
+  <div class="input-field col s12">
+    <form [formGroup]="inputForm">
+      <input placeholder="Adicionar comentário" formControlName="input" type="text">
+    </form>
+  </div>
+
+  <div class="col s3 push-s9 right-align">
+    <a class="waves-effect waves-light btn-large no-shadow primary bold border-radius-3px width-100" (click)="validate(inputForm)">
+      Enviar
+    </a>
+  </div>
+
+</div>
