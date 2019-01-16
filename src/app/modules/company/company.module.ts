@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { CompanyRoutingModule } from './company-routing.module';
 import { CompanyComponent } from './company.component';
 import { CompanyService } from './company.service';
+import { CompanyFormComponent } from './company-form/company-form.component';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { CompanyService } from './company.service';
   ],
   declarations: [
     CompanyComponent,
+    CompanyFormComponent,
   ],
   providers: [
     CompanyService,

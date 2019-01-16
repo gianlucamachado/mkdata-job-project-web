@@ -43,11 +43,13 @@
     </span>
 
     <!-- purchase request -->
-    <div class="col s12 margin-top grey lighten-4">
-      <p class="padding-vertical no-margin black-text bold center-align"> Detalhes da solicitação de compra </p>
-      <p class="no-margin justify-text"> <span class="bold">Descrição:</span> {{ solicitation?.purchase_request?.purchase_request_description }} </p>
-      <p class="no-margin justify-text padding-bottom"> <span class="bold">Preço estimado:</span> {{ solicitation?.purchase_request?.purchase_request_price | currency: 'BRL' }} </p>
-    </div>
+    <span *ngIf="number(solicitation.request_status_id) > 0 && solicitation.purchase_request">
+      <div class="col s12 margin-top grey lighten-4">
+        <p class="padding-vertical no-margin black-text bold center-align"> Detalhes da solicitação de compra </p>
+        <p class="no-margin justify-text"> <span class="bold">Descrição:</span> {{ solicitation?.purchase_request?.purchase_request_description }} </p>
+        <p class="no-margin justify-text padding-bottom"> <span class="bold">Preço estimado:</span> {{ solicitation?.purchase_request?.purchase_request_price | currency: 'BRL' }} </p>
+      </div>
+    </span>
 
     <!-- description -->
     <div class="col s12 padding-top">
