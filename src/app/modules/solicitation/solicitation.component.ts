@@ -40,6 +40,11 @@ export class SolicitationComponent implements OnInit {
   public paramsToCompareSearch = ['employee_name', 'service_type_description', 'agency'];
 
   /**
+   * Number method
+   */
+  public number: NumberConstructor = Number;
+
+  /**
    * @ignore
    */
   constructor(

@@ -70,10 +70,10 @@
         <span class="orange-text" *ngIf="number(solicitation.purchase_request.purchase_status_id) === 1">
           Aguardando aprovação de solicitação
         </span>
-        <span class="green-text" *ngIf="number(solicitation.purchase_request.purchase_status_id) === 2">
+        <span class="deep-purple-text" *ngIf="number(solicitation.purchase_request.purchase_status_id) === 2">
           Solicitação de compra aprovada
         </span>
-        <span class="red-text" *ngIf="number(solicitation.purchase_request.purchase_status_id) === 3">
+        <span class="pink-text" *ngIf="number(solicitation.purchase_request.purchase_status_id) === 3">
           Solicitação de compra recusada
         </span>
       </p>
@@ -81,7 +81,7 @@
         <span *ngIf="number(solicitation.request_status_id) !== 2">
           {{ solicitation.status }}
         </span>
-        <span class="green-text" *ngIf="number(solicitation.request_status_id) === 2">
+        <span class="deep-purple-text" *ngIf="number(solicitation.request_status_id) === 2">
           Solicitação de compra aprovada
         </span>
       </p>

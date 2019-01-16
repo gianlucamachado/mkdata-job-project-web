@@ -11,5 +11,6 @@ export class Solicitation {
   public request_id: number | string;
   public request_photo_url: string;
   public service_type_description: string;
+  public request_status_id: string;
   public status: string;
 }
