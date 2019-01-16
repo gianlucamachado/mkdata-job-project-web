@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
 
 import { Company } from '../../classes/Company.class';
 import { CompanyService } from './company.service';
@@ -10,6 +10,7 @@ import { UtilsService } from './../../providers/utils/utils.service';
 import { MaterializeAction } from 'angular2-materialize';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SweetMessageComponent } from '../../components/others/sweet-message/sweet-message.component';
 
 /**
  * Company component.
@@ -60,6 +61,20 @@ export class CompanyComponent implements OnInit {
       complete: () => { },
     },
   ];
+
+  /**
+   * Swal options.
+   */
+  public swalOptions: any = {
+    title: '',
+    content: '',
+    button: 'Entendi',
+  };
+
+  /**
+   * View message child.
+   */
+  @ViewChild(SweetMessageComponent) messageComponent: SweetMessageComponent;
 
   /**
    * @ignore
@@ -200,12 +215,25 @@ export class CompanyComponent implements OnInit {
       // log response
       console.log(response);
 
+      // message
+      this.swalOptions.title = 'Sucesso';
+      this.swalOptions.content = 'Empresa atualizado com sucesso';
+      this.swalOptions.button = 'Entendi';
+
     } catch (e) {
 
       // log
       console.error(e);
 
+      // message
+      this.swalOptions.title = 'Erro';
+      this.swalOptions.content = 'Erro ao atualizar empresa';
+      this.swalOptions.button = 'Entendi';
+
     }
+
+    // show message
+    this.messageComponent.show();
 
     // get info
     this.getList();

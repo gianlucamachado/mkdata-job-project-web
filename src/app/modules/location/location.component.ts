@@ -1,12 +1,13 @@
 import { ListControllerService } from './../../providers/utils/list-controller.service';
 import { LocationService } from './location.service';
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
 import { MaterializeAction } from 'angular2-materialize';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as faker from 'faker';
 import { PaginationService } from '../../components/others/pagination/pagination.service';
 import { ListState } from '../../classes/State.class';
+import { SweetMessageComponent } from '../../components/others/sweet-message/sweet-message.component';
 
 /**
  * Location Component.
@@ -52,6 +53,20 @@ export class LocationComponent implements OnInit {
    * location State.
    */
   public locationState: ListState<Location> = new ListState();
+
+  /**
+   * Swal options.
+   */
+  public swalOptions: any = {
+    title: '',
+    content: '',
+    button: 'Entendi',
+  };
+
+  /**
+   * View message child.
+   */
+  @ViewChild(SweetMessageComponent) messageComponent: SweetMessageComponent;
 
   /**
    * @ignore
@@ -183,12 +198,25 @@ export class LocationComponent implements OnInit {
       // log response
       console.log(response);
 
+      // message
+      this.swalOptions.title = 'Sucesso';
+      this.swalOptions.content = 'Local adicionado com sucesso';
+      this.swalOptions.button = 'Entendi';
+
     } catch (e) {
 
       // log
       console.error(e);
 
+      // message
+      this.swalOptions.title = 'Erro';
+      this.swalOptions.content = 'Erro ao criar local';
+      this.swalOptions.button = 'Entendi';
+
     }
+
+    // show message
+    this.messageComponent.show();
 
     // get info
     this.getList();
@@ -238,12 +266,25 @@ export class LocationComponent implements OnInit {
       // log response
       console.log(response);
 
+      // message
+      this.swalOptions.title = 'Sucesso';
+      this.swalOptions.content = 'Local atualizado com sucesso';
+      this.swalOptions.button = 'Entendi';
+
     } catch (e) {
 
       // log
       console.error(e);
 
+      // message
+      this.swalOptions.title = 'Erro';
+      this.swalOptions.content = 'Erro ao atualizar local';
+      this.swalOptions.button = 'Entendi';
+
     }
+
+    // show message
+    this.messageComponent.show();
 
     // get info
     this.getList();
