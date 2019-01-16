@@ -217,7 +217,7 @@ export class CompanyComponent implements OnInit {
 
       // message
       this.swalOptions.title = 'Sucesso';
-      this.swalOptions.content = 'Empresa atualizado com sucesso';
+      this.swalOptions.content = 'Empresa atualizada com sucesso';
       this.swalOptions.button = 'Entendi';
 
     } catch (e) {
