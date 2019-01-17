@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SolicitationService } from '../solicitation.service';
 import { UtilsService } from '../../../providers/utils/utils.service';
 import { SweetMessageComponent } from '../../../components/others/sweet-message/sweet-message.component';
@@ -61,6 +61,11 @@ export class SolicitationDetailsComponent implements OnInit {
   public number: NumberConstructor = Number;
 
   /**
+   * Type
+   */
+  public type: boolean;
+
+  /**
    * Swal options.
    */
   public swalOptions: any = {
@@ -93,7 +98,6 @@ export class SolicitationDetailsComponent implements OnInit {
    * @ignore
    */
   constructor(
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private solicitationService: SolicitationService,
     public utilsService: UtilsService,
@@ -144,7 +148,7 @@ export class SolicitationDetailsComponent implements OnInit {
   /**
    * Change status
    */
-  async changeStatus() {
+  async changeStatus(type: boolean) {
 
     // log
     console.log('changeStatus(status: any)');
@@ -153,7 +157,10 @@ export class SolicitationDetailsComponent implements OnInit {
     this.loadingTransparent = true;
 
     // get request status id
-    const id: number = 2;
+    const id: number = (type) ? 2 : 3;
+
+    // message label
+    const label: string = (type) ? 'aprovada' : 'recusada';
 
     // request id
     const req: string = this.activatedRoute.snapshot.paramMap.get('request_id');
@@ -161,15 +168,27 @@ export class SolicitationDetailsComponent implements OnInit {
     // set as in progress
     try {
 
-      // create comment
-      const response: any = await this.solicitationService.changeStatus({ request_id: req, request_status_id: id });
+      if (type) {
 
-      // log response
-      console.log(response);
+        // create comment
+        const response: any = await this.solicitationService.changeStatus({ request_id: req, request_status_id: id });
+
+        // log response
+        console.log(response);
+
+      } else {
+
+        // create comment
+        const response: any = await this.solicitationService.refusePurchaseRequest({ request_id: req, purchase_status_id: id }, this.solicitation.purchase_request.purchase_request_id);
+
+        // log response
+        console.log(response);
+
+      }
 
       // message
       this.swalOptions.title = 'Sucesso';
-      this.swalOptions.content = 'Solicitação de compra aprovada.';
+      this.swalOptions.content = `Solicitação de compra ${label}.`;
       this.swalOptions.button = 'Entendi';
 
       // show message
@@ -233,16 +252,23 @@ export class SolicitationDetailsComponent implements OnInit {
   /**
    * Open change status modal.
    */
-  openChangeStatusModal() {
+  openChangeStatusModal(type: boolean) {
 
     // log
     console.log('openChangeStatusModal()');
 
-    // message
+    // default values
     this.swalQuestionOptions.title = 'Solicitação de compra';
-    this.swalQuestionOptions.content = 'Deseja realmente aprovar a solicitação de compra?';
     this.swalQuestionOptions.button_left = 'Nâo';
     this.swalQuestionOptions.button_right = 'Sim';
+    this.type = type;
+
+    // message
+    if (type) {
+      this.swalQuestionOptions.content = 'Deseja realmente aprovar a solicitação de compra?';
+    } else {
+      this.swalQuestionOptions.content = 'Deseja realmente recusar a solicitação de compra?';
+    }
 
     // show message
     this.questionComponent.show();
