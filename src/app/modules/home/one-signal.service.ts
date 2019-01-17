@@ -85,6 +85,7 @@ export class OneSignalService {
     console.log('Init OneSignal');
     OneSignal.push(['init', {
       appId: environment.one_signal_app_id,
+      safari_web_id: environment.one_signal_safari_web_id,
       autoRegister: true,
       allowLocalhostAsSecureOrigin: true,
       notifyButton: {
