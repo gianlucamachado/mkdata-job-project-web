@@ -27,7 +27,7 @@
 
   <!-- table med and up -->
   <div *ngIf="notificationState.list?.length !== 0">
-    <span *ngFor="let notification of notificationState.list; let i = index">
+    <span *ngFor="let notification of notificationState.list; let i = index" (click)="openNotification(notification?.data?.url)">
 
       <div class="row border-row no-margin padding-vertical no-border-top" [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
         <div class="col s12">
@@ -40,7 +40,8 @@
           </div>
           <div class="col margin-top-6px">
             <p class="no-margin blue-text text-darken-4">
-              {{ notification['send_after']*1000 | date: 'dd/MM/yyyy' }} às {{ notification['send_after']*1000 | date: 'H:mm' }}
+              {{ notification['send_after']*1000 | date: 'dd/MM/yyyy' }} às {{ notification['send_after']*1000 | date:
+              'H:mm' }}
             </p>
           </div>
         </div>
