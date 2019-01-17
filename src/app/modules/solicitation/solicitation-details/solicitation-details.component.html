@@ -37,8 +37,15 @@
 
     <!-- button update status -->
     <span *ngIf="number(solicitation.request_status_id) === 1 && solicitation.purchase_request">
-      <div class="col s12 m6 push-m3 margin-top no-padding" *ngIf="number(solicitation.purchase_request.purchase_status_id) === 1">
-        <app-button-generic [isOutline]="true" [text]="'Aprovar Solicitação de Compra'" (onClick)="openChangeStatusModal()"></app-button-generic>
+      <div class="row no-margin">
+        <div class="col s12 m6 push-m3 margin-top no-padding" *ngIf="number(solicitation.purchase_request.purchase_status_id) === 1">
+          <app-button-generic [isOutline]="false" [text]="'Aprovar solicitação de Compra'" (onClick)="openChangeStatusModal(true)"></app-button-generic>
+        </div>
+      </div>
+      <div class="row no-margin">
+        <div class="col s12 m6 push-m3 margin-top no-padding" *ngIf="number(solicitation.purchase_request.purchase_status_id) === 1">
+          <app-button-generic [isOutline]="true" [text]="'Recusar solicitação de Compra'" (onClick)="openChangeStatusModal(false)"></app-button-generic>
+        </div>
       </div>
     </span>
 
@@ -46,8 +53,10 @@
     <span *ngIf="number(solicitation.request_status_id) > 0 && solicitation.purchase_request">
       <div class="col s12 margin-top grey lighten-4">
         <p class="padding-vertical no-margin black-text bold center-align"> Detalhes da solicitação de compra </p>
-        <p class="no-margin justify-text"> <span class="bold">Descrição:</span> {{ solicitation?.purchase_request?.purchase_request_description }} </p>
-        <p class="no-margin justify-text padding-bottom"> <span class="bold">Preço estimado:</span> {{ solicitation?.purchase_request?.purchase_request_price | currency: 'BRL' }} </p>
+        <p class="no-margin justify-text"> <span class="bold">Descrição:</span> {{
+          solicitation?.purchase_request?.purchase_request_description }} </p>
+        <p class="no-margin justify-text padding-bottom"> <span class="bold">Preço estimado:</span> {{
+          solicitation?.purchase_request?.purchase_request_price | currency: 'BRL' }} </p>
       </div>
     </span>
 
@@ -125,4 +134,4 @@
 <app-sweet-message [swalOptions]="swalOptions"></app-sweet-message>
 
 <!-- question swal -->
-<app-button-swal-alert [swalOptions]="swalQuestionOptions" (onRightButtonConfirm)="changeStatus()"></app-button-swal-alert>
+<app-button-swal-alert [swalOptions]="swalQuestionOptions" (onRightButtonConfirm)="changeStatus(type)"></app-button-swal-alert>

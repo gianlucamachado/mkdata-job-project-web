@@ -20,6 +20,11 @@ export class SolicitationService {
   private requestStatusHistoryUrl: string = '/api/request-status-history';
 
   /**
+   * purchase request url.
+   */
+  private purchaseRequestUrl: string = '/api/purchase-request';
+
+  /**
    * @ignore
    */
   constructor(
@@ -84,6 +89,23 @@ export class SolicitationService {
       (resolve, reject) => {
         this.httpRequestService
           .putRequestWithAuthorization(this.requestStatusHistoryUrl, body)
+          .subscribe(
+            response => resolve(response),
+            error => reject(error),
+          );
+      },
+    );
+  }
+
+  /**
+   * Realize http request and refuse purchase request.
+   * @returns Promise any.
+   */
+  refusePurchaseRequest(body: any, id: string): Promise<any> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.httpRequestService
+          .postRequestWithAuthorization(`${this.purchaseRequestUrl}/update-purchase-status/${id}`, body)
           .subscribe(
             response => resolve(response),
             error => reject(error),
