@@ -3,6 +3,7 @@ import { ListControllerService } from './../../providers/utils/list-controller.s
 import { Component, OnInit } from '@angular/core';
 import { PaginationService } from '../../components/others/pagination/pagination.service';
 import { NotificationService } from './notification.service';
+import { Router } from '@angular/router';
 
 /**
  * Notification component.
@@ -26,6 +27,7 @@ export class NotificationComponent implements OnInit {
     public paginationService: PaginationService,
     private notificationService: NotificationService,
     private listController: ListControllerService,
+    private router: Router,
   ) { }
 
   /**
@@ -83,6 +85,18 @@ export class NotificationComponent implements OnInit {
     // set pager controller to pagination and set current page.
     this.notificationState.pager = pages.pagerController;
     this.notificationState.list = pages.currentPage;
+  }
+
+  /**
+   * Open notification url.
+   */
+  openNotification(url: string) {
+
+    // open
+    if (url) {
+      this.router.navigate([url]);
+    }
+
   }
 
 }
