@@ -35,7 +35,7 @@ export class ListControllerService {
   setSearch(searched: string, params: string[], list: any[]) {
     if (list) {
       // do search.
-      const foundValuesList = this.doSearch(searched, params, list);
+      const foundValuesList = this.doSearch(this.removeAccents(searched), params, list);
       // do pagination.
       return this.setPagination(1, foundValuesList);
     }
@@ -97,6 +97,26 @@ export class ListControllerService {
   }
 
   /**
+   * remove all accents to the string.
+   * @param str string to be remove all accents
+   */
+  removeAccents(str) {
+    const accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+    const accentsOut = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
+    // tslint:disable-next-line:no-parameter-reassignment
+    str = str.split('');
+    const strLen = str.length;
+    // tslint:disable-next-line:one-variable-per-declaration
+    let i, x;
+    for (i = 0; i < strLen; i++) {
+      if ((x = accents.indexOf(str[i])) !== -1) {
+        str[i] = accentsOut[x];
+      }
+    }
+    return str.join('');
+  }
+
+  /**
    * Look for value searched in list by params list.
    * @param searched sought value.
    * @param searchParameterNames list of parameters to be compared.
@@ -107,7 +127,11 @@ export class ListControllerService {
     const filtered = [];
     // do search by all parameter name selected.
     for (const parameterName of searchParameterNames) {
-      filtered.push(list.filter((a: any) => a[parameterName].toLowerCase().includes(searched.toLowerCase()) ? a : null));
+      filtered.push(
+        list.filter(a =>
+          this.removeAccents(a[parameterName])
+            .toLowerCase()
+            .includes(searched.toLowerCase()) ? a : null));
     }
     // merge the filtered array.
     return Array.from(new Set([].concat(...filtered)));
