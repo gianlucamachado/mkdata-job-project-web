@@ -133,11 +133,19 @@ export class LocationComponent implements OnInit {
   }
 
   /**
-   * set current page.
+   * Set current page.
    */
   pagination(page: number): void {
-    // get current page.
-    const pages = this.listController.setPagination(page, this.locationState.allList);
+
+    // Verify if exist allListSearched.
+    // case not exist -> Verify if exist allListFiltered
+    // case not exist -> get allList
+    const list = (this.locationState.allListSearched) ?
+      this.locationState.allListSearched :
+      (this.locationState.allListFiltered) ?
+        this.locationState.allListFiltered : this.locationState.allList;
+
+    const pages = this.listController.setPagination(page, list);
     // set pager controller to pagination and set current page.
     this.locationState.pager = pages.pagerController;
     this.locationState.list = pages.currentPage;
@@ -150,12 +158,15 @@ export class LocationComponent implements OnInit {
   search(search: string) {
     // params to be searched
     const params = ['environment_description'];
-    // get filters list case have filter active else get list.
-    const pages = this.listController.setSearch(search, params, this.locationState.allList);
 
-    // set pager controller to pagination and set current page.
-    this.locationState.pager = pages.pagerController;
-    this.locationState.list = pages.currentPage;
+    // get filters list case have filter active else get list.
+    const list = (this.locationState.allListFiltered) ? this.locationState.allListFiltered : this.locationState.allList;
+    const { pagerController, currentPage, allListSearched } = this.listController.setSearch(search, params, list);
+
+    // set pager controller to pagination, current page and searched list.
+    this.locationState.allListSearched = allListSearched;
+    this.locationState.pager = pagerController;
+    this.locationState.list = currentPage;
   }
 
   /**

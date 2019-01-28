@@ -62,11 +62,19 @@ export class UserComponent implements OnInit {
   }
 
   /**
-   * set current page.
+   * Set current page.
    */
   pagination(page: number): void {
-    // get current page.
-    const pages = this.listController.setPagination(page, this.userState.allList);
+
+    // Verify if exist allListSearched.
+    // case not exist -> Verify if exist allListFiltered
+    // case not exist -> get allList
+    const list = (this.userState.allListSearched) ?
+      this.userState.allListSearched :
+      (this.userState.allListFiltered) ?
+        this.userState.allListFiltered : this.userState.allList;
+
+    const pages = this.listController.setPagination(page, list);
     // set pager controller to pagination and set current page.
     this.userState.pager = pages.pagerController;
     this.userState.list = pages.currentPage;
@@ -79,12 +87,15 @@ export class UserComponent implements OnInit {
   search(search: string) {
     // params to be searched
     const params = ['user_email', 'employee_name'];
-    // get filters list case have filter active else get list.
-    const pages = this.listController.setSearch(search, params, this.userState.allList);
 
-    // set pager controller to pagination and set current page.
-    this.userState.pager = pages.pagerController;
-    this.userState.list = pages.currentPage;
+    // get filters list case have filter active else get list.
+    const list = (this.userState.allListFiltered) ? this.userState.allListFiltered : this.userState.allList;
+    const { pagerController, currentPage, allListSearched } = this.listController.setSearch(search, params, list);
+
+    // set pager controller to pagination, current page and searched list.
+    this.userState.allListSearched = allListSearched;
+    this.userState.pager = pagerController;
+    this.userState.list = currentPage;
   }
 
 }

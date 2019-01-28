@@ -55,10 +55,10 @@ label {
   padding-right: 20px;
 }
 [type="radio"]:checked + label::after, [type="radio"].with-gap:checked + label::after {
-  background-color: map-get($colors , 'gray-dark' );
+  background-color: map-get($colors , 'ternary' );
 }
 [type="radio"]:checked + label::after, [type="radio"].with-gap:checked + label::before, [type="radio"].with-gap:checked + label::after {
-  border: 2px solid map-get($colors , 'gray-dark' );
+  border: 2px solid map-get($colors , 'ternary' );
 }
 
 // -----  SWITCH -----

@@ -117,11 +117,19 @@ export class ServiceComponent implements OnInit {
   }
 
   /**
-   * set current page.
+   * Set current page.
    */
   pagination(page: number): void {
-    // get current page.
-    const pages = this.listController.setPagination(page, this.serviceState.allList);
+
+    // Verify if exist allListSearched.
+    // case not exist -> Verify if exist allListFiltered
+    // case not exist -> get allList
+    const list = (this.serviceState.allListSearched) ?
+      this.serviceState.allListSearched :
+      (this.serviceState.allListFiltered) ?
+        this.serviceState.allListFiltered : this.serviceState.allList;
+
+    const pages = this.listController.setPagination(page, list);
     // set pager controller to pagination and set current page.
     this.serviceState.pager = pages.pagerController;
     this.serviceState.list = pages.currentPage;
@@ -134,12 +142,15 @@ export class ServiceComponent implements OnInit {
   search(search: string) {
     // params to be searched
     const params = ['service_type_description'];
-    // get filters list case have filter active else get list.
-    const pages = this.listController.setSearch(search, params, this.serviceState.allList);
 
-    // set pager controller to pagination and set current page.
-    this.serviceState.pager = pages.pagerController;
-    this.serviceState.list = pages.currentPage;
+    // get filters list case have filter active else get list.
+    const list = (this.serviceState.allListFiltered) ? this.serviceState.allListFiltered : this.serviceState.allList;
+    const { pagerController, currentPage, allListSearched } = this.listController.setSearch(search, params, list);
+
+    // set pager controller to pagination, current page and searched list.
+    this.serviceState.allListSearched = allListSearched;
+    this.serviceState.pager = pagerController;
+    this.serviceState.list = currentPage;
   }
 
   /**

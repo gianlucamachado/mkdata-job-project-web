@@ -15,6 +15,8 @@ export interface Pagination {
 interface State {
   pagerController: Pagination;
   currentPage: any;
+  allListFiltered?: any[];
+  allListSearched?: any[];
 }
 
 @Injectable()
@@ -32,49 +34,56 @@ export class ListControllerService {
    * @param params list of parameters to be compared.
    * @param list list to search.
    */
-  setSearch(searched: string, params: string[], list: any[]) {
+  setSearch(searched: string, params: any[], list: any[]) {
     if (list) {
+
+      // Case exist list, but search value is empty.
+      if (!searched || searched === '') {
+        return { ...this.setPagination(1, list), allListSearched: null };
+      }
+
       // do search.
-      const foundValuesList = this.doSearch(searched, params, list);
+      const allListSearched = this.doSearch(this.removeAccents(searched), params, list);
+
       // do pagination.
-      return this.setPagination(1, foundValuesList);
+      return { ...this.setPagination(1, allListSearched), allListSearched };
     }
 
-    return this.setPagination(1, []);
+    return { ...this.setPagination(1, list), allListSearched: null };
   }
 
   /**
    * Set Filters to list and apply pagination.
-   * @param state state filter
-   *  state.values -> array with {key, value} to be filtered.
-   *  state.dates -> object with init_date and finish_date.
+   * @param filterValues filter value.
+   *  filterValues.values -> array with {key, value} to be filtered.
+   *  filterValues.dates -> object with init_date and finish_date.
    * @param list list to search.
    */
-  setFilters(state, list: any[], betweenKey?: string) {
+  setFilters(filterValues, list: any[], betweenKey?: string) {
     // case not exist values. like a clear filter.
     // do pagination
-    if (!state) {
-      return this.setPagination(1, list);
+    if (!filterValues) {
+      return { ...this.setPagination(1, list), allListFiltered: null };
     }
 
     // Object to save list with all filters apply.
     const filtered = [];
 
     // do search by all parameter name.
-    for (const value of state.values) {
+    for (const value of filterValues.values) {
       filtered.push(this.doSearch(value.value, [value.key], list));
     }
 
     // Look for date between dates values passed by filter.
-    if (state.dates) {
-      filtered.push(this.doSearchBetween(betweenKey, state.dates['init_date'], state.dates['finish_date'], list));
+    if (filterValues.dates) {
+      filtered.push(this.doSearchBetween(betweenKey, filterValues.dates['init_date'], filterValues.dates['finish_date'], list));
     }
 
     // merge the filtered array.
     const allListFiltered = Array.from(new Set([].concat(...filtered)));
 
     // Apply pagination
-    return this.setPagination(1, allListFiltered);
+    return { ...this.setPagination(1, allListFiltered), allListFiltered };
   }
 
   /**
@@ -97,6 +106,26 @@ export class ListControllerService {
   }
 
   /**
+   * remove all accents to the string.
+   * @param str string to be remove all accents
+   */
+  removeAccents(str) {
+    const accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+    const accentsOut = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
+    // tslint:disable-next-line:no-parameter-reassignment
+    str = str.split('');
+    const strLen = str.length;
+    // tslint:disable-next-line:one-variable-per-declaration
+    let i, x;
+    for (i = 0; i < strLen; i++) {
+      if ((x = accents.indexOf(str[i])) !== -1) {
+        str[i] = accentsOut[x];
+      }
+    }
+    return str.join('');
+  }
+
+  /**
    * Look for value searched in list by params list.
    * @param searched sought value.
    * @param searchParameterNames list of parameters to be compared.
@@ -107,7 +136,12 @@ export class ListControllerService {
     const filtered = [];
     // do search by all parameter name selected.
     for (const parameterName of searchParameterNames) {
-      filtered.push(list.filter((a: any) => a[parameterName].toLowerCase().includes(searched.toLowerCase()) ? a : null));
+      filtered.push(
+        list.filter(objectList => (
+          this.removeAccents(parameterName
+            .split('.').reduce((p, c) => p && p[c] || null, objectList)) // search property even within the object.
+            .toLowerCase()
+            .includes(searched.toLowerCase()) ? objectList : null)));
     }
     // merge the filtered array.
     return Array.from(new Set([].concat(...filtered)));
