@@ -138,14 +138,22 @@ export class CompanyComponent implements OnInit {
   }
 
   /**
-   * set current page.
+   * Set current page.
    */
   pagination(page: number): void {
-    // get current page.
-    const { pagerController, currentPage } = this.listController.setPagination(page, this.companyState.allList);
+
+    // Verify if exist allListSearched.
+    // case not exist -> Verify if exist allListFiltered
+    // case not exist -> get allList
+    const list = (this.companyState.allListSearched) ?
+      this.companyState.allListSearched :
+      (this.companyState.allListFiltered) ?
+        this.companyState.allListFiltered : this.companyState.allList;
+
+    const pages = this.listController.setPagination(page, list);
     // set pager controller to pagination and set current page.
-    this.companyState.pager = pagerController;
-    this.companyState.list = currentPage;
+    this.companyState.pager = pages.pagerController;
+    this.companyState.list = pages.currentPage;
   }
 
   /**
@@ -155,9 +163,13 @@ export class CompanyComponent implements OnInit {
   search(search: string) {
     // params to be searched
     const params = ['company_fantasy_name', 'company_responsible_name', 'company_cnpj', 'user_email'];
+
     // get filters list case have filter active else get list.
-    const { pagerController, currentPage } = this.listController.setSearch(search, params, this.companyState.allList);
-    // set pager controller to pagination and set current page.
+    const list = (this.companyState.allListFiltered) ? this.companyState.allListFiltered : this.companyState.allList;
+    const { pagerController, currentPage, allListSearched } = this.listController.setSearch(search, params, list);
+
+    // set pager controller to pagination, current page and searched list.
+    this.companyState.allListSearched = allListSearched;
     this.companyState.pager = pagerController;
     this.companyState.list = currentPage;
   }

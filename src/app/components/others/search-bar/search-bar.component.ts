@@ -1,6 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CreateformsService } from '../../../providers/form/createforms.service';
 
 import { MaterializeAction } from 'angular2-materialize';
 
@@ -21,10 +20,14 @@ export class SearchBarComponent implements OnInit {
    */
   public searchForm: FormGroup;
 
-  // Side navbar actions.
+  /**
+   * Side navbar actions.
+   */
   public sideNavActions = new EventEmitter<string | MaterializeAction>();
 
-  // Side nav params.
+  /**
+   * Side nav params.
+   */
   public sideNavParams: any[] = [{ closeOnClick: true, edge: 'right' }];
 
   /**
@@ -35,7 +38,7 @@ export class SearchBarComponent implements OnInit {
   /**
    * Question form.
    */
-  @Input() questions: any;
+  @Input() questions: Promise<any>;
 
   /**
    * Output search event.
@@ -62,7 +65,6 @@ export class SearchBarComponent implements OnInit {
    */
   constructor(
     private formBuilder: FormBuilder,
-    private createForm: CreateformsService,
   ) { }
 
   /**
@@ -75,15 +77,10 @@ export class SearchBarComponent implements OnInit {
     // initialize form group
     self.initializeForm();
 
+    // Emmit values searched.
     this.searchForm.controls['input'].valueChanges
       .debounceTime(400)
       .subscribe(search => this.onSearch.emit(search));
-
-    this.getFilters();
-  }
-
-  async getFilters() {
-    this.questions = await this.createForm.getSolicitationFilter();
   }
 
   get input() { return this.searchForm.get('input'); }
@@ -92,11 +89,8 @@ export class SearchBarComponent implements OnInit {
    * Initialize Form.
    */
   initializeForm(): void {
-    // tslint:disable-next-line:no-this-assignment
-    const self = this;
-
     // form group
-    self.searchForm = self.formBuilder.group({
+    this.searchForm = this.formBuilder.group({
       input: ['', Validators.required],
     });
   }
@@ -107,6 +101,10 @@ export class SearchBarComponent implements OnInit {
  * emit keys selecteds to component
  */
   formKeysSelected(keys: string[]) {
+    // remove searched value.
+    this.searchForm.reset();
+
+    // Emmit keys selected.
     this.keysSelected.emit(keys);
     this.hideSideNav();
   }
@@ -117,6 +115,10 @@ export class SearchBarComponent implements OnInit {
    * emit values to dynamic form to component
    */
   formValues(values) {
+
+    // remove searched value.
+    this.searchForm.reset();
+
     if (!values) {
       this.formValue.emit(null);
       return;

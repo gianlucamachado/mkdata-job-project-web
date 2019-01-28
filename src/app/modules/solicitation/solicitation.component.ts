@@ -8,6 +8,7 @@ import { PaginationService } from '../../components/others/pagination/pagination
 
 import { MaterializeAction } from 'angular2-materialize';
 import { Router } from '@angular/router';
+import { CreateformsService } from '../../providers/form/createforms.service';
 
 /**
  * Solicitation component.
@@ -45,6 +46,11 @@ export class SolicitationComponent implements OnInit {
   public number: NumberConstructor = Number;
 
   /**
+   * Get filters values.
+   */
+  public getFiltersValues: Promise<any>;
+
+  /**
    * @ignore
    */
   constructor(
@@ -52,6 +58,7 @@ export class SolicitationComponent implements OnInit {
     private listController: ListControllerService,
     private solicitationService: SolicitationService,
     private router: Router,
+    public createForm: CreateformsService,
   ) { }
 
   /**
@@ -59,9 +66,11 @@ export class SolicitationComponent implements OnInit {
    */
   ngOnInit() {
 
+    // get filters
+    this.getFiltersValues = this.createForm.getSolicitationFilter();
+
     // initialize
     this.getList();
-
   }
 
   /**
@@ -88,11 +97,19 @@ export class SolicitationComponent implements OnInit {
   }
 
   /**
-   * set current page.
+   * Set current page.
    */
   pagination(page: number): void {
-    // get current page.
-    const pages = this.listController.setPagination(page, this.solicitationState.allList);
+
+    // Verify if exist allListSearched.
+    // case not exist -> Verify if exist allListFiltered
+    // case not exist -> get allList
+    const list = (this.solicitationState.allListSearched) ?
+      this.solicitationState.allListSearched :
+      (this.solicitationState.allListFiltered) ?
+        this.solicitationState.allListFiltered : this.solicitationState.allList;
+
+    const pages = this.listController.setPagination(page, list);
     // set pager controller to pagination and set current page.
     this.solicitationState.pager = pages.pagerController;
     this.solicitationState.list = pages.currentPage;
@@ -106,24 +123,28 @@ export class SolicitationComponent implements OnInit {
     // params to be searched
     // get filters list case have filter active else get list.
     const list = (this.solicitationState.allListFiltered) ? this.solicitationState.allListFiltered : this.solicitationState.allList;
-    const { pagerController, currentPage } = this.listController.setSearch(search, this.paramsToCompareSearch, list);
+    const { pagerController, currentPage, allListSearched } = this.listController.setSearch(search, this.paramsToCompareSearch, list);
 
-    // set pager controller to pagination and set current page.
+    // set pager controller to pagination, current page and searched list.
+    this.solicitationState.allListSearched = allListSearched;
     this.solicitationState.pager = pagerController;
     this.solicitationState.list = currentPage;
   }
 
   /**
    * Apply filters and do pagination
-   * @param state object with filters values and dates.
+   * @param filtersParams object with filters values and dates.
    */
-  filters(state) {
-    // Get filters.
-    const { pagerController, currentPage } = (!state) ?
-      (this.solicitationState.allListFiltered = null, this.listController.setFilters(null, this.solicitationState.allList)) :
-      this.listController.setFilters(state, this.solicitationState.allList);
+  filters(filtersParams) {
+    // Case get filtersParams, do filters in all list
+    // case filtersParams empty, set pagination and remove filteredList.
+    // allListFiltered returned null case filtersParams has null.
+    const { pagerController, currentPage, allListFiltered } = (filtersParams) ?
+      this.listController.setFilters(filtersParams, this.solicitationState.allList) :
+      this.listController.setFilters(null, this.solicitationState.allList);
 
-    // set pager controller to pagination and set current page.
+    // set pager controller to pagination, current page and filtered list.
+    this.solicitationState.allListFiltered = allListFiltered;
     this.solicitationState.pager = pagerController;
     this.solicitationState.list = currentPage;
   }

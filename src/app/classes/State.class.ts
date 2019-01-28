@@ -23,14 +23,19 @@ export class ListState<T> implements OnInit {
   public messageError: string;
 
   /**
+   * All list to filter.
+   */
+  public allList: T[];
+
+  /**
    * All list filtered.
    */
   public allListFiltered?: T[];
 
   /**
-   * All list to filter.
+   * All list searched.
    */
-  public allList: T[];
+  public allListSearched?: T[];
 
   /**
    * List.

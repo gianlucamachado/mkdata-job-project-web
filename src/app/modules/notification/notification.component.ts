@@ -62,11 +62,19 @@ export class NotificationComponent implements OnInit {
   }
 
   /**
-   * set current page.
+   * Set current page.
    */
   pagination(page: number): void {
-    // get current page.
-    const pages = this.listController.setPagination(page, this.notificationState.allList);
+
+    // Verify if exist allListSearched.
+    // case not exist -> Verify if exist allListFiltered
+    // case not exist -> get allList
+    const list = (this.notificationState.allListSearched) ?
+      this.notificationState.allListSearched :
+      (this.notificationState.allListFiltered) ?
+        this.notificationState.allListFiltered : this.notificationState.allList;
+
+    const pages = this.listController.setPagination(page, list);
     // set pager controller to pagination and set current page.
     this.notificationState.pager = pages.pagerController;
     this.notificationState.list = pages.currentPage;
@@ -78,13 +86,16 @@ export class NotificationComponent implements OnInit {
    */
   search(search: string) {
     // params to be searched
-    const params = ['employee_name', 'service_type_description', 'agency'];
-    // get filters list case have filter active else get list.
-    const pages = this.listController.setSearch(search, params, this.notificationState.allList);
+    const params = ['headings.pt'];
 
-    // set pager controller to pagination and set current page.
-    this.notificationState.pager = pages.pagerController;
-    this.notificationState.list = pages.currentPage;
+    // get filters list case have filter active else get list.
+    const list = (this.notificationState.allListFiltered) ? this.notificationState.allListFiltered : this.notificationState.allList;
+    const { pagerController, currentPage, allListSearched } = this.listController.setSearch(search, params, list);
+
+    // set pager controller to pagination, current page and searched list.
+    this.notificationState.allListSearched = allListSearched;
+    this.notificationState.pager = pagerController;
+    this.notificationState.list = currentPage;
   }
 
   /**
