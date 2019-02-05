@@ -42,9 +42,24 @@ export class CompanyFormComponent implements OnInit {
   public loading: boolean = false;
 
   /**
-   * Comapny id.
+   * Initial loading component.
+   */
+  public initialLoading: boolean = true;
+
+  /**
+   * Loading page transparent component.
+   */
+  public showLoadingPageTransparent: boolean = false;
+
+  /**
+   * Company id.
    */
   public company_id: string;
+
+  /**
+   * Company.
+   */
+  public company: any;
 
   /**
    * Will save objects to save on database.
@@ -97,6 +112,14 @@ export class CompanyFormComponent implements OnInit {
       console.error(e);
     }
 
+    // get company
+    try {
+      this.company = await this.companyService.getCompany(this.company_id);
+      console.log(this.company);
+    } catch (e) {
+      console.error(e);
+    }
+
     // create subscribe
     this.companyForm.controls.agency_id.valueChanges.subscribe(async (value) => {
 
@@ -134,6 +157,8 @@ export class CompanyFormComponent implements OnInit {
       }
 
     });
+
+    this.initialLoading = false;
 
   }
 
@@ -183,17 +208,27 @@ export class CompanyFormComponent implements OnInit {
    */
   async saveServiceType(objectsToSave: any) {
 
+    // get values
+    const value: any = { data: Object.values(objectsToSave) };
+
     // log
-    console.log({ data: Object.values(objectsToSave) });
-    console.log(JSON.stringify({ data: Object.values(objectsToSave) }));
+    console.log(value);
+    console.log(JSON.stringify(value));
+
+    // present loading
+    this.showLoadingPageTransparent = true;
 
     try {
 
-      // update
-      const response: any = await this.companyService.updateServiceTypes({ data: Object.values(objectsToSave) });
+      if (value.data.length > 0) {
 
-      // log response
-      console.log(response);
+        // update
+        const response: any = await this.companyService.updateServiceTypes(value);
+
+        // log response
+        console.log(response);
+
+      }
 
       // define message
       this.swalOptions.title = 'Sucesso';
@@ -214,6 +249,9 @@ export class CompanyFormComponent implements OnInit {
 
     // show message
     this.messageComponent.show();
+
+    // present loading
+    this.showLoadingPageTransparent = false;
 
   }
 

@@ -34,6 +34,21 @@ export class CompanyService {
   ) { }
 
   /**
+   * Find company.
+   */
+  getCompany(companyId: string): Promise<Company[]> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.httpRequestService.getRequestWithAuthorization(`${this.baseUrl}/find-by-company-id/${companyId}`)
+          .subscribe(
+            response => resolve(response),
+            error => reject(error),
+          );
+      },
+    );
+  }
+
+  /**
    * Get list with all companies.
    */
   getAllCompanies(): Promise<Company[]> {
