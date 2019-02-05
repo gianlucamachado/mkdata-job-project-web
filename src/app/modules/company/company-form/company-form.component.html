@@ -33,31 +33,65 @@
         <app-item-loading></app-item-loading>
       </div>
 
-      <!-- input -->
+      <!-- labels -->
+      <div class="row" *ngIf="services$ && (services$ | async)?.length > 0 && !loading">
+        <div class="col padding-horizontal">
+          <p>
+            <input onclick="return false;" type="checkbox" id="label1" checked />
+            <label for="label1">
+              Serviço associado
+            </label>
+          </p>
+        </div>
+        <div class="col">
+          <p>
+            <input onclick="return false;" type="checkbox" id="label2" disabled="true" />
+            <label for="label2">
+              Serviço associado a outra empresa
+            </label>
+          </p>
+        </div>
+        <div class="col">
+          <p>
+            <input onclick="return false;" type="checkbox" id="label3" />
+            <label for="label3">
+              Serviço não associado
+            </label>
+          </p>
+        </div>
+      </div>
+
+      <!-- services list -->
       <div class="row margin-top" *ngIf="services$ && (services$ | async)?.length > 0 && !loading">
         <div class="col s12 m6 l4 padding-horizontal" *ngFor="let service of services$ | async">
           <p>
             <input type="checkbox" [id]="service.service_type_id" [checked]="(service?.checked && service?.checked === '1') ? true : false"
-              [disabled]="(service?.company_id && service?.company_id !== company_id) ? true : false" />
+              [disabled]="(service?.company_id && service?.company_id !== company_id) ? true : false" 
+              (change)="onCheckboxValueChange($event, companyForm.getRawValue().agency_id, service?.service_type_id, company_id)" />
             <label [for]="service.service_type_id">
-              {{ service.service_type_description }} 
-              <span *ngIf="service?.company_id" > ({{ service?.company_fantasy_name }}) </span>
+              {{ service.service_type_description }}
+              <span *ngIf="service?.company_id && service?.company_id !== company_id"> 
+                ({{ service?.company_fantasy_name }}) </span>
             </label>
           </p>
         </div>
       </div>
 
       <!-- button concluir -->
-      <div class="col s12 m6 push-m6 padding center-align">
-        <app-button-generic [text]="'Salvar'" (onClick)="validate(companyForm)"></app-button-generic>
+      <div class="col s12 m6 push-m6 center-align no-padding" *ngIf="services$ && (services$ | async)?.length > 0 && !loading">
+        <app-button-generic class="button-margin-left" [text]="'Salvar'" (onClick)="saveServiceType(objectsToSave)"></app-button-generic>
       </div>
 
       <!-- button cancel -->
-      <div class="col s12 m6 pull-m6 padding center-align">
-        <app-button-generic [text]="'Cancelar'" [isOutline]="true" (onClick)="backPage()"></app-button-generic>
+      <div class="col s12 m6 pull-m6 center-align no-padding button-margin-top" *ngIf="services$ && (services$ | async)?.length > 0 && !loading">
+        <app-button-generic class="button-margin-right" [text]="'Cancelar'" [isOutline]="true" (onClick)="backPage()"></app-button-generic>
       </div>
 
     </div>
   </form>
 
 </div>
+
+
+<!-- message -->
+<app-sweet-message [swalOptions]="swalOptions"></app-sweet-message>

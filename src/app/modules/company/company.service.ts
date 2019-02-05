@@ -83,6 +83,23 @@ export class CompanyService {
   }
 
   /**
+   * Realize http request and update all service types by company and agency.
+   * @returns Promise any.
+   */
+  updateServiceTypes(body: any): Promise<any> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.httpRequestService
+          .postRequestWithAuthorization(this.serviceTypeAgencyUrl, body)
+          .subscribe(
+            response => resolve(of(response)),
+            error => reject(error),
+          );
+      },
+    );
+  }
+
+  /**
    * Create new service type agency.
    */
   createServiceTypeAgency(body: any): Promise<any> {

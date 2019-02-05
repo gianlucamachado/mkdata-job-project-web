@@ -38,20 +38,6 @@ export class CompanyComponent implements OnInit {
   public companyState: ListState<Company> = new ListState<Company>();
 
   /**
-   * Swal options.
-   */
-  public swalOptions: any = {
-    title: '',
-    content: '',
-    button: 'Entendi',
-  };
-
-  /**
-   * View message child.
-   */
-  @ViewChild(SweetMessageComponent) messageComponent: SweetMessageComponent;
-
-  /**
    * @ignore
    */
   constructor(
