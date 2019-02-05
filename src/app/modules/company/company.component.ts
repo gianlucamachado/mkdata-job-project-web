@@ -59,7 +59,6 @@ export class CompanyComponent implements OnInit {
     private companyService: CompanyService,
     public utilsService: UtilsService,
     private listController: ListControllerService,
-    private formBuilder: FormBuilder,
     public router: Router,
   ) { }
 
@@ -151,6 +150,8 @@ export class CompanyComponent implements OnInit {
     // log company
     console.log(company);
 
+    // navigate
+    this.router.navigate([`/administrador/empresa/associar/${company.company_id}`]);
   }
 
 }

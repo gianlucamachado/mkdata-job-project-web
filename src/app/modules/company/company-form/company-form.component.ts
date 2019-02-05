@@ -1,8 +1,9 @@
 import { CompanyService } from './../company.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { UtilsService } from '../../../providers/utils/utils.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 /**
  * Company form component.
@@ -15,24 +16,14 @@ import { UtilsService } from '../../../providers/utils/utils.service';
 export class CompanyFormComponent implements OnInit {
 
   /**
-   * Form received by param.
+   * Form with data.
    */
-  @Input() modalForm: FormGroup;
+  public companyForm: FormGroup;
 
   /**
    * Submit attempt variable.
    */
-  @Input() submitAttempt: boolean = false;
-
-  /**
-   * Close modal event.
-   */
-  @Output() onClose: EventEmitter<void> = new EventEmitter<void>();
-
-  /**
-   * Update service event.
-   */
-  @Output() onUpdate: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+  public submitAttempt: boolean = false;
 
   /**
    * Agencies.
@@ -40,7 +31,7 @@ export class CompanyFormComponent implements OnInit {
   public agencies$: Observable<any[]>;
 
   /**
-   * services.
+   * Services.
    */
   public services$: Observable<any[]>;
 
@@ -50,17 +41,34 @@ export class CompanyFormComponent implements OnInit {
   public loading: boolean = false;
 
   /**
+   * Comapny id.
+   */
+  public company_id: string;
+
+  /**
    * @ignore
    */
   constructor(
     public utils: UtilsService,
     private companyService: CompanyService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   /**
    * @ignore
    */
   async ngOnInit() {
+
+    // initialize form
+    this.companyForm = this.formBuilder.group({
+      agency_id: ['', Validators.compose([Validators.required])],
+      service_type_id: ['', Validators.compose([Validators.required])],
+    });
+
+    // get company id
+    this.company_id = this.activatedRoute.snapshot.paramMap.get('company_id');
 
     // get agencies
     try {
@@ -70,7 +78,7 @@ export class CompanyFormComponent implements OnInit {
     }
 
     // create subscribe
-    this.modalForm.controls.agency_id.valueChanges.subscribe(async (value) => {
+    this.companyForm.controls.agency_id.valueChanges.subscribe(async (value) => {
 
       // log value
       console.log(value);
@@ -85,10 +93,10 @@ export class CompanyFormComponent implements OnInit {
         try {
 
           // remove service type id
-          this.modalForm.controls.service_type_id.setValue('');
+          this.companyForm.controls.service_type_id.setValue('');
 
           // get services
-          this.services$ = await this.companyService.getServiceTypes(value);
+          this.services$ = await this.companyService.getServiceTypes(value, this.company_id);
 
         } catch (e) {
 
@@ -117,10 +125,16 @@ export class CompanyFormComponent implements OnInit {
     // validate
     if (form.valid) {
       self.submitAttempt = false;
-      self.onUpdate.emit(form);
     } else {
       self.submitAttempt = true;
     }
+  }
+
+  /**
+   * Back to company list page.
+   */
+  backPage() {
+    return this.router.navigate(['/administrador/empresa']);
   }
 
 }

@@ -69,11 +69,11 @@ export class CompanyService {
    * Realize http request and get all service types.
    * @returns Promise any.
    */
-  getServiceTypes(id: string): Promise<any> {
+  getServiceTypes(agencyId: string, companyId: string): Promise<any> {
     return new Promise<any>(
       (resolve, reject) => {
         this.httpRequestService
-          .getRequestWithAuthorization(`${this.serviceTypeUrl}/find-by-agency/${id}`)
+          .getRequestWithAuthorization(`${this.serviceTypeUrl}/find-by-agency/${agencyId}/${companyId}`)
           .subscribe(
             response => resolve(of(response)),
             error => reject(error),
