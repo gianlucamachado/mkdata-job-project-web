@@ -52,7 +52,7 @@
     <span *ngFor="let solicitation of solicitationState.list; let i = index">
 
       <!-- table med and up -->
-      <div class="row hide-on-med-and-down border-row no-margin padding-vertical no-border-top hover-row cursor-pointer"
+      <div class="row hide-on-med-and-down border-row no-margin padding-vertical no-border-top hover-row cursor-pointer valign-wrapper"
         (click)="openDetails(solicitation)">
         <div class="col s4">
           <div class="col">
@@ -63,7 +63,8 @@
           </div>
         </div>
         <div class="col s4">
-          <p> {{ solicitation.environment_description }} </p>
+          <p class="no-margin"> {{ solicitation.environment_description }} </p>
+          <p class="no-margin"> <span class="bold">Agência:</span> {{ solicitation.agency }} </p>
         </div>
         <div class="col s2">
           <p> {{ solicitation.service_type_description }} </p>
@@ -104,6 +105,7 @@
         </div>
         <div class="col s12 m6">
           <p> <span class="bold">Local:</span> {{ solicitation.environment_description }} </p>
+          <p> <span class="bold">Agência:</span> {{ solicitation.agency }} </p>
           <p> <span class="bold">Serviço:</span> {{ solicitation.service_type_description }} </p>
           <p>
             <span class="bold">
@@ -140,6 +142,7 @@
         <div class="col s12">
           <p> <span class="bold">Nome:</span> {{ solicitation.employee_name }} </p>
           <p> <span class="bold">Local:</span> {{ solicitation.environment_description }} </p>
+          <p> <span class="bold">Agência:</span> {{ solicitation.agency }} </p>
           <p> <span class="bold">Serviço:</span> {{ solicitation.service_type_description }} </p>
           <p>
             <span class="bold">
