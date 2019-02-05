@@ -123,15 +123,3 @@
   </li>
 
 </ul>
-
-
-<!-- modal form -->
-<div *ngIf="router.url === '/administrador/empresa'" id="company_modal" class="modal" materialize="modal"
-  [materializeParams]="modelParams" [materializeActions]="modalActions">
-  <div class="modal-content">
-    <app-company-form [submitAttempt]="submitAttempt" [modalForm]="modalForm" (onClose)="closeModal()" (onUpdate)="updateEvent($event)"></app-company-form>
-  </div>
-</div>
-
-<!-- message -->
-<app-sweet-message [swalOptions]="swalOptions"></app-sweet-message>

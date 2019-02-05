@@ -34,6 +34,21 @@ export class CompanyService {
   ) { }
 
   /**
+   * Find company.
+   */
+  getCompany(companyId: string): Promise<Company[]> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.httpRequestService.getRequestWithAuthorization(`${this.baseUrl}/find-by-company-id/${companyId}`)
+          .subscribe(
+            response => resolve(response),
+            error => reject(error),
+          );
+      },
+    );
+  }
+
+  /**
    * Get list with all companies.
    */
   getAllCompanies(): Promise<Company[]> {
@@ -69,11 +84,28 @@ export class CompanyService {
    * Realize http request and get all service types.
    * @returns Promise any.
    */
-  getServiceTypes(id: string): Promise<any> {
+  getServiceTypes(agencyId: string, companyId: string): Promise<any> {
     return new Promise<any>(
       (resolve, reject) => {
         this.httpRequestService
-          .getRequestWithAuthorization(`${this.serviceTypeUrl}/find-by-agency/${id}`)
+          .getRequestWithAuthorization(`${this.serviceTypeUrl}/find-by-agency/${agencyId}/${companyId}`)
+          .subscribe(
+            response => resolve(of(response)),
+            error => reject(error),
+          );
+      },
+    );
+  }
+
+  /**
+   * Realize http request and update all service types by company and agency.
+   * @returns Promise any.
+   */
+  updateServiceTypes(body: any): Promise<any> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.httpRequestService
+          .postRequestWithAuthorization(this.serviceTypeAgencyUrl, body)
           .subscribe(
             response => resolve(of(response)),
             error => reject(error),

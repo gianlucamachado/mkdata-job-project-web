@@ -8,7 +8,7 @@ import { PaginationService } from '../../components/others/pagination/pagination
 import { UtilsService } from './../../providers/utils/utils.service';
 
 import { MaterializeAction } from 'angular2-materialize';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SweetMessageComponent } from '../../components/others/sweet-message/sweet-message.component';
 
@@ -38,45 +38,6 @@ export class CompanyComponent implements OnInit {
   public companyState: ListState<Company> = new ListState<Company>();
 
   /**
-   * Modal actions.
-   */
-  public modalActions = new EventEmitter<any | MaterializeAction>();
-
-  /*
-   * Modal form.
-   */
-  public modalForm: FormGroup;
-
-  /**
-   * Submit attempt variable.
-   */
-  public submitAttempt: boolean = false;
-
-  /**
-   * Modal params.
-   */
-  public modelParams = [
-    {
-      dismissible: false,
-      complete: () => { },
-    },
-  ];
-
-  /**
-   * Swal options.
-   */
-  public swalOptions: any = {
-    title: '',
-    content: '',
-    button: 'Entendi',
-  };
-
-  /**
-   * View message child.
-   */
-  @ViewChild(SweetMessageComponent) messageComponent: SweetMessageComponent;
-
-  /**
    * @ignore
    */
   constructor(
@@ -84,7 +45,6 @@ export class CompanyComponent implements OnInit {
     private companyService: CompanyService,
     public utilsService: UtilsService,
     private listController: ListControllerService,
-    private formBuilder: FormBuilder,
     public router: Router,
   ) { }
 
@@ -92,26 +52,8 @@ export class CompanyComponent implements OnInit {
    * @ignore
    */
   ngOnInit() {
-    // initialize form
-    this.initializeForm();
-
     // get list
     this.getList();
-  }
-
-  /**
-   * Initialize Form.
-   */
-  initializeForm(): void {
-    // tslint:disable-next-line:no-this-assignment
-    const self = this;
-
-    // form group
-    self.modalForm = self.formBuilder.group({
-      agency_id: ['', Validators.compose([Validators.required])],
-      company_id: ['', Validators.compose([Validators.required])],
-      service_type_id: ['', Validators.compose([Validators.required])],
-    });
   }
 
   /**
@@ -186,97 +128,16 @@ export class CompanyComponent implements OnInit {
   }
 
   /**
-   * Update a service.
-   * @param service Service snapshot to remove from database.
+   * Update an company.
+   * @param company Company snapshot from database.
    */
-  update(service: any): void {
-    // tslint:disable-next-line:no-this-assignment
-    const self = this;
+  update(company: any): void {
 
-    // path values
-    self.modalForm.patchValue(service);
+    // log company
+    console.log(company);
 
-    // open modal
-    self.openModal();
-  }
-
-  /**
-   * Update a service.
-   * @param form Form with values.
-   */
-  async updateEvent(form: FormGroup) {
-
-    // get form value
-    const value: any = form.getRawValue();
-
-    // log value
-    console.log('updateEvent()', value);
-
-    // close modal
-    this.closeModal();
-
-    // present loading
-    this.companyState.loading = true;
-
-    // try/catch
-    try {
-
-      // add new service type
-      const response: any = await this.companyService.createServiceTypeAgency(value);
-
-      // log response
-      console.log(response);
-
-      // message
-      this.swalOptions.title = 'Sucesso';
-      this.swalOptions.content = 'Empresa atualizada com sucesso';
-      this.swalOptions.button = 'Entendi';
-
-    } catch (e) {
-
-      // log
-      console.error(e);
-
-      // message
-      this.swalOptions.title = 'Erro';
-      this.swalOptions.content = 'Erro ao atualizar empresa';
-      this.swalOptions.button = 'Entendi';
-
-    }
-
-    // show message
-    this.messageComponent.show();
-
-    // get info
-    this.getList();
-  }
-
-  /**
-   * Open modal.
-   */
-  openModal(): void {
-    // tslint:disable-next-line:no-this-assignment
-    const self = this;
-
-    // emit event to open modal
-    self.modalActions.emit({ action: 'modal', params: ['open'] });
-  }
-
-  /**
-   * Close modal page.
-   */
-  closeModal(): void {
-    // tslint:disable-next-line:no-this-assignment
-    const self = this;
-
-    // set false submit attempt
-    self.submitAttempt = false;
-
-    // reset form
-    self.initializeForm();
-
-    // emit event to close modal
-    self.modalActions.emit({ action: 'modal', params: ['close'] });
+    // navigate
+    this.router.navigate([`/administrador/empresa/associar/${company.company_id}`]);
   }
 
 }
