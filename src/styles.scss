@@ -56,23 +56,23 @@ h3 {
 * Colors
 *************************************************************************************/
 .secondary {
-  background-color: map-get($map: $colors, $key: secondary);
+  background-color: map-get($map: $colors, $key: secondary) !important;
 }
 
 .primary {
-  background-color: map-get($map: $colors, $key: primary);
+  background-color: map-get($map: $colors, $key: primary) !important;
 }
 
 .ternary {
-  background-color: map-get($map: $colors, $key: ternary);
+  background-color: map-get($map: $colors, $key: ternary) !important;
 }
 
 .primary-text {
-  color: map-get($map: $colors, $key: primary);
+  color: map-get($map: $colors, $key: primary) !important;
 }
 
 .primary-border {
-  border: 1px solid map-get($map: $colors, $key: primary);
+  border: 1px solid map-get($map: $colors, $key: primary) !important;
 }
 
 .bold {
