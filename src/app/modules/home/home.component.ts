@@ -26,14 +26,7 @@ export class HomeComponent implements OnInit {
    * Menu Itens.
    */
   public menu: MenuItem[] = [
-    { icon: 'far fa-chart-bar', label: 'Dashboard', href: '/administrador/painel', isActive: true },
-    { icon: 'fas fa-wrench', label: 'Solicitações', href: '/administrador/solicitacao', isActive: false },
-    { icon: 'fas fa-store-alt', label: 'Empresas', href: '/administrador/empresa', isActive: false },
-    { icon: 'fas fa-th-large', label: 'Serviços', href: '/administrador/servico', isActive: false },
-    { icon: 'fas fa-map-marked', label: 'Locais', href: '/administrador/local', isActive: false },
-    { icon: 'fas fa-user', label: 'Usuários', href: '/administrador/usuario', isActive: false },
-    { icon: 'fas fa-file-alt', label: 'Relatórios', href: '/administrador/relatorio', isActive: false },
-    { icon: 'fas fa-bell', label: 'Notificação', href: '/administrador/notificacao', isActive: false },
+    { icon: 'fas fa-store-alt', label: 'Empresas', href: '/administrador/empresa', isActive: true },
     { icon: 'fas fa-sign-out-alt', label: 'Sair', href: '', isActive: false },
   ];
 

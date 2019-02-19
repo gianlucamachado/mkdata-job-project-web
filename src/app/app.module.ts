@@ -18,7 +18,7 @@ import { SharedModule } from './shared/shared.module';
   ],
   imports: [
     AppRoutingModule,
-    BrowserModule.withServerTransition({ appId: 'report-corporate-web' }),
+    BrowserModule.withServerTransition({ appId: 'mkdata-job-project-web' }),
     HttpClientModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     SharedModule.forRoot(),

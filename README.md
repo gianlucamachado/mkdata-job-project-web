@@ -1,9 +1,4 @@
-# Report Corporate WEB
-
-## Getting Started
-
-Following these instructions you will have a build of 'Mobilidade Urbana' to run on development or production mode.
-
+# MKData Job Project Web
 
 ## Run Development server
 

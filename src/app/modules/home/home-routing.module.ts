@@ -9,15 +9,8 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [HomeGuardService],
     children: [
-      { path: '', redirectTo: 'painel' },
-      { path: 'painel', loadChildren: '../dashboard/dashboard.module#DashboardModule' },
-      { path: 'solicitacao', loadChildren: '../solicitation/solicitation.module#SolicitationModule' },
+      { path: '', redirectTo: 'empresa' },
       { path: 'empresa', loadChildren: '../company/company.module#CompanyModule' },
-      { path: 'servico', loadChildren: '../service/service.module#ServiceModule' },
-      { path: 'local', loadChildren: '../location/location.module#LocationModule' },
-      { path: 'usuario', loadChildren: '../user/user.module#UserModule' },
-      { path: 'relatorio', loadChildren: '../report/report.module#ReportModule' },
-      { path: 'notificacao', loadChildren: '../notification/notification.module#NotificationModule' },
     ],
   },
 ];

@@ -114,126 +114,127 @@ export class LoginComponent implements OnInit {
    * @param form Object of FormGroup that contains email and password.
    */
   async signInUser(form: FormGroup) {
-    // get form value
-    const value: any = form.getRawValue();
+    // // get form value
+    // const value: any = form.getRawValue();
 
-    // log values
-    console.log(value);
+    // // log values
+    // console.log(value);
 
-    // try/catch
-    try {
+    // // try/catch
+    // try {
 
-      // set loading
-      this.loading = true;
+    //   // set loading
+    //   this.loading = true;
 
-      // set md5 password
-      value.user_password = md5(value.user_password);
+    //   // set md5 password
+    //   value.user_password = md5(value.user_password);
 
-      // do login
-      const response: any = await this.loginService.login(value);
+    //   // do login
+    //   const response: any = await this.loginService.login(value);
 
-      // log response
-      console.log(response);
+    //   // log response
+    //   console.log(response);
 
-      // verify login
-      if (!response.token) {
-        throw Error('erro ao realizar login');
-      }
+    //   // verify login
+    //   if (!response.token) {
+    //     throw Error('erro ao realizar login');
+    //   }
 
-      // get token
-      const token: string = response.token;
+    //   // get token
+    //   const token: string = response.token;
 
-      // decode token
-      const decodedToken: any = jwtDecode(token);
+    //   // decode token
+    //   const decodedToken: any = jwtDecode(token);
 
-      // print decoded token
-      console.log(decodedToken);
+    //   // print decoded token
+    //   console.log(decodedToken);
 
-      // get profile id
-      const profileId: number = Number(decodedToken.prof_id);
+    //   // get profile id
+    //   const profileId: number = Number(decodedToken.prof_id);
 
-      // log profile id
-      console.log('profile_id: ', profileId);
+    //   // log profile id
+    //   console.log('profile_id: ', profileId);
 
-      // declare path
-      let path: string = '';
+    //   // declare path
+    //   let path: string = '';
 
-      // verify path
-      if (profileId === 1) {
+    //   // verify path
+    //   if (profileId === 1) {
 
-        // admin url
-        path = '/administrador';
+    //     // admin url
+    //     path = '/administrador';
 
-      } else {
+    //   } else {
 
-        // is not employee
-        // permission denied
-        this.swalOptions.title = 'Acesso não permitido';
-        this.swalOptions.content = 'Usuário não tem premissão para acessar o painel.';
-        this.swalOptions.button = 'Entendi';
-        this.loading = false;
-        return this.messageComponent.show();
-      }
+    //     // is not employee
+    //     // permission denied
+    //     this.swalOptions.title = 'Acesso não permitido';
+    //     this.swalOptions.content = 'Usuário não tem premissão para acessar o painel.';
+    //     this.swalOptions.button = 'Entendi';
+    //     this.loading = false;
+    //     return this.messageComponent.show();
+    //   }
 
-      // log path
-      console.log(path);
+    //   // log path
+    //   console.log(path);
 
-      // set new token
-      this.tokenService.setToken(`Bearer ${token}`);
+    //   // set new token
+    //   this.tokenService.setToken(`Bearer ${token}`);
 
-      // save on storage
-      await this.storageService.store('token', this.tokenService.getToken());
+    //   // save on storage
+    //   await this.storageService.store('token', this.tokenService.getToken());
 
-      // navigate to admin route
-      await this.router.navigate([path]);
+    //   // navigate to admin route
+    //   await this.router.navigate([path]);
 
-    } catch (e) {
+    // } catch (e) {
 
-      // log error
-      console.error(e);
+    //   // log error
+    //   console.error(e);
 
-      // handle errors
-      if (e && e.error && e.error.message === 'status/invalid-password') {
+    //   // handle errors
+    //   if (e && e.error && e.error.message === 'status/invalid-password') {
 
-        this.swalOptions.title = 'E-mail/Senha inválidos';
-        this.swalOptions.content = 'Verifique as informações inseridas e tente novamente.';
-        this.swalOptions.button = 'Entendi';
+    //     this.swalOptions.title = 'E-mail/Senha inválidos';
+    //     this.swalOptions.content = 'Verifique as informações inseridas e tente novamente.';
+    //     this.swalOptions.button = 'Entendi';
 
-      } else if (e && e.error && e.error.message === 'status/user-not-found') {
+    //   } else if (e && e.error && e.error.message === 'status/user-not-found') {
 
-        this.swalOptions.title = 'Usuário não encontrado';
-        this.swalOptions.content = 'Este e-mail não possui nenhum usuário. Verifique as informações inseridas e tente novamente.';
-        this.swalOptions.button = 'Entendi';
+    //     this.swalOptions.title = 'Usuário não encontrado';
+    //     this.swalOptions.content = 'Este e-mail não possui nenhum usuário. Verifique as informações inseridas e tente novamente.';
+    //     this.swalOptions.button = 'Entendi';
 
-      } else if (e && e.error && e.error.message === 'status/email-not-verified') {
+    //   } else if (e && e.error && e.error.message === 'status/email-not-verified') {
 
-        this.swalOptions.title = 'E-mail não confirmado';
-        this.swalOptions.content = 'Acesse seu endereço de e-mail para confirmar sua conta.';
-        this.swalOptions.button = 'Entendi';
-        this.swalOptions.button = 'Reenviar e-mail?';
-        this.recoveryEmail = value.user_email;
+    //     this.swalOptions.title = 'E-mail não confirmado';
+    //     this.swalOptions.content = 'Acesse seu endereço de e-mail para confirmar sua conta.';
+    //     this.swalOptions.button = 'Entendi';
+    //     this.swalOptions.button = 'Reenviar e-mail?';
+    //     this.recoveryEmail = value.user_email;
 
-      } else if (e && e.error && e.error.message === 'status/invalid-email') {
+    //   } else if (e && e.error && e.error.message === 'status/invalid-email') {
 
-        this.swalOptions.title = 'E-mail inválido';
-        this.swalOptions.content = 'Este e-mail é inválido. Verifique as informações inseridas e tente novamente.';
-        this.swalOptions.button = 'Entendi';
+    //     this.swalOptions.title = 'E-mail inválido';
+    //     this.swalOptions.content = 'Este e-mail é inválido. Verifique as informações inseridas e tente novamente.';
+    //     this.swalOptions.button = 'Entendi';
 
-      } else {
+    //   } else {
 
-        this.swalOptions.title = 'Erro ao realizar login';
-        this.swalOptions.content = 'O login falhou. Verifique as informações inseridas e tente novamente.';
-        this.swalOptions.button = 'Entendi';
+    //     this.swalOptions.title = 'Erro ao realizar login';
+    //     this.swalOptions.content = 'O login falhou. Verifique as informações inseridas e tente novamente.';
+    //     this.swalOptions.button = 'Entendi';
 
-      }
+    //   }
 
-      // present swal
-      this.messageComponent.show();
+    //   // present swal
+    //   this.messageComponent.show();
 
-    }
+    // }
 
-    // dismiss loading
-    this.loading = false;
+    // // dismiss loading
+    // this.loading = false;
+    await this.router.navigate(['/administrador']);
   }
 
   /**

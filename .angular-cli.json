@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "sicoob-report-corporate-pwa"
+    "name": "mkdata-job-project-web"
   },
   "apps": [
     {

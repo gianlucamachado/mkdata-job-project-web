@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   /**
    * Title of app.
    */
-  public title = 'Report Corporate Web';
+  public title = 'MKData Job Project';
 
   /**
    * Routes that will be not verify token.
@@ -54,13 +54,13 @@ export class AppComponent implements OnInit {
         // log
         console.log(event);
 
-        // verify route
-        if (!this.arrayContains(event.url, this.routes)) {
+        // // verify route
+        // if (!this.arrayContains(event.url, this.routes)) {
 
-          // validate
-          this.validateSavedToken();
+        //   // validate
+        //   this.validateSavedToken();
 
-        }
+        // }
 
         // unsubscribe
         sub.unsubscribe();
