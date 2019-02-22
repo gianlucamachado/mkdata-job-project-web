@@ -13,10 +13,6 @@ const APP_ROUTES: Routes = [
     path: 'administrador',
     loadChildren: './modules/home/home.module#HomeModule',
   },
-  {
-    path: 'recuperar-acesso',
-    loadChildren: './modules/recovery/recovery.module#RecoveryModule',
-  },
 ];
 
 @NgModule({
