@@ -52,8 +52,8 @@ export class FormLoginComponent implements OnInit {
 
     // initialize form
     self.loginForm = self.formBuilder.group({
-      user_email: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(50)])],
-      user_password: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(50)])],
+      username: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(50)])],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(50)])],
     });
 
     // bind values from dev env

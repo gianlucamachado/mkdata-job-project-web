@@ -9,8 +9,8 @@ export const environment = {
   one_signal_app_id: '',
   one_signal_safari_web_id: '',
   login: {
-    user_email: 'admin@mkdata.com',
-    user_password: '123456',
+    username: 'admin@mkdata.com',
+    password: '123456',
   },
 };
 

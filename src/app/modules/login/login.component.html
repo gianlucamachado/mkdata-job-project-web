@@ -33,7 +33,6 @@
 
 </section>
 
-
 <!-- modal form -->
 <div id="recovery_modal" class="modal" materialize="modal" [materializeParams]="modalParams" [materializeActions]="modalActions">
   <div class="modal-content">
@@ -86,6 +85,5 @@
   </div>
 </div>
 
-
 <!-- message -->
-<app-sweet-message [swalOptions]="swalOptions" (onConfirm)="resendConfirmEmail(recoveryEmail)"></app-sweet-message>
+<app-sweet-message [swalOptions]="swalOptions"></app-sweet-message>

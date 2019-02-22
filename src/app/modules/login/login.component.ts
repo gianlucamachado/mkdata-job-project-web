@@ -93,20 +93,11 @@ export class LoginComponent implements OnInit {
    */
   ngOnInit(): void {
 
-    // tslint:disable-next-line:no-this-assignment
-    const self = this;
-
     // initialize form
-    self.recoveryForm = self.initializeForm();
-  }
-
-  /**
-   * Initialize form.
-   */
-  initializeForm(): FormGroup {
-    return this.formBuilder.group({
+    this.recoveryForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email])],
     });
+
   }
 
   /**
@@ -114,127 +105,63 @@ export class LoginComponent implements OnInit {
    * @param form Object of FormGroup that contains email and password.
    */
   async signInUser(form: FormGroup) {
-    // // get form value
-    // const value: any = form.getRawValue();
 
-    // // log values
-    // console.log(value);
+    // get form value
+    const value: any = form.getRawValue();
 
-    // // try/catch
-    // try {
+    // log values
+    console.log(value);
 
-    //   // set loading
-    //   this.loading = true;
+    // try/catch
+    try {
 
-    //   // set md5 password
-    //   value.user_password = md5(value.user_password);
+      // set loading
+      this.loading = true;
 
-    //   // do login
-    //   const response: any = await this.loginService.login(value);
+      // do login
+      const token: string = await this.loginService.login(value);
 
-    //   // log response
-    //   console.log(response);
+      // log response
+      console.log(token);
 
-    //   // verify login
-    //   if (!response.token) {
-    //     throw Error('erro ao realizar login');
-    //   }
+      // decode token
+      const decodedToken: any = jwtDecode(token);
 
-    //   // get token
-    //   const token: string = response.token;
+      // print decoded token
+      console.log(decodedToken);
 
-    //   // decode token
-    //   const decodedToken: any = jwtDecode(token);
+      // declare path
+      const path: string = '/administrador';
 
-    //   // print decoded token
-    //   console.log(decodedToken);
+      // log path
+      console.log(path);
 
-    //   // get profile id
-    //   const profileId: number = Number(decodedToken.prof_id);
+      // set new token
+      this.tokenService.setToken(token);
 
-    //   // log profile id
-    //   console.log('profile_id: ', profileId);
+      // save on storage
+      await this.storageService.store('token', this.tokenService.getToken());
 
-    //   // declare path
-    //   let path: string = '';
+      // navigate to admin route
+      await this.router.navigate([path]);
 
-    //   // verify path
-    //   if (profileId === 1) {
+    } catch (e) {
 
-    //     // admin url
-    //     path = '/administrador';
+      // log error
+      console.error(e);
 
-    //   } else {
+      // set message
+      this.swalOptions.title = 'Usuário não encontrado';
+      this.swalOptions.content = 'Este e-mail não possui nenhum usuário. Verifique as informações inseridas e tente novamente.';
+      this.swalOptions.button = 'Entendi';
 
-    //     // is not employee
-    //     // permission denied
-    //     this.swalOptions.title = 'Acesso não permitido';
-    //     this.swalOptions.content = 'Usuário não tem premissão para acessar o painel.';
-    //     this.swalOptions.button = 'Entendi';
-    //     this.loading = false;
-    //     return this.messageComponent.show();
-    //   }
+      // present swal
+      this.messageComponent.show();
 
-    //   // log path
-    //   console.log(path);
+    }
 
-    //   // set new token
-    //   this.tokenService.setToken(`Bearer ${token}`);
-
-    //   // save on storage
-    //   await this.storageService.store('token', this.tokenService.getToken());
-
-    //   // navigate to admin route
-    //   await this.router.navigate([path]);
-
-    // } catch (e) {
-
-    //   // log error
-    //   console.error(e);
-
-    //   // handle errors
-    //   if (e && e.error && e.error.message === 'status/invalid-password') {
-
-    //     this.swalOptions.title = 'E-mail/Senha inválidos';
-    //     this.swalOptions.content = 'Verifique as informações inseridas e tente novamente.';
-    //     this.swalOptions.button = 'Entendi';
-
-    //   } else if (e && e.error && e.error.message === 'status/user-not-found') {
-
-    //     this.swalOptions.title = 'Usuário não encontrado';
-    //     this.swalOptions.content = 'Este e-mail não possui nenhum usuário. Verifique as informações inseridas e tente novamente.';
-    //     this.swalOptions.button = 'Entendi';
-
-    //   } else if (e && e.error && e.error.message === 'status/email-not-verified') {
-
-    //     this.swalOptions.title = 'E-mail não confirmado';
-    //     this.swalOptions.content = 'Acesse seu endereço de e-mail para confirmar sua conta.';
-    //     this.swalOptions.button = 'Entendi';
-    //     this.swalOptions.button = 'Reenviar e-mail?';
-    //     this.recoveryEmail = value.user_email;
-
-    //   } else if (e && e.error && e.error.message === 'status/invalid-email') {
-
-    //     this.swalOptions.title = 'E-mail inválido';
-    //     this.swalOptions.content = 'Este e-mail é inválido. Verifique as informações inseridas e tente novamente.';
-    //     this.swalOptions.button = 'Entendi';
-
-    //   } else {
-
-    //     this.swalOptions.title = 'Erro ao realizar login';
-    //     this.swalOptions.content = 'O login falhou. Verifique as informações inseridas e tente novamente.';
-    //     this.swalOptions.button = 'Entendi';
-
-    //   }
-
-    //   // present swal
-    //   this.messageComponent.show();
-
-    // }
-
-    // // dismiss loading
-    // this.loading = false;
-    await this.router.navigate(['/administrador']);
+    // dismiss loading
+    this.loading = false;
   }
 
   /**
@@ -247,60 +174,6 @@ export class LoginComponent implements OnInit {
 
     // log values
     console.log(value);
-
-    // try/catch
-    try {
-
-      // set loading
-      this.loadingSpinner = true;
-
-      // do login
-      const response: any = await this.loginService.recoveryPassword(value.email);
-
-      // log response
-      console.log(response);
-
-      // Succefull message
-      this.swalOptions.title = 'E-mail enviado com sucesso';
-      this.swalOptions.content = `Um e-mail foi enviado para ${value.email} com instruções para recuperar o acesso a aplicação Report Corporate.`;
-      this.swalOptions.button = 'Entendi';
-
-      // navigate to admin route
-      this.closeModal(false, null);
-
-    } catch (e) {
-
-      // log error
-      console.error(e);
-
-      // handle errors
-      if (e && e.error && e.error.message === 'status/user-not-found') {
-
-        this.swalOptions.title = 'Usuário não encontrado';
-        this.swalOptions.content = 'Este e-mail não possui nenhum usuário. Verifique as informações inseridas e tente novamente.';
-        this.swalOptions.button = 'Entendi';
-
-      } else if (e && e.error && e.error.message === 'status/invalid-email') {
-
-        this.swalOptions.title = 'E-mail inválido';
-        this.swalOptions.content = 'Este e-mail é inválido. Verifique as informações inseridas e tente novamente.';
-        this.swalOptions.button = 'Entendi';
-
-      } else {
-
-        this.swalOptions.title = 'Erro enviar e-mail';
-        this.swalOptions.content = 'O envio de e-mail falhou. Verifique as informações inseridas e tente novamente.';
-        this.swalOptions.button = 'Entendi';
-
-      }
-
-    }
-
-    // present swal
-    this.messageComponent.show();
-
-    // dismiss loading
-    this.loadingSpinner = false;
 
   }
 
@@ -333,56 +206,6 @@ export class LoginComponent implements OnInit {
       self.modalActions.emit({ action: 'modal', params: ['close'] });
       // reset form
       this.recoveryForm.reset();
-    }
-  }
-
-  /**
-   * Resend confirm e-mail
-   */
-  async resendConfirmEmail(email: string) {
-    if (email) {
-
-      // log email
-      console.log(email);
-
-      // present loading
-      this.loading = true;
-
-      // try/catcg
-      try {
-
-        // resend e-mail
-        const response: any = await this.loginService.resendConfirmAccountEmail(email);
-
-        // log response
-        console.log(response);
-
-        // Succefull message
-        this.swalOptions.title = 'E-mail enviado com sucesso';
-        this.swalOptions.content = `Um e-mail de confirmação foi enviado para ${email} para liberar o acesso à aplicação Report Corporate.`;
-        this.swalOptions.button = 'Entendi';
-
-      } catch (e) {
-
-        // log error
-        console.error(e);
-
-        // error message
-        this.swalOptions.title = 'Erro enviar e-mail';
-        this.swalOptions.content = 'O envio de e-mail falhou. Verifique as informações inseridas e tente novamente.';
-        this.swalOptions.button = 'Entendi';
-
-      }
-
-      // present swal
-      this.messageComponent.show();
-
-      // dismiss loading
-      setTimeout(() => this.loading = false, 500);
-
-      // set undefined
-      this.recoveryEmail = undefined;
-
     }
   }
 }

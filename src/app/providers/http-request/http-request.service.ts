@@ -41,7 +41,13 @@ export class HttpRequestService {
    * @param body Body to request.
    */
   postRequest(url: string, body: any): Observable<any> {
-    return this.http.post(environment.api_url + url, body)
+
+    // create request options
+    const options: any = {
+      observe: 'response',
+    };
+
+    return this.http.post(environment.api_url + url, body, options)
       .pipe(
         tap(data => console.log(data)),
         retry(3),
