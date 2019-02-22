@@ -6,24 +6,9 @@ import { of } from 'rxjs/observable/of';
 export class CompanyService {
 
   /**
-   * Company endpoint.
+   * Customer endpoint.
    */
-  private baseUrl = '/api/company';
-
-  /**
-   * Agency url.
-   */
-  private agencyUrl: string = '/api/agency';
-
-  /**
-   * Service type url.
-   */
-  private serviceTypeUrl: string = '/api/service-type';
-
-  /**
-   * Service type agency url.
-   */
-  private serviceTypeAgencyUrl: string = '/api/service-type-agency';
+  private baseUrl = '/api/customers';
 
   /**
    * @ignore

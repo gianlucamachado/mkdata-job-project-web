@@ -8,6 +8,8 @@ import { MaterializeAction } from 'angular2-materialize';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Customer } from '../../classes/Customer.class';
+import { Subscriber } from 'rxjs/Subscriber';
+import * as faker from 'faker';
 
 /**
  * Company component.
@@ -56,6 +58,37 @@ export class CompanyComponent implements OnInit {
 
     // dismiss loading
     setTimeout(() => this.loading = false, 500);
+
+    // get customers
+    this.customers$ = new Observable((observer: Subscriber<Customer[]>) => {
+      observer.next([
+        {
+          id: '0',
+          created_at: '',
+          document_one: '41648268862',
+          document_two: '',
+          group: 'A',
+          is_active: true,
+          name: 'Gianluca Maziero Machado',
+          type: 'CPF',
+          updated_at: '',
+          email: faker.internet.email(),
+        },
+        {
+          id: '1',
+          created_at: '',
+          document_one: '41648268862',
+          document_two: '',
+          group: 'A',
+          is_active: true,
+          name: 'Gianluca Maziero Machado',
+          type: 'CPF',
+          updated_at: '',
+          email: faker.internet.email(),
+        },
+      ]);
+      observer.complete();
+    });
 
   }
 

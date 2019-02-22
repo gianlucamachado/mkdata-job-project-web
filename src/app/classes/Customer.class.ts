@@ -8,4 +8,5 @@ export class Customer {
   public name: string;
   public type: string;
   public updated_at: string;
+  public email: string;
 }
