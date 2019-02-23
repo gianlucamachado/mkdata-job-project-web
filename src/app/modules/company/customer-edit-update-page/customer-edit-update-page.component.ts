@@ -1,7 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { SweetMessageComponent } from '../../../components/others/sweet-message/sweet-message.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UtilsService } from '../../../providers/utils/utils.service';
+import { CnpjValidator } from '../../../validators/cnpj.validator';
+import { CPFValidator } from '../../../validators/cpf.validator';
+import { PhoneValidator } from '../../../validators/phone.validator';
+import { LengthValidator } from '../../../validators/length.validator';
+declare var Materialize: any;
 
 /**
  * Customer edit page.
@@ -17,6 +23,11 @@ export class CustomerEditUpdatePageComponent implements OnInit {
    * Customer form.
    */
   public customerForm: FormGroup;
+
+  /**
+   * phone form.
+   */
+  public phoneForm: FormGroup;
 
   /**
    * Submit attempt variable.
@@ -59,6 +70,7 @@ export class CustomerEditUpdatePageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    public utilsService: UtilsService,
   ) { }
 
   /**
@@ -69,16 +81,37 @@ export class CustomerEditUpdatePageComponent implements OnInit {
     // initiliaze form
     this.customerForm = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required])],
-      email: ['', Validators.compose([Validators.required])],
+      email: ['', Validators.compose([Validators.required, Validators.email])],
       document_one: ['', Validators.compose([Validators.required])],
-      document_two: ['', Validators.compose([Validators.required])],
+      document_two: [''],
       group: ['', Validators.compose([Validators.required])],
       type: ['', Validators.compose([Validators.required])],
       is_active: [true, Validators.compose([Validators.required])],
+      phones: this.formBuilder.array([], LengthValidator.isValid),
+    });
+
+    this.phoneForm = this.formBuilder.group({
+      phone: ['', Validators.compose([Validators.required, PhoneValidator.isValid])],
     });
 
     // get customer id
     const customer_id: string = this.activatedRoute.snapshot.paramMap.get('customer_id');
+
+    // create subscribe and define validators
+    this.customerForm.controls.type.valueChanges.subscribe((value: string) => {
+
+      if (value) {
+        if (value === 'PF') {
+          this.customerForm.controls.document_one.setValidators([Validators.required, CPFValidator.isValid]);
+        } else if (value === 'PJ') {
+          this.customerForm.controls.document_one.setValidators([Validators.required, CnpjValidator.isValid]);
+        }
+      }
+
+      // update fields
+      setTimeout(() => Materialize.updateTextFields(), 500);
+
+    });
 
     // define edit mode value
     this.editMode = (customer_id) ? true : false;
@@ -90,6 +123,28 @@ export class CustomerEditUpdatePageComponent implements OnInit {
    */
   backPage() {
     return this.router.navigate(['/administrador/empresa']);
+  }
+
+  /**
+   * Add new number value.
+   */
+  addNewPhone(form: FormGroup) {
+
+    // get form value
+    const value: any = form.getRawValue();
+
+    // log form value
+    console.log(value);
+
+    if (form.valid) {
+      // set new phone value
+      (this.customerForm.get('phones') as FormArray).push(
+        this.formBuilder.group({
+          number: value.phone,
+        }),
+      );
+    }
+
   }
 
   /**

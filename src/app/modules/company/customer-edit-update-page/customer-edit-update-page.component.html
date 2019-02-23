@@ -29,30 +29,78 @@
 
       <!-- nome completo -->
       <div class="input-field col s12 margin-top">
-        <input placeholder="Nome Completo" id="name" type="text" class="validate" formControlName="name">
+        <input placeholder="Nome Completo" id="name" type="text" class="validate" formControlName="name" [ngClass]="{'invalid':utilsService.showError('name', customerForm, submitAttempt)}">
         <label for="name">Nome Completo</label>
       </div>
+      <div class="col s12 form-control-feedback red-text s12" *ngIf="utilsService.showError('name', customerForm, submitAttempt)">
+        <p class="no-margin" *ngIf="customerForm['controls']['name'].errors.required">
+          Campo obrigatório
+        </p>
+      </div>
 
-      <!--email -->
+      <!-- email -->
       <div class="input-field col s12 margin-top">
-        <input placeholder="E-mail" id="email" type="email" class="validate" formControlName="email">
+        <input placeholder="E-mail" id="email" type="email" class="validate" formControlName="email" [ngClass]="{'invalid':utilsService.showError('email', customerForm, submitAttempt)}">
         <label for="email">E-mail</label>
+      </div>
+      <div class="col s12 form-control-feedback red-text" *ngIf="utilsService.showError('email', customerForm, submitAttempt)">
+        <p class="no-margin" *ngIf="customerForm['controls']['email'].errors.required">
+          Campo obrigatório
+        </p>
+        <p class="no-margin" *ngIf="!customerForm['controls']['email'].errors.required && customerForm['controls']['email'].errors.email">
+          E-mail inválido
+        </p>
+      </div>
+
+      <!-- phone -->
+      <div class="input-field col m9 l10 margin-top">
+        <form [formGroup]="phoneForm">
+          <input placeholder="Telefone (Adicione quantos forem necessários)" id="tel" type="tel" class="validate"
+            formControlName="phone" mask="(00) 0 0000-0000">
+          <label for="email">Telefone</label>
+        </form>
+      </div>
+      <div class="input-field col m3 l2 margin-top">
+        <app-button-add (onClick)="addNewPhone(phoneForm)"></app-button-add>
+      </div>
+      <div class="col s12 form-control-feedback red-text" *ngIf="utilsService.showError('phone', phoneForm, submitAttempt)">
+        <p class="no-margin" *ngIf="phoneForm['controls']['phone'].errors.required">
+          Campo obrigatório
+        </p>
+        <p class="no-margin" *ngIf="!phoneForm['controls']['phone'].errors.required && phoneForm['controls']['phone'].errors.invalidPhone">
+          Telefone inválido
+        </p>
+      </div>
+      <div class="col s12 form-control-feedback red-text" *ngIf="utilsService.showError('phones', customerForm, submitAttempt)">
+        <p class="no-margin" *ngIf="customerForm['controls']['phones'].errors.invalidLength">
+          É obrigatório pelo menos um telefone
+        </p>
+      </div>
+
+      <!-- phones list -->
+      <div class="col s12" *ngFor="let phone of customerForm.value.phones; let i = index">
+        Telefone {{i+1}}: {{ phone.number | mask: '(00) 0 0000-0000' }}
       </div>
 
       <!-- grupo -->
       <div class="col s12 margin-top">
-        <div class="input-field">
-          <select id="type" materialize="material_select">
+        <div [ngClass]="{'invalid': utilsService.showError('group', customerForm, submitAttempt), 'input-field': true}">
+          <select id="type" materialize="material_select" formControlName="group">
             <option value="" disabled selected>Selecione o grupo</option>
             <option *ngFor="let group of groups" [value]="group">{{ group }}</option>
           </select>
           <label for="type">Grupo</label>
         </div>
       </div>
+      <div class="col s12 form-control-feedback red-text" *ngIf="utilsService.showError('group', customerForm, submitAttempt)">
+        <p class="no-margin" *ngIf="customerForm['controls']['group'].errors.required">
+          Opção obrigatória
+        </p>
+      </div>
 
       <!-- tipo de documento -->
       <div class="col s12 margin-top">
-        <div class="input-field">
+        <div [ngClass]="{'invalid': utilsService.showError('type', customerForm, submitAttempt), 'input-field': true}">
           <select id="type" materialize="material_select" formControlName="type">
             <option value="" disabled selected>Selecione o tipo de documento</option>
             <option value="PF">Pessoa Física</option>
@@ -61,17 +109,44 @@
           <label for="type">Tipo de Documento</label>
         </div>
       </div>
+      <div class="col s12 form-control-feedback red-text" *ngIf="utilsService.showError('type', customerForm, submitAttempt)">
+        <p class="no-margin" *ngIf="customerForm['controls']['type'].errors.required">
+          Opção obrigatória
+        </p>
+      </div>
 
       <!-- CPF -->
       <div class="input-field col s12 margin-top" *ngIf="customerForm.controls.type.valid && customerForm.value.type === 'PF'">
-        <input placeholder="CPF" id="cpf" type="tel" class="validate" mask="000.000.000-00" formControlName="document_one">
+        <input placeholder="CPF" id="cpf" type="tel" class="validate" mask="000.000.000-00" formControlName="document_one"
+          [ngClass]="{'invalid':utilsService.showError('document_one', customerForm, submitAttempt)}">
         <label for="cpf">CPF</label>
+      </div>
+      <div *ngIf="customerForm.controls.type.valid && customerForm.value.type === 'PF'">
+        <div class="col s12 form-control-feedback red-text" *ngIf="utilsService.showError('document_one', customerForm, submitAttempt)">
+          <p class="no-margin" *ngIf="customerForm['controls']['document_one'].errors.required">
+            Campo obrigatório
+          </p>
+          <p class="no-margin" *ngIf="!customerForm['controls']['document_one'].errors.required && customerForm['controls']['document_one'].errors.invalidCPF">
+            CPF inválido
+          </p>
+        </div>
       </div>
 
       <!-- cnpj -->
       <div class="input-field col s12 margin-top" *ngIf="customerForm.controls.type.valid && customerForm.value.type === 'PJ'">
-        <input placeholder="CNPJ" id="cnpj" type="tel" class="validate" mask="00.000.000/0000-00" formControlName="document_one">
+        <input placeholder="CNPJ" id="cnpj" type="tel" class="validate" mask="00.000.000/0000-00" formControlName="document_one"
+          [ngClass]="{'invalid':utilsService.showError('document_one', customerForm, submitAttempt)}">
         <label for="cnpj">CNPJ</label>
+      </div>
+      <div *ngIf="customerForm.controls.type.valid && customerForm.value.type === 'PJ'">
+        <div class="col s12 form-control-feedback red-text" *ngIf="utilsService.showError('document_one', customerForm, submitAttempt)">
+          <p class="no-margin" *ngIf="customerForm['controls']['document_one'].errors.required">
+            Campo obrigatório
+          </p>
+          <p class="no-margin" *ngIf="!customerForm['controls']['document_one'].errors.required && customerForm['controls']['document_one'].errors.invalidCnpj">
+            CNPJ inválido
+          </p>
+        </div>
       </div>
 
       <!-- rg -->
