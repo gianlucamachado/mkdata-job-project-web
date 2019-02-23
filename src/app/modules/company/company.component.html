@@ -50,6 +50,7 @@
   <div *ngIf="(customers$ | async)?.length !== 0">
     <span *ngFor="let customer of customers$ | async; let i = index">
 
+      <!-- med and up -->
       <div class="row valign-wrapper hide-on-med-and-down border-row no-margin padding-vertical no-border-top hover-row cursor-pointer">
         <div class="col s4">
           <p> {{ customer.name }} </p>
@@ -64,7 +65,7 @@
           <p> {{ customer.group }} </p>
         </div>
         <div class="col s1 center-align">
-          <i class="fas fa-pencil-alt fa-lg blue-text text-darken-4" (click)="update(company)"></i>
+          <i class="fas fa-pencil-alt fa-lg blue-text text-darken-4" (click)="update(customer)"></i>
         </div>
       </div>
 
@@ -110,10 +111,17 @@
     </div>
   </div>
 
+  <!-- fab button -->
+  <div class="fixed-action-btn" (click)="create()">
+    <a class="btn-floating btn-large primary">
+      <i class="large material-icons">add</i>
+    </a>
+  </div>
+
 </div>
 
 <!-- sidenav menu -->
-<ul id="company-filter" class="side-nav side-menu secondary">
+<ul id="customer-filter" class="side-nav side-menu secondary">
 
   <!-- header -->
   <li>

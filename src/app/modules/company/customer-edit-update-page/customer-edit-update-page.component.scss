@@ -1,0 +1,51 @@
+@import 'src/app/theme/variables.scss';
+
+.padding {
+  padding: $padding !important;
+}
+
+.margin-top {
+  margin-top: $margin !important;
+}
+
+.lever {
+  transform: translateY(-2px);
+}
+
+.switch label input[type=checkbox]:checked+.lever:after {
+  background-color: #3e95dc;
+}
+
+input[type=text]:not(.browser-default).validate+label,
+input[type=email]:not(.browser-default).validate+label,
+input[type=tel]:not(.browser-default).validate+label {
+  left: $padding !important;
+}
+
+.row .col {
+  padding-left: $padding !important;
+  padding-right: 0px !important;
+}
+
+@media #{$medium-and-up} {
+
+  .button-margin-right {
+    margin-right: $margin;
+  }
+
+}
+
+@media #{$small-and-down} {
+  .button-margin-top {
+    margin-top: $margin;
+  }
+
+  .button-margin-left {
+    margin-left: 0;
+  }
+
+  .button-margin-right {
+    margin-right: 0;
+  }
+
+}

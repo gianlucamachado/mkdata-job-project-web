@@ -63,7 +63,7 @@ export class CompanyComponent implements OnInit {
     this.customers$ = new Observable((observer: Subscriber<Customer[]>) => {
       observer.next([
         {
-          id: '0',
+          customer_id: '0',
           created_at: '',
           document_one: '41648268862',
           document_two: '',
@@ -75,7 +75,7 @@ export class CompanyComponent implements OnInit {
           email: faker.internet.email(),
         },
         {
-          id: '1',
+          customer_id: '1',
           created_at: '',
           document_one: '41648268862',
           document_two: '',
@@ -107,24 +107,36 @@ export class CompanyComponent implements OnInit {
    * Close filter menu.
    */
   closeFilterMenu(): void {
+
     // tslint:disable-next-line:no-this-assignment
     const self = this;
 
     // emit event to close modal
     self.sideNavActions.emit({ action: 'sideNav', params: ['hide'] });
+
   }
 
   /**
-   * Update an company.
-   * @param company Company snapshot from database.
+   * Update a customer.
+   * @param customer Customer snapshot from database.
    */
-  update(company: any): void {
+  update(customer: Customer): void {
 
-    // log company
-    console.log(company);
+    // log customer
+    console.log(customer);
 
     // navigate
-    this.router.navigate([`/administrador/empresa/associar/${company.company_id}`]);
+    this.router.navigate([`/administrador/empresa/editar/${customer.customer_id}`]);
+
+  }
+
+  /**
+   * Create a customer.
+   */
+  create(): void {
+
+    // navigate
+    this.router.navigate(['/administrador/empresa/novo']);
 
   }
 

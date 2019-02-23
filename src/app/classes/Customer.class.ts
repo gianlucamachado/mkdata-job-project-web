@@ -1,5 +1,5 @@
 export class Customer {
-  public id: string;
+  public customer_id: string;
   public created_at: string;
   public document_one: string;
   public document_two: string;

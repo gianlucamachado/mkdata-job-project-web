@@ -1,0 +1,102 @@
+<!-- container -->
+<div class="container">
+
+  <form [formGroup]="customerForm">
+    <div class="row">
+
+      <!-- header -->
+      <div class="col s12 left-align padding">
+        <h5 *ngIf="editMode" class="no-margin">Editar Cliente</h5>
+        <h5 *ngIf="!editMode" class="no-margin">Novo Cliente</h5>
+      </div>
+
+      <!-- message -->
+      <div class="col s12 margin-bottom">
+        <p *ngIf="editMode" class="left-align no-margin">Altere as informações necessárias e salve o cliente.</p>
+        <p *ngIf="!editMode" class="left-align no-margin">Preencha as informações para adicionar um novo cliente.</p>
+      </div>
+
+      <!-- switch -->
+      <div class="col s12 margin-bottom">
+        <div class="switch">
+          <label>
+            Este usuário está ativo?
+            <input type="checkbox" formControlName="is_active">
+            <span class="lever"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- nome completo -->
+      <div class="input-field col s12 margin-top">
+        <input placeholder="Nome Completo" id="name" type="text" class="validate" formControlName="name">
+        <label for="name">Nome Completo</label>
+      </div>
+
+      <!--email -->
+      <div class="input-field col s12 margin-top">
+        <input placeholder="E-mail" id="email" type="email" class="validate" formControlName="email">
+        <label for="email">E-mail</label>
+      </div>
+
+      <!-- grupo -->
+      <div class="col s12 margin-top">
+        <div class="input-field">
+          <select id="type" materialize="material_select">
+            <option value="" disabled selected>Selecione o grupo</option>
+            <option *ngFor="let group of groups" [value]="group">{{ group }}</option>
+          </select>
+          <label for="type">Grupo</label>
+        </div>
+      </div>
+
+      <!-- tipo de documento -->
+      <div class="col s12 margin-top">
+        <div class="input-field">
+          <select id="type" materialize="material_select" formControlName="type">
+            <option value="" disabled selected>Selecione o tipo de documento</option>
+            <option value="PF">Pessoa Física</option>
+            <option value="PJ">Pessoa Jurídica</option>
+          </select>
+          <label for="type">Tipo de Documento</label>
+        </div>
+      </div>
+
+      <!-- CPF -->
+      <div class="input-field col s12 margin-top" *ngIf="customerForm.controls.type.valid && customerForm.value.type === 'PF'">
+        <input placeholder="CPF" id="cpf" type="tel" class="validate" mask="000.000.000-00" formControlName="document_one">
+        <label for="cpf">CPF</label>
+      </div>
+
+      <!-- cnpj -->
+      <div class="input-field col s12 margin-top" *ngIf="customerForm.controls.type.valid && customerForm.value.type === 'PJ'">
+        <input placeholder="CNPJ" id="cnpj" type="tel" class="validate" mask="00.000.000/0000-00" formControlName="document_one">
+        <label for="cnpj">CNPJ</label>
+      </div>
+
+      <!-- rg -->
+      <div class="input-field col s12 margin-top" *ngIf="customerForm.controls.type.valid && customerForm.value.type === 'PF'">
+        <input placeholder="RG (Opcional)" id="rg" type="tel" class="validate" formControlName="document_two">
+        <label for="rg">RG</label>
+      </div>
+
+      <!-- ie -->
+      <div class="input-field col s12 margin-top" *ngIf="customerForm.controls.type.valid && customerForm.value.type === 'PJ'">
+        <input placeholder="IE (Opcional)" id="ie" type="tel" class="validate" formControlName="document_two">
+        <label for="ie">IE</label>
+      </div>
+
+      <!-- button concluir -->
+      <div class="col s12 m6 push-m6 l3 push-l9 center-align no-padding">
+        <app-button-generic class="button-margin-left" [text]="(editMode) ? 'Salvar' : 'Concluir'" (onClick)="validate(customerForm)"></app-button-generic>
+      </div>
+
+      <!-- button cancel -->
+      <div class="col s12 m6 pull-m6 l3 push-l3 center-align no-padding button-margin-top">
+        <app-button-generic class="button-margin-right" [text]="'Cancelar'" [isOutline]="true" (onClick)="backPage()"></app-button-generic>
+      </div>
+
+    </div>
+  </form>
+
+</div>
