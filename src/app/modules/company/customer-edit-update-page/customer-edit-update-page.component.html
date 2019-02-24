@@ -80,7 +80,8 @@
       </div>
 
       <!-- phones list -->
-      <div class="col s12" *ngFor="let phone of customerForm.value.phones; let i = index">
+      <div class="col s12 padding-top" *ngFor="let phone of customerForm.value.phones; let i = index">
+        <i class="far fa-trash-alt fa-lg padding-right cursor-pointer" (click)="removePhone(i)"></i>
         Telefone {{i+1}}: {{ phone.number | mask: '(00) 0 0000-0000' }}
       </div>
 

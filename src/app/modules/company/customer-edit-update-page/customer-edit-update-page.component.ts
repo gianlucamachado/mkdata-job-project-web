@@ -189,6 +189,14 @@ export class CustomerEditUpdatePageComponent implements OnInit {
   }
 
   /**
+   * Index to remove phone.
+   * @param index Index to remove.
+   */
+  removePhone(index: number) {
+    (this.customerForm.get('phones') as FormArray).removeAt(index);
+  }
+
+  /**
    * Add new number value.
    */
   addNewPhone(form: FormGroup) {
