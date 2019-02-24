@@ -108,6 +108,7 @@
         </div>
         <div class="col s1 center-align">
           <i class="fas fa-pencil-alt fa-lg blue-text text-darken-4" (click)="update(customer)"></i>
+          <i class="fas fa-trash-alt fa-lg blue-text text-darken-4 padding"></i>
         </div>
       </div>
 
@@ -125,7 +126,14 @@
             <span *ngIf="customer.is_active" class="green-text">Ativo</span>
             <span *ngIf="!customer.is_active" class="red-text">Inativo</span>
           </p>
-          <!-- <i class="fas fa-pencil-alt fa-lg blue-text text-darken-4" (click)="update(company)"></i> -->
+          <a class="btn-flat no-padding">
+            <i class="fas fa-pencil-alt fa-lg blue-text text-darken-4 left" (click)="update(company)"></i>
+            Editar
+          </a>
+          <a class="btn-flat">
+            <i class="fas fa-trash-alt fa-lg blue-text text-darken-4 left"></i>
+            Excluir
+          </a>
         </div>
       </div>
 
@@ -141,7 +149,14 @@
             <span *ngIf="customer.is_active" class="green-text">Ativo</span>
             <span *ngIf="!customer.is_active" class="red-text">Inativo</span>
           </p>
-          <!-- <i class="fas fa-pencil-alt fa-2x blue-text text-darken-4" (click)="update(company)"></i> -->
+          <a class="btn-flat">
+            <i class="fas fa-pencil-alt fa-lg blue-text text-darken-4 left" (click)="update(company)"></i>
+            Editar
+          </a>
+          <a class="btn-flat">
+            <i class="fas fa-trash-alt fa-lg blue-text text-darken-4 left"></i>
+            Excluir
+          </a>
         </div>
       </div>
     </span>
