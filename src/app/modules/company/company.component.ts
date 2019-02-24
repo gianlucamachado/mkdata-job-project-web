@@ -69,6 +69,11 @@ export class CompanyComponent implements OnInit {
   public customer: Customer;
 
   /**
+   * Save number of customers.
+   */
+  public numberOfCustomers: number = 0;
+
+  /**
    * Swal options.
    */
   public swalOptions: any = {
