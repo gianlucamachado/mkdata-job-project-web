@@ -69,7 +69,7 @@ export class FormLoginComponent implements OnInit {
    * @returns void or boolean values.
    */
   validate(loginForm: FormGroup, onValidate: EventEmitter<FormGroup>): void | boolean {
-    return (loginForm.valid) ? onValidate.emit(loginForm) : this.submitAttempt = true;
+    return onValidate.emit(loginForm);
   }
 
   /**
