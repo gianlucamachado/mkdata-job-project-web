@@ -120,6 +120,9 @@ export class CompanyComponent implements OnInit {
       // get customers
       this.customers$ = await this.companyService.getAllCustomers();
 
+      // get total of customers
+      this.customers$.subscribe(data => this.numberOfCustomers = data.length);
+
       // dismiss loading
       setTimeout(() => this.loading = false, 500);
 
@@ -146,9 +149,6 @@ export class CompanyComponent implements OnInit {
     // set new input
     this.input = search;
 
-    // log search
-    console.log(search);
-
     // get all values
     try {
 
@@ -160,6 +160,7 @@ export class CompanyComponent implements OnInit {
 
       // get filter form value
       const filterFormValue: any = this.filterForm.getRawValue();
+      console.log(filterFormValue);
 
       // filter data
       this.customers$ = this.customers$.pipe(
@@ -176,11 +177,9 @@ export class CompanyComponent implements OnInit {
               finalValue = finalValue && !item.is_active;
             } else if (!filterFormValue.active && !filterFormValue.inactive) {
               finalValue = finalValue && (item.is_active && !item.is_active);
-            } else {
-              finalValue = finalValue && (item.is_active || !item.is_active);
             }
 
-            if (filterFormValue.group !== 'Todos') {
+            if (filterFormValue.group !== '' && filterFormValue.group !== 'Todos') {
               finalValue = finalValue && item.group === filterFormValue.group;
             }
 
