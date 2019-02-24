@@ -4,25 +4,25 @@
   <!-- index -->
   <div class="col s12 m4 push-m4 center-align">
     <ul class="pagination">
-      <li *ngFor="let page of pager?.pages; let i = index" class="cursor-pointer" [ngClass]="{active:pager?.currentPage === page}">
-        <a (click)="pagination.emit(page)"> {{ page }} </a>
+      <li *ngFor="let page of pages; let i = index" class="cursor-pointer" [ngClass]="{ 'active': page === currentPage, 'disabled': disabledItem(i, currentPage) }">
+        <a (click)="onSelectPage(i+1)"> {{ page }} </a>
       </li>
     </ul>
   </div>
 
   <!-- back button -->
-  <div class="col s6 m4 pull-m4">
+  <div class="col s6 m4 pull-m4 no-padding">
     <a class="waves-effect waves-light btn no-shadow white border-radius-5px width-100 primary-text primary-border"
-      (click)="pagination.emit(pager?.currentPage - 1)">
+      (click)="decrease()">
       <i class="material-icons left secondary-text">chevron_left</i>
       <span class="hide-on-small-only">Anterior</span>
     </a>
   </div>
 
   <!-- forwar button -->
-  <div class="col s6 m4 right-align">
+  <div class="col s6 m4 right-align no-padding">
     <a class="waves-effect waves-light btn no-shadow white border-radius-5px width-100 primary-text primary-border"
-      (click)="pagination.emit(pager?.currentPage + 1)">
+      (click)="increase()">
       <i class="material-icons right secondary-text">chevron_right</i>
       <span class="hide-on-small-only">Próximo</span>
     </a>

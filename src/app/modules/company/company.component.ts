@@ -42,6 +42,11 @@ export class CompanyComponent implements OnInit {
   public customers$: Observable<Customer[]>;
 
   /**
+   * Current page.
+   */
+  public currentPage: number = 1;
+
+  /**
    * @ignore
    */
   constructor(

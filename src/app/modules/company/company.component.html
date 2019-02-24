@@ -51,7 +51,7 @@
     <span *ngFor="let customer of customers$ | async; let i = index">
 
       <!-- med and up -->
-      <div class="row valign-wrapper hide-on-med-and-down border-row no-margin padding-vertical no-border-top hover-row cursor-pointer">
+      <div class="row valign-wrapper hide-on-med-and-down border-row no-margin padding-vertical no-border-top hover-row cursor-pointer" *ngIf="paginationService.isCurrentPage(i, currentPage)">
         <div class="col s4">
           <p> {{ customer.name }} </p>
         </div>
@@ -71,7 +71,7 @@
 
       <!-- table med only -->
       <div class="row hide-on-large-only hide-on-small-only border-row no-margin padding-vertical hover-row cursor-pointer"
-        [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
+        [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}" *ngIf="paginationService.isCurrentPage(i, currentPage)">
         <div class="col s12 m6">
           <p> {{ customer.name }} </p>
         </div>
@@ -85,7 +85,7 @@
 
       <!-- table small only -->
       <div class="row show-on-small hide-on-med-and-up center-align border-row no-margin padding-vertical hover-row cursor-pointer"
-        [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}">
+        [ngClass]="{'no-border-top': i % paginationService.getItemsPerPage() !== 0}" *ngIf="paginationService.isCurrentPage(i, currentPage)">
         <div class="col s12">
           <p> <span class="bold">Nome:</span> {{ customer.name }} </p>
           <p> <span class="bold">E-mail:</span> {{ customer.email }} </p>
@@ -98,11 +98,11 @@
   </div>
 
   <!-- pagination -->
-  <!-- <div *ngIf="companyState.list?.length !== 0">
+  <div *ngIf="(customers$ | async)?.length !== 0">
     <div class="col s12">
-      <app-pagination [pager]="companyState.pager" (pagination)="pagination($event)"></app-pagination>
+      <app-pagination [numberOfItems]="(customers$ | async)?.length" [currentPage]="currentPage" (onChange)="currentPage = $event"></app-pagination>
     </div>
-  </div> -->
+  </div>
 
   <!-- table body message -->
   <div *ngIf="(customers$ | async)?.length === 0" class="row border-row">
