@@ -26,6 +26,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { MaterializeModule } from 'angular2-materialize';
 import { RequestStatusService } from '../providers/utils/request-status.service';
 import { InputCommentComponent } from './forms/input-comment/input-comment.component';
+import { SweetDefaultOptionComponent } from './others/sweet-default-option/sweet-default-option.component';
 
 @NgModule({
   imports: [
@@ -55,6 +56,7 @@ import { InputCommentComponent } from './forms/input-comment/input-comment.compo
     SpinnerComponent,
     InputCommentComponent,
     ButtonSwalAlertComponent,
+    SweetDefaultOptionComponent,
   ],
   providers: [
     QuestionControlService,
@@ -62,6 +64,7 @@ import { InputCommentComponent } from './forms/input-comment/input-comment.compo
     RequestStatusService,
   ],
   exports: [
+    SweetDefaultOptionComponent,
     ButtonSwalAlertComponent,
     InputCommentComponent,
     SpinnerComponent,

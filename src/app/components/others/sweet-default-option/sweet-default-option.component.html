@@ -1,0 +1,29 @@
+<!-- Swall confirm -->
+<swal #generalSwal [showConfirmButton]="false" [allowOutsideClick]="dismissible">
+
+    <!-- header -->
+    <ng-container *swalPartial="swalTargets.title">
+      <div class="d-flex justify-content-center flex-column align-items-center">
+        <img src="assets/logo.png" height="40" alt="Logo">
+      </div>
+    </ng-container>
+  
+    <!-- content -->
+    <div class="d-flex flex-column align-items-center margin-top" *swalPartial="swalTargets.content">
+      <div class="padding-bottom-40px d-flex flex-column align-items-center margin-bottom-5px">
+        <strong class="title-text padding-top center-align"> {{ swalOptions.title }} </strong>
+        <span class="padding-vertical center-align">
+          {{ swalOptions.content }}
+        </span>
+      </div>
+
+      <a class="position-absolute bottom-0 left-0 btn hover-secondary btn-large width-50 secondary grey-text text-ligthen-2 flex-1" (click)="close()">
+        Não
+      </a>
+      <a class="position-absolute bottom-0 left-50 btn hover-secondary btn-large width-50 primary white-text flex-1" (click)="close()">
+        Sim
+      </a>
+
+    </div>
+  
+  </swal>

@@ -154,4 +154,30 @@ export class HttpRequestService {
       );
   }
 
+  /**
+   * Delete request with authorization header.
+   * @param url Url to do request.
+   * @returns Promise Request or Response return.
+   */
+  deleteRequestWithAuthorization(url: string, contentType: string = 'application/json', replaceToken?: string): Observable<any> {
+
+    // get token
+    const token: string = this.tokenProvider.getToken();
+
+    // create request options
+    const options = {
+      headers: {
+        'Content-Type': contentType,
+        Authorization: (replaceToken) ? replaceToken : token,
+      },
+    };
+
+    // return
+    return this.http.delete(environment.api_url + url, options)
+      .pipe(
+        tap(data => console.log(data)),
+        retry(3),
+      );
+  }
+
 }

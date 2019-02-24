@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
 
 import { CompanyService } from './company.service';
 import { PaginationService } from '../../components/others/pagination/pagination.service';
@@ -10,6 +10,8 @@ import { Observable } from 'rxjs/Observable';
 import { Customer } from '../../classes/Customer.class';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { filter, map } from 'rxjs/operators';
+import { SweetDefaultOptionComponent } from '../../components/others/sweet-default-option/sweet-default-option.component';
+import { SweetMessageComponent } from '../../components/others/sweet-message/sweet-message.component';
 
 /**
  * Company component.
@@ -60,6 +62,30 @@ export class CompanyComponent implements OnInit {
    * Input value from search.
    */
   public input: string = '';
+
+  /**
+   * Customer that will be deleted.
+   */
+  public customer: Customer;
+
+  /**
+   * Swal options.
+   */
+  public swalOptions: any = {
+    title: '',
+    content: '',
+    button: 'Entendi',
+  };
+
+  /**
+   * View message child.
+   */
+  @ViewChild(SweetDefaultOptionComponent) optionComponent: SweetDefaultOptionComponent;
+
+  /**
+   * View message child.
+   */
+  @ViewChild(SweetMessageComponent) messageComponent: SweetMessageComponent;
 
   /**
    * @ignore
@@ -191,6 +217,61 @@ export class CompanyComponent implements OnInit {
 
     // navigate
     this.router.navigate([`/administrador/empresa/editar/${customer.customer_id}`]);
+
+  }
+
+  /**
+   * Confirm customer deletion;
+   */
+  openConfirmationSwal(customer: Customer) {
+
+    // set message
+    this.swalOptions.title = 'Confirmação';
+    this.swalOptions.content = 'Deseja realmente excluir esse cliente?';
+    this.swalOptions.button = 'Entendi';
+
+    // show swal
+    this.optionComponent.show();
+
+    // save customer
+    this.customer = customer;
+  }
+
+  /**
+   * Delete a customer.
+   * @param customer Customer snapshot from database.
+   */
+  async delete(customer: Customer) {
+
+    // log customer
+    console.log(customer);
+
+    try {
+
+      // delete customer
+      await this.companyService.deleteCustomer(customer.customer_id);
+
+      // set message
+      this.swalOptions.title = 'Sucesso';
+      this.swalOptions.content = 'Cliente excluído com sucesso';
+      this.swalOptions.button = 'Entendi';
+      this.messageComponent.show();
+
+      // presente loading
+      this.loading = true;
+
+      // get customers
+      this.customers$ = await this.companyService.getAllCustomers();
+
+      // dismiss loading
+      setTimeout(() => this.loading = false, 500);
+
+    } catch (e) {
+
+      // show error
+      console.error(e);
+
+    }
 
   }
 

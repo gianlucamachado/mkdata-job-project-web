@@ -79,4 +79,19 @@ export class CompanyService {
     );
   }
 
+  /**
+   * delete customer.
+   */
+  deleteCustomer(customer_id: string): Promise<Customer> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.httpRequestService.deleteRequestWithAuthorization(`${this.baseUrl}/${customer_id}`)
+          .subscribe(
+            response => resolve(response),
+            error => reject(error),
+          );
+      },
+    );
+  }
+
 }
