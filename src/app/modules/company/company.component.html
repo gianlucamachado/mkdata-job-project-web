@@ -21,12 +21,46 @@
   </div>
 
   <!-- panels -->
-  <div class="row valign-wrapper">
+  <div class="row">
 
     <!-- searchbar -->
     <div class="col s12">
-      <app-search-bar [placeholder]="'Buscar por nome ou CPF/CNPJ'" (onSearch)="search($event)"></app-search-bar>
+      <app-search-bar [placeholder]="'Buscar por nome, email ou CPF/CNPJ'" (onSearch)="search($event)"></app-search-bar>
     </div>
+
+    <!-- label -->
+    <div class="col s12 margin-top">
+      <p class="no-margin grey-text text-lighten-1">Filtros de Pesquisa</p>
+    </div>
+
+    <!-- filters -->
+    <form [formGroup]="filterForm">
+
+      <div class="col">
+        <p>
+          <input type="checkbox" id="active" formControlName="active"/>
+          <label for="active">Ativo</label>
+        </p>
+      </div>
+      <div class="col">
+        <p>
+          <input type="checkbox" id="inactive" formControlName="inactive"/>
+          <label for="inactive">Inativo</label>
+        </p>
+      </div>
+  
+      <!-- group select -->
+      <div class="col s12 margin-top">
+        <div class="input-field">
+          <select id="type" materialize="material_select" formControlName="group">
+            <option value="Todos" selected>Todos</option>
+            <option *ngFor="let group of groups" [value]="group">{{ group }}</option>
+          </select>
+          <label for="type">Grupo</label>
+        </div>
+      </div>
+    </form>
+
   </div>
 
   <!-- header med and up -->
@@ -51,7 +85,8 @@
     <span *ngFor="let customer of customers$ | async; let i = index">
 
       <!-- med and up -->
-      <div class="row valign-wrapper hide-on-med-and-down border-row no-margin padding-vertical no-border-top hover-row cursor-pointer" *ngIf="paginationService.isCurrentPage(i, currentPage)">
+      <div class="row valign-wrapper hide-on-med-and-down border-row no-margin padding-vertical no-border-top hover-row cursor-pointer"
+        *ngIf="paginationService.isCurrentPage(i, currentPage)">
         <div class="col s4">
           <p> {{ customer.name }} </p>
         </div>

@@ -8,8 +8,8 @@ import { MaterializeAction } from 'angular2-materialize';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Customer } from '../../classes/Customer.class';
-import { Subscriber } from 'rxjs/Subscriber';
-import * as faker from 'faker';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { filter, map } from 'rxjs/operators';
 
 /**
  * Company component.
@@ -47,6 +47,21 @@ export class CompanyComponent implements OnInit {
   public currentPage: number = 1;
 
   /**
+   * All groups to select.
+   */
+  public groups: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+  /**
+   * Filter form.
+   */
+  public filterForm: FormGroup;
+
+  /**
+   * Input value from search.
+   */
+  public input: string = '';
+
+  /**
    * @ignore
    */
   constructor(
@@ -54,12 +69,20 @@ export class CompanyComponent implements OnInit {
     private companyService: CompanyService,
     public utilsService: UtilsService,
     public router: Router,
+    private formBuilder: FormBuilder,
   ) { }
 
   /**
    * @ignore
    */
   async ngOnInit() {
+
+    // initialize filter form
+    this.filterForm = this.formBuilder.group({
+      active: [true],
+      inactive: [true],
+      group: [''],
+    });
 
     try {
 
@@ -75,16 +98,50 @@ export class CompanyComponent implements OnInit {
       console.error(e);
 
     }
+
+    // subscribe filter form
+    this.filterForm.valueChanges.subscribe((value) => {
+      console.log(value);
+    });
+
   }
 
   /**
    * Do Search and aplly pagination.
    * @param search value searched
    */
-  search(search: string) {
+  async search(search: string) {
+
+    // set new input
+    this.input = search;
 
     // log search
     console.log(search);
+
+    // get all values
+    try {
+
+      // get customers
+      this.customers$ = await this.companyService.getAllCustomers();
+
+      // filter data
+      this.customers$ = this.customers$.pipe(
+        map(arr => arr.filter(
+          (item) => {
+            // const compare1: string = self.utilsService.stringNormalize(item.payload.val().metadata.public.fantasyName.toLowerCase());
+            // const compare2: string = self.utilsService.stringNormalize(item.payload.val().metadata.private.responsible.toLowerCase());
+            // return compare1.indexOf(val) !== -1 || compare2.indexOf(val) !== -1;
+            return true;
+          },
+        )),
+      );
+
+    } catch (e) {
+
+      // log error
+      console.error(e);
+
+    }
 
   }
 
