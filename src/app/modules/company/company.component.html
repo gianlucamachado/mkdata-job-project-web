@@ -38,17 +38,17 @@
 
       <div class="col">
         <p>
-          <input type="checkbox" id="active" formControlName="active"/>
+          <input type="checkbox" id="active" formControlName="active" />
           <label for="active">Ativo</label>
         </p>
       </div>
       <div class="col">
         <p>
-          <input type="checkbox" id="inactive" formControlName="inactive"/>
+          <input type="checkbox" id="inactive" formControlName="inactive" />
           <label for="inactive">Inativo</label>
         </p>
       </div>
-  
+
       <!-- group select -->
       <div class="col s12 margin-top">
         <div class="input-field">
@@ -74,8 +74,11 @@
     <div class="col s2">
       <p>Documento</p>
     </div>
-    <div class="col s2 center-align">
+    <div class="col s1 center-align">
       <p>Grupo</p>
+    </div>
+    <div class="col s1 center-align">
+      <p>Status</p>
     </div>
     <div class="col s1"> </div>
   </div>
@@ -96,8 +99,12 @@
         <div class="col s2">
           <p> {{ customer.document_one | mask: '000.000.000-00' }} </p>
         </div>
-        <div class="col s2 center-align">
+        <div class="col s1 center-align">
           <p> {{ customer.group }} </p>
+        </div>
+        <div class="col s1 center-align">
+          <p *ngIf="customer.is_active" class="green-text">Ativo</p>
+          <p *ngIf="!customer.is_active" class="red-text">Inativo</p>
         </div>
         <div class="col s1 center-align">
           <i class="fas fa-pencil-alt fa-lg blue-text text-darken-4" (click)="update(customer)"></i>
@@ -114,6 +121,10 @@
           <p> <span class="bold">E-mail:</span> {{ customer.email }} </p>
           <p> <span class="bold">Documento:</span> {{ customer.document_one | mask: '000.000.000-00' }} </p>
           <p> <span class="bold">Grupo:</span> {{ customer.group }} </p>
+          <p> <span class="bold">Status:</span>
+            <span *ngIf="customer.is_active" class="green-text">Ativo</span>
+            <span *ngIf="!customer.is_active" class="red-text">Inativo</span>
+          </p>
           <!-- <i class="fas fa-pencil-alt fa-lg blue-text text-darken-4" (click)="update(company)"></i> -->
         </div>
       </div>
@@ -126,6 +137,10 @@
           <p> <span class="bold">E-mail:</span> {{ customer.email }} </p>
           <p> <span class="bold">Documento:</span> {{ customer.document_one | mask: '000.000.000-00' }} </p>
           <p> <span class="bold">Grupo:</span> {{ customer.group }} </p>
+          <p> <span class="bold">Status:</span>
+            <span *ngIf="customer.is_active" class="green-text">Ativo</span>
+            <span *ngIf="!customer.is_active" class="red-text">Inativo</span>
+          </p>
           <!-- <i class="fas fa-pencil-alt fa-2x blue-text text-darken-4" (click)="update(company)"></i> -->
         </div>
       </div>
