@@ -15,7 +15,6 @@ export class LengthValidator {
   static isValid(control: FormControl) {
 
     const value: number = Object.values(control.value).length;
-    console.log(value);
 
     if (value > 0) {
       return null;

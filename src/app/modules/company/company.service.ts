@@ -34,4 +34,34 @@ export class CompanyService {
     );
   }
 
+  /**
+   * Get customer by id.
+   */
+  getCustomerById(customer_id: string): Promise<Customer> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.httpRequestService.getRequestWithAuthorization(`${this.baseUrl}/${customer_id}`)
+          .subscribe(
+            response => resolve(response),
+            error => reject(error),
+          );
+      },
+    );
+  }
+
+  /**
+   * Create new customer.
+   */
+  createNewCustomer(body: any): Promise<Customer> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.httpRequestService.putRequestWithAuthorization(`${this.baseUrl}`, body)
+          .subscribe(
+            response => resolve(response),
+            error => reject(error),
+          );
+      },
+    );
+  }
+
 }

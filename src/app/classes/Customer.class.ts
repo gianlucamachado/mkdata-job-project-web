@@ -9,4 +9,5 @@ export class Customer {
   public type: string;
   public updated_at: string;
   public email: string;
+  public phones: any[];
 }

@@ -1,3 +1,5 @@
+<app-loading-page-transparent *ngIf="showLoadingPageTransparent"></app-loading-page-transparent>
+
 <!-- container -->
 <div class="container">
 
@@ -175,3 +177,6 @@
   </form>
 
 </div>
+
+<!-- message -->
+<app-sweet-message [swalOptions]="swalOptions" (onConfirm)="(backPageFlag) ? backPage() : null" [dismissible]="false"></app-sweet-message>

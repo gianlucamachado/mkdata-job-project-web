@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SweetMessageComponent } from '../../../components/others/sweet-message/sweet-message.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UtilsService } from '../../../providers/utils/utils.service';
@@ -7,6 +7,10 @@ import { CnpjValidator } from '../../../validators/cnpj.validator';
 import { CPFValidator } from '../../../validators/cpf.validator';
 import { PhoneValidator } from '../../../validators/phone.validator';
 import { LengthValidator } from '../../../validators/length.validator';
+import { CompanyService } from '../company.service';
+import { Customer } from '../../../classes/Customer.class';
+import { environment } from '../../../../environments/environment';
+import * as faker from 'faker';
 declare var Materialize: any;
 
 /**
@@ -45,6 +49,11 @@ export class CustomerEditUpdatePageComponent implements OnInit {
   public showLoadingPageTransparent: boolean = false;
 
   /**
+   * Define will be back page.
+   */
+  public backPageFlag: boolean = false;
+
+  /**
    * All groups to select.
    */
   public groups: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'U', 'V', 'W', 'X', 'Y', 'Z'];
@@ -71,12 +80,13 @@ export class CustomerEditUpdatePageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     public utilsService: UtilsService,
+    private companyService: CompanyService,
   ) { }
 
   /**
    * @ignore
    */
-  ngOnInit() {
+  async ngOnInit() {
 
     // initiliaze form
     this.customerForm = this.formBuilder.group({
@@ -99,7 +109,6 @@ export class CustomerEditUpdatePageComponent implements OnInit {
 
     // create subscribe and define validators
     this.customerForm.controls.type.valueChanges.subscribe((value: string) => {
-
       if (value) {
         if (value === 'PF') {
           this.customerForm.controls.document_one.setValidators([Validators.required, CPFValidator.isValid]);
@@ -115,6 +124,59 @@ export class CustomerEditUpdatePageComponent implements OnInit {
 
     // define edit mode value
     this.editMode = (customer_id) ? true : false;
+
+    try {
+
+      if (this.editMode) {
+
+        // get customers
+        const customer: Customer = await this.companyService.getCustomerById(customer_id);
+
+        // log customer
+        console.log(customer);
+
+        // patch values
+        this.customerForm.patchValue(customer);
+
+        // for each phone
+        customer.phones.forEach((phone: any) => {
+          (this.customerForm.get('phones') as FormArray).push(this.formBuilder.group(phone));
+        });
+      }
+
+    } catch (e) {
+
+      // log error
+      console.error(e);
+
+    }
+
+    if (!environment.production && !this.editMode) {
+
+      // create mock
+      const mock: any = {
+        name: 'Gianluca Maziero Machado',
+        email: faker.internet.email(),
+        document_one: '',
+        document_two: '40394093X',
+        group: 'A',
+        type: 'PF',
+        is_active: true,
+        phones: [{
+          number: '43999005847',
+        }, {
+          number: '43999005847',
+        }],
+      };
+
+      // patch values
+      this.customerForm.patchValue(mock);
+
+      // for each phone
+      mock.phones.forEach((phone: any) => {
+        (this.customerForm.get('phones') as FormArray).push(this.formBuilder.group(phone));
+      });
+    }
 
   }
 
@@ -151,7 +213,7 @@ export class CustomerEditUpdatePageComponent implements OnInit {
    * Validate form values.
    * @param form Form group.
    */
-  validate(form: FormGroup) {
+  async validate(form: FormGroup) {
 
     // get form value
     const value: any = form.getRawValue();
@@ -163,6 +225,38 @@ export class CustomerEditUpdatePageComponent implements OnInit {
 
       // set submit attempt as false
       this.submitAttempt = false;
+
+      // present loading
+      this.showLoadingPageTransparent = true;
+
+      try {
+
+        // create new customer
+        const customer: Customer = await this.companyService.createNewCustomer(value);
+
+        // log created customer
+        console.log(customer);
+
+        // set message
+        this.swalOptions.title = 'Sucesso';
+        this.swalOptions.content = 'Cliente criado com sucesso';
+        this.swalOptions.button = 'Entendi';
+
+        // present swal
+        this.messageComponent.show();
+
+        // back to customers list
+        this.backPageFlag = true;
+
+      } catch (e) {
+
+        // log error
+        console.error(e);
+
+      }
+
+      // dismiss loading
+      this.showLoadingPageTransparent = false;
 
     } else {
 
