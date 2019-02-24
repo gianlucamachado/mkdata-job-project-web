@@ -151,8 +151,8 @@ export class LoginComponent implements OnInit {
       console.error(e);
 
       // set message
-      this.swalOptions.title = 'Usuário não encontrado';
-      this.swalOptions.content = 'Este e-mail não possui nenhum usuário. Verifique as informações inseridas e tente novamente.';
+      this.swalOptions.title = 'Usuário e/ou senha inválidos';
+      this.swalOptions.content = 'Verifique as informações inseridas e tente novamente.';
       this.swalOptions.button = 'Entendi';
 
       // present swal
