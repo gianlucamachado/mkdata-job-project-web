@@ -145,8 +145,8 @@ export class CustomerEditUpdatePageComponent implements OnInit {
         });
 
         // disbale documents
-        this.customerForm.controls.type.disable();
         this.customerForm.controls.document_one.disable();
+        this.customerForm.controls.type.disable();
       }
 
     } catch (e) {
@@ -154,33 +154,6 @@ export class CustomerEditUpdatePageComponent implements OnInit {
       // log error
       console.error(e);
 
-    }
-
-    if (!environment.production && !this.editMode) {
-
-      // create mock
-      const mock: any = {
-        name: 'Gianluca Maziero Machado',
-        email: faker.internet.email(),
-        document_one: '',
-        document_two: '40394093X',
-        group: 'A',
-        type: 'PF',
-        is_active: true,
-        phones: [{
-          number: '43999005847',
-        }, {
-          number: '43999005847',
-        }],
-      };
-
-      // patch values
-      this.customerForm.patchValue(mock);
-
-      // for each phone
-      mock.phones.forEach((phone: any) => {
-        (this.customerForm.get('phones') as FormArray).push(this.formBuilder.group(phone));
-      });
     }
 
   }

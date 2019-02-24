@@ -119,12 +119,12 @@
       </div>
 
       <!-- CPF -->
-      <div class="input-field col s12 margin-top" *ngIf="customerForm.controls.type.valid && customerForm.value.type === 'PF'">
+      <div class="input-field col s12 margin-top" *ngIf="customerForm.getRawValue().type && customerForm.getRawValue().type === 'PF'">
         <input placeholder="CPF" id="cpf" type="tel" class="validate" mask="000.000.000-00" formControlName="document_one"
           [ngClass]="{'invalid':utilsService.showError('document_one', customerForm, submitAttempt)}">
         <label for="cpf">CPF</label>
       </div>
-      <div *ngIf="customerForm.controls.type.valid && customerForm.value.type === 'PF'">
+      <div *ngIf="customerForm.getRawValue().type && customerForm.getRawValue().type === 'PF'">
         <div class="col s12 form-control-feedback red-text" *ngIf="utilsService.showError('document_one', customerForm, submitAttempt)">
           <p class="no-margin" *ngIf="customerForm['controls']['document_one'].errors.required">
             Campo obrigatório
@@ -136,12 +136,12 @@
       </div>
 
       <!-- cnpj -->
-      <div class="input-field col s12 margin-top" *ngIf="customerForm.controls.type.valid && customerForm.value.type === 'PJ'">
+      <div class="input-field col s12 margin-top" *ngIf="customerForm.getRawValue().type && customerForm.getRawValue().type === 'PJ'">
         <input placeholder="CNPJ" id="cnpj" type="tel" class="validate" mask="00.000.000/0000-00" formControlName="document_one"
           [ngClass]="{'invalid':utilsService.showError('document_one', customerForm, submitAttempt)}">
         <label for="cnpj">CNPJ</label>
       </div>
-      <div *ngIf="customerForm.controls.type.valid && customerForm.value.type === 'PJ'">
+      <div *ngIf="customerForm.getRawValue().type && customerForm.getRawValue().type === 'PJ'">
         <div class="col s12 form-control-feedback red-text" *ngIf="utilsService.showError('document_one', customerForm, submitAttempt)">
           <p class="no-margin" *ngIf="customerForm['controls']['document_one'].errors.required">
             Campo obrigatório
@@ -153,13 +153,13 @@
       </div>
 
       <!-- rg -->
-      <div class="input-field col s12 margin-top" *ngIf="customerForm.controls.type.valid && customerForm.value.type === 'PF'">
+      <div class="input-field col s12 margin-top" *ngIf="customerForm.getRawValue().type && customerForm.getRawValue().type === 'PF'">
         <input placeholder="RG (Opcional)" id="rg" type="tel" class="validate" formControlName="document_two">
         <label for="rg">RG</label>
       </div>
 
       <!-- ie -->
-      <div class="input-field col s12 margin-top" *ngIf="customerForm.controls.type.valid && customerForm.value.type === 'PJ'">
+      <div class="input-field col s12 margin-top" *ngIf="customerForm.getRawValue().type && customerForm.getRawValue().type === 'PJ'">
         <input placeholder="IE (Opcional)" id="ie" type="tel" class="validate" formControlName="document_two">
         <label for="ie">IE</label>
       </div>
