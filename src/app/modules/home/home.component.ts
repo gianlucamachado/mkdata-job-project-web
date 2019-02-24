@@ -6,6 +6,7 @@ import { HomeService } from './home.service';
 import { StorageService } from '../../providers/storage/storage.service';
 import { TokenService } from '../../providers/token/token.service';
 import { OneSignalService } from './one-signal.service';
+import * as jwtDecode from 'jwt-decode';
 
 /**
  * Home Component.
@@ -67,8 +68,29 @@ export class HomeComponent implements OnInit {
     this.user = {
       admin_name: 'Admin',
       admin_photo_url: 'https://trello-attachments.s3.amazonaws.com/5b58fcf29a311ba8e8a12679/5c0fbda6df91812808f83c26/7002108d60ddb6698626b5954f168d29/Ativo_1.png',
-      user_email: 'admin@report.com',
+      user_email: 'admin@mkdata.com',
     };
+
+    try {
+
+      // get token
+      const token = await this.storageService.retrieve('token');
+
+      // log token
+      console.log('token', token);
+
+      // decoded token
+      const decodedToken: any = jwtDecode(token);
+
+      // set user email
+      this.user.user_email = decodedToken.sub;
+
+    } catch (e) {
+
+      // log error
+      console.error(e);
+
+    }
 
     // get active page
     await self.getActivePage();
