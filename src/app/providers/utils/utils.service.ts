@@ -92,4 +92,31 @@ export class UtilsService {
     return photo;
   }
 
+  /**
+   * normalize string
+   * @param string String to be normalized
+   * @returns Normalized string
+   */
+  stringNormalize(string: string): string {
+    // Lowercase the string
+    let normalizedString = string.toLowerCase();
+    // Substitute any divisors for underscores
+    normalizedString = normalizedString.split(' ').join('_');
+    normalizedString = normalizedString.split('-').join('_');
+    // Substitute special characters for normalized variants
+    normalizedString = normalizedString.replace(new RegExp('\\s', 'g'), '');
+    normalizedString = normalizedString.replace(new RegExp('[àáâãäå]', 'g'), 'a');
+    normalizedString = normalizedString.replace(new RegExp('æ', 'g'), 'ae');
+    normalizedString = normalizedString.replace(new RegExp('ç', 'g'), 'c');
+    normalizedString = normalizedString.replace(new RegExp('[èéêë]', 'g'), 'e');
+    normalizedString = normalizedString.replace(new RegExp('[ìíîï]', 'g'), 'i');
+    normalizedString = normalizedString.replace(new RegExp('ñ', 'g'), 'n');
+    normalizedString = normalizedString.replace(new RegExp('[òóôõö]', 'g'), 'o');
+    normalizedString = normalizedString.replace(new RegExp('œ', 'g'), 'oe');
+    normalizedString = normalizedString.replace(new RegExp('[ùúûü]', 'g'), 'u');
+    normalizedString = normalizedString.replace(new RegExp('[ýÿ]', 'g'), 'y');
+    normalizedString = normalizedString.replace(new RegExp('\\W', 'g'), '');
+    return normalizedString;
+  }
+
 }

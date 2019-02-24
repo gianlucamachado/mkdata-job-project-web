@@ -101,7 +101,7 @@ export class CompanyComponent implements OnInit {
 
     // subscribe filter form
     this.filterForm.valueChanges.subscribe((value) => {
-      console.log(value);
+      this.search(this.input);
     });
 
   }
@@ -124,14 +124,36 @@ export class CompanyComponent implements OnInit {
       // get customers
       this.customers$ = await this.companyService.getAllCustomers();
 
+      // const compare string
+      const compare: string = this.utilsService.stringNormalize(search);
+
+      // get filter form value
+      const filterFormValue: any = this.filterForm.getRawValue();
+
       // filter data
       this.customers$ = this.customers$.pipe(
         map(arr => arr.filter(
           (item) => {
-            // const compare1: string = self.utilsService.stringNormalize(item.payload.val().metadata.public.fantasyName.toLowerCase());
-            // const compare2: string = self.utilsService.stringNormalize(item.payload.val().metadata.private.responsible.toLowerCase());
-            // return compare1.indexOf(val) !== -1 || compare2.indexOf(val) !== -1;
-            return true;
+            const name: string = this.utilsService.stringNormalize(item.name.toLowerCase());
+            const email: string = this.utilsService.stringNormalize(item.email.toLowerCase());
+            const document: string = this.utilsService.stringNormalize(item.document_one.toLowerCase());
+            let finalValue = name.indexOf(compare) !== -1 || email.indexOf(compare) !== -1 || document.indexOf(compare) !== -1;
+
+            if (filterFormValue.active && !filterFormValue.inactive) {
+              finalValue = finalValue && item.is_active;
+            } else if (!filterFormValue.active && filterFormValue.inactive) {
+              finalValue = finalValue && !item.is_active;
+            } else if (!filterFormValue.active && !filterFormValue.inactive) {
+              finalValue = finalValue && (item.is_active && !item.is_active);
+            } else {
+              finalValue = finalValue && (item.is_active || !item.is_active);
+            }
+
+            if (filterFormValue.group !== 'Todos') {
+              finalValue = finalValue && item.group === filterFormValue.group;
+            }
+
+            return finalValue;
           },
         )),
       );
