@@ -54,42 +54,22 @@ export class CompanyComponent implements OnInit {
   /**
    * @ignore
    */
-  ngOnInit() {
+  async ngOnInit() {
 
-    // dismiss loading
-    setTimeout(() => this.loading = false, 500);
+    try {
 
-    // get customers
-    this.customers$ = new Observable((observer: Subscriber<Customer[]>) => {
-      observer.next([
-        {
-          customer_id: '0',
-          created_at: '',
-          document_one: '41648268862',
-          document_two: '',
-          group: 'A',
-          is_active: true,
-          name: 'Gianluca Maziero Machado',
-          type: 'CPF',
-          updated_at: '',
-          email: faker.internet.email(),
-        },
-        {
-          customer_id: '1',
-          created_at: '',
-          document_one: '41648268862',
-          document_two: '',
-          group: 'A',
-          is_active: true,
-          name: 'Gianluca Maziero Machado',
-          type: 'CPF',
-          updated_at: '',
-          email: faker.internet.email(),
-        },
-      ]);
-      observer.complete();
-    });
+      // get customers
+      this.customers$ = await this.companyService.getAllCustomers();
 
+      // dismiss loading
+      setTimeout(() => this.loading = false, 500);
+
+    } catch (e) {
+
+      // log error
+      console.error(e);
+
+    }
   }
 
   /**
