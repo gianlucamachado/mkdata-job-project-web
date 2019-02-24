@@ -54,13 +54,13 @@ export class AppComponent implements OnInit {
         // log
         console.log(event);
 
-        // // verify route
-        // if (!this.arrayContains(event.url, this.routes)) {
+        // verify route
+        if (!this.arrayContains(event.url, this.routes)) {
 
-        //   // validate
-        //   this.validateSavedToken();
+          // validate
+          this.validateSavedToken();
 
-        // }
+        }
 
         // unsubscribe
         sub.unsubscribe();
@@ -98,7 +98,7 @@ export class AppComponent implements OnInit {
 
       // validate token
       await new Promise<any>((resolve, reject) => {
-        this.httpRequestService.getRequestWithAuthorization('/api/user/validate')
+        this.httpRequestService.getRequestWithAuthorization('/users/validate')
           .subscribe(_ => resolve(), _ => reject());
       });
 
@@ -111,28 +111,8 @@ export class AppComponent implements OnInit {
       // print decoded token
       console.log(decodedToken);
 
-      // get profile id
-      const profileId: number = Number(decodedToken.prof_id);
-
-      // log profile id
-      console.log('profile_id: ', profileId);
-
       // declare path
-      let path: string = '';
-
-      // verify path
-      if (profileId === 1) {
-        // go to admin painel
-        path = (this.router.url === '/') ? '/administrador' : this.router.url;
-      } else {
-        // got to home
-        path = '';
-        // remove token case user is customer
-        // customer can not enter in web
-        this.tokenService.setToken(null);
-        // remove token case user is customer
-        this.storageService.removeItem('token');
-      }
+      const path: string = (this.router.url === '/') ? '/administrador' : this.router.url;
 
       // log path
       console.log(path);
