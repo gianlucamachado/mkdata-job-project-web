@@ -90,6 +90,7 @@ export class CustomerEditUpdatePageComponent implements OnInit {
 
     // initiliaze form
     this.customerForm = this.formBuilder.group({
+      customer_id: [null],
       name: ['', Validators.compose([Validators.required])],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       document_one: ['', Validators.compose([Validators.required])],
@@ -213,7 +214,7 @@ export class CustomerEditUpdatePageComponent implements OnInit {
    * Validate form values.
    * @param form Form group.
    */
-  async validate(form: FormGroup) {
+  async validateAndCreate(form: FormGroup) {
 
     // get form value
     const value: any = form.getRawValue();
@@ -240,6 +241,66 @@ export class CustomerEditUpdatePageComponent implements OnInit {
         // set message
         this.swalOptions.title = 'Sucesso';
         this.swalOptions.content = 'Cliente criado com sucesso';
+        this.swalOptions.button = 'Entendi';
+
+        // present swal
+        this.messageComponent.show();
+
+        // back to customers list
+        this.backPageFlag = true;
+
+      } catch (e) {
+
+        // log error
+        console.error(e);
+
+      }
+
+      // dismiss loading
+      this.showLoadingPageTransparent = false;
+
+    } else {
+
+      // set submit attempt as true
+      this.submitAttempt = true;
+
+    }
+
+  }
+
+  /**
+   * Validate form values and update user.
+   * @param form Form group.
+   */
+  async validateAndUpdate(form: FormGroup) {
+
+    // get form value
+    const value: any = form.getRawValue();
+
+    // log form value
+    console.log(value);
+
+    if (form.valid) {
+
+      // set submit attempt as false
+      this.submitAttempt = false;
+
+      // present loading
+      this.showLoadingPageTransparent = true;
+
+      try {
+
+        console.log(JSON.stringify(value));
+
+        // create new customer
+        const customer: Customer = await this.companyService.updateCustomer(value);
+
+        // log created customer
+        console.log(customer);
+
+        // set message
+        this.swalOptions.title = 'Sucesso';
+        this.swalOptions.content = 'Cliente atualizado com sucesso';
         this.swalOptions.button = 'Entendi';
 
         // present swal

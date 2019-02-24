@@ -52,10 +52,25 @@ export class CompanyService {
   /**
    * Create new customer.
    */
-  createNewCustomer(body: any): Promise<Customer> {
+  createNewCustomer(body: Customer): Promise<Customer> {
     return new Promise<any>(
       (resolve, reject) => {
         this.httpRequestService.putRequestWithAuthorization(`${this.baseUrl}`, body)
+          .subscribe(
+            response => resolve(response),
+            error => reject(error),
+          );
+      },
+    );
+  }
+
+  /**
+   * Update customer.
+   */
+  updateCustomer(body: Customer): Promise<Customer> {
+    return new Promise<any>(
+      (resolve, reject) => {
+        this.httpRequestService.postRequestWithAuthorization(`${this.baseUrl}/${body.customer_id}`, body)
           .subscribe(
             response => resolve(response),
             error => reject(error),

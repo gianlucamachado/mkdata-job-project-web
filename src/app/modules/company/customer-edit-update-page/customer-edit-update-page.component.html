@@ -165,7 +165,7 @@
 
       <!-- button concluir -->
       <div class="col s12 m6 push-m6 l3 push-l9 center-align no-padding">
-        <app-button-generic class="button-margin-left" [text]="(editMode) ? 'Salvar' : 'Concluir'" (onClick)="validate(customerForm)"></app-button-generic>
+        <app-button-generic class="button-margin-left" [text]="(editMode) ? 'Salvar' : 'Concluir'" (onClick)="(editMode) ? validateAndUpdate(customerForm) : validateAndCreate(customerForm)"></app-button-generic>
       </div>
 
       <!-- button cancel -->
