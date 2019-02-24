@@ -201,6 +201,9 @@ export class CustomerEditUpdatePageComponent implements OnInit {
         }),
       );
 
+      // reset form
+      this.phoneForm.reset();
+
     } else {
 
       // set as true
