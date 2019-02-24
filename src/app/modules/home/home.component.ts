@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
    * Menu Itens.
    */
   public menu: MenuItem[] = [
-    { icon: 'fas fa-store-alt', label: 'Empresas', href: '/administrador/empresa', isActive: true },
+    { icon: 'fas fa-users', label: 'Clientes', href: '/administrador/empresa', isActive: true },
     { icon: 'fas fa-sign-out-alt', label: 'Sair', href: '', isActive: false },
   ];
 
