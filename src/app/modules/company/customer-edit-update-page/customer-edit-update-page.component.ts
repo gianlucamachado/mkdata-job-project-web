@@ -39,6 +39,11 @@ export class CustomerEditUpdatePageComponent implements OnInit {
   public submitAttempt: boolean = false;
 
   /**
+   * Submit attempt variable phone.
+   */
+  public phoneSubmitAttempt: boolean = false;
+
+  /**
    * Define form is edit mode.
    */
   public editMode: boolean = false;
@@ -185,12 +190,22 @@ export class CustomerEditUpdatePageComponent implements OnInit {
     console.log(value);
 
     if (form.valid) {
+
+      // set as false
+      this.phoneSubmitAttempt = false;
+
       // set new phone value
       (this.customerForm.get('phones') as FormArray).push(
         this.formBuilder.group({
           number: value.phone,
         }),
       );
+
+    } else {
+
+      // set as true
+      this.phoneSubmitAttempt = true;
+
     }
 
   }
