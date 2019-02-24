@@ -143,6 +143,10 @@ export class CustomerEditUpdatePageComponent implements OnInit {
         customer.phones.forEach((phone: any) => {
           (this.customerForm.get('phones') as FormArray).push(this.formBuilder.group(phone));
         });
+
+        // disbale documents
+        this.customerForm.controls.type.disable();
+        this.customerForm.controls.document_one.disable();
       }
 
     } catch (e) {
@@ -251,9 +255,6 @@ export class CustomerEditUpdatePageComponent implements OnInit {
         this.swalOptions.content = 'Cliente criado com sucesso';
         this.swalOptions.button = 'Entendi';
 
-        // present swal
-        this.messageComponent.show();
-
         // back to customers list
         this.backPageFlag = true;
 
@@ -262,7 +263,24 @@ export class CustomerEditUpdatePageComponent implements OnInit {
         // log error
         console.error(e);
 
+        if (e && e.error && e.error.message === 'error/user-already-exists') {
+          this.swalOptions.title = 'Erro';
+          if (value.type === 'PF') {
+            this.swalOptions.content = 'Este CPF já está cadastrado.';
+          } else {
+            this.swalOptions.content = 'Este CNPJ já está cadastrado.';
+          }
+          this.swalOptions.button = 'Entendi';
+        } else {
+          this.swalOptions.title = 'Erro';
+          this.swalOptions.content = 'Erro ao cadastrar novo cliente';
+          this.swalOptions.button = 'Entendi';
+        }
+
       }
+
+      // present swal
+      this.messageComponent.show();
 
       // dismiss loading
       this.showLoadingPageTransparent = false;

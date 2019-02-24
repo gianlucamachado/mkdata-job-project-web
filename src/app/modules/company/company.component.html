@@ -97,7 +97,8 @@
           <p> {{ customer.email }} </p>
         </div>
         <div class="col s2">
-          <p> {{ customer.document_one | mask: '000.000.000-00' }} </p>
+          <p *ngIf="customer.type === 'PF'"> {{ customer.document_one | mask: '000.000.000-00' }} </p>
+          <p *ngIf="customer.type === 'PJ'"> {{ customer.document_one | mask: '00.000.000/0000-00' }} </p>
         </div>
         <div class="col s1 center-align">
           <p> {{ customer.group }} </p>
@@ -120,7 +121,8 @@
         </div>
         <div class="col s12 m6">
           <p> <span class="bold">E-mail:</span> {{ customer.email }} </p>
-          <p> <span class="bold">Documento:</span> {{ customer.document_one | mask: '000.000.000-00' }} </p>
+          <p  *ngIf="customer.type === 'PF'"> <span class="bold">Documento:</span> {{ customer.document_one | mask: '000.000.000-00' }} </p>
+          <p  *ngIf="customer.type === 'PJ'"> <span class="bold">Documento:</span> {{ customer.document_one | mask: '00.000.000/0000-00' }} </p>
           <p> <span class="bold">Grupo:</span> {{ customer.group }} </p>
           <p> <span class="bold">Status:</span>
             <span *ngIf="customer.is_active" class="green-text">Ativo</span>
@@ -143,7 +145,8 @@
         <div class="col s12">
           <p> <span class="bold">Nome:</span> {{ customer.name }} </p>
           <p> <span class="bold">E-mail:</span> {{ customer.email }} </p>
-          <p> <span class="bold">Documento:</span> {{ customer.document_one | mask: '000.000.000-00' }} </p>
+          <p *ngIf="customer.type === 'PF'"> <span class="bold">Documento:</span> {{ customer.document_one | mask: '000.000.000-00' }} </p>
+          <p *ngIf="customer.type === 'PJ'"> <span class="bold">Documento:</span> {{ customer.document_one | mask: '00.000.000/0000-00' }} </p>
           <p> <span class="bold">Grupo:</span> {{ customer.group }} </p>
           <p> <span class="bold">Status:</span>
             <span *ngIf="customer.is_active" class="green-text">Ativo</span>
