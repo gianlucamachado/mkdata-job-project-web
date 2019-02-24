@@ -55,14 +55,14 @@
       </div>
 
       <!-- phone -->
-      <div class="input-field col m9 l10 margin-top">
+      <div class="input-field col s9 m9 l10 margin-top">
         <form [formGroup]="phoneForm">
           <input placeholder="Telefone (Adicione quantos forem necessários)" id="tel" type="tel" class="validate"
             formControlName="phone" mask="(00) 0 0000-0000">
           <label for="email">Telefone</label>
         </form>
       </div>
-      <div class="input-field col m3 l2 margin-top">
+      <div class="input-field col s3 m3 l2 margin-top">
         <app-button-add (onClick)="addNewPhone(phoneForm)"></app-button-add>
       </div>
       <div class="col s12 form-control-feedback red-text" *ngIf="utilsService.showError('phone', phoneForm, submitAttempt)">
